@@ -1,0 +1,22 @@
+         
+        <div class="container">    
+          <div class="row">
+            <div class="col-md-12">
+                <footer>                
+                    &copy; Derechos reservador por Los autores: Eliacer, Mirian, Edgar y Daniel
+                    <div>
+                        <br>
+                    </div>
+                </footer>
+                <br>
+            </div>
+          </div>
+        </div>
+   
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="jquery/jquery-1.11.2.min.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+</body>
+</html>		
+	
+

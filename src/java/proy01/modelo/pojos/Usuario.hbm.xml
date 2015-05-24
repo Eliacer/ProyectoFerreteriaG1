@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07/05/2015 07:26:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="proy01.modelo.entidad.Usuario" optimistic-lock="version" schema="FERRETERIA_DANIEL" table="USUARIO">
+    <id name="idUsuario" type="string">
+      <column length="20" name="ID_USUARIO"/>
+      <generator class="foreign">
+        <param name="property">persona</param>
+      </generator>
+    </id>
+    <many-to-one class="proy01.modelo.entidad.TipoUsuario" fetch="select" name="tipoUsuario">
+      <column length="10" name="ID_TIPO_USUARIO"/>
+    </many-to-one>
+    <one-to-one class="proy01.modelo.entidad.Persona" constrained="true" name="persona"/>
+    <property name="login" type="string">
+      <column length="40" name="LOGIN" not-null="true" unique="true"/>
+    </property>
+    <property name="password" type="string">
+      <column length="10" name="PASSWORD" not-null="true"/>
+    </property>
+    <property name="estado" type="string">
+      <column length="1" name="ESTADO" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="compras" table="COMPRA">
+      <key>
+        <column length="20" name="ID_USUARIO"/>
+      </key>
+      <one-to-many class="proy01.modelo.entidad.Compra"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="ventas" table="VENTA">
+      <key>
+        <column length="20" name="ID_USUARIO"/>
+      </key>
+      <one-to-many class="proy01.modelo.entidad.Venta"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="compraDevolucions" table="COMPRA_DEVOLUCION">
+      <key>
+        <column length="20" name="ID_USUARIO"/>
+      </key>
+      <one-to-many class="proy01.modelo.entidad.CompraDevolucion"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="devolucions" table="DEVOLUCION">
+      <key>
+        <column length="20" name="ID_USUARIO"/>
+      </key>
+      <one-to-many class="proy01.modelo.entidad.Devolucion"/>
+    </set>
+  </class>
+</hibernate-mapping>

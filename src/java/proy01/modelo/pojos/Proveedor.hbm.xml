@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07/05/2015 07:26:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="proy01.modelo.entidad.Proveedor" optimistic-lock="version" schema="FERRETERIA_DANIEL" table="PROVEEDOR">
+    <id name="idProveedor" type="string">
+      <column length="20" name="ID_PROVEEDOR"/>
+      <generator class="foreign">
+        <param name="property">persona</param>
+      </generator>
+    </id>
+    <one-to-one class="proy01.modelo.entidad.Persona" constrained="true" name="persona"/>
+    <property name="correoElectronico" type="string">
+      <column length="70" name="CORREO_ELECTRONICO"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="compras" table="COMPRA">
+      <key>
+        <column length="20" name="ID_PROVEEDOR"/>
+      </key>
+      <one-to-many class="proy01.modelo.entidad.Compra"/>
+    </set>
+  </class>
+</hibernate-mapping>

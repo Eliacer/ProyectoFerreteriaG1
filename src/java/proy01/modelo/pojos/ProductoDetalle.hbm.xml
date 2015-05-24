@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07/05/2015 07:26:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="proy01.modelo.entidad.ProductoDetalle" optimistic-lock="version" schema="FERRETERIA_DANIEL" table="PRODUCTO_DETALLE">
+    <composite-id class="proy01.modelo.entidad.ProductoDetalleId" name="id">
+      <key-property name="idCompra" type="string">
+        <column length="20" name="ID_COMPRA"/>
+      </key-property>
+      <key-property name="idProducto" type="string">
+        <column length="20" name="ID_PRODUCTO"/>
+      </key-property>
+    </composite-id>
+    <one-to-one class="proy01.modelo.entidad.DetalleCompra" constrained="true" name="detalleCompra"/>
+    <property name="fechaRegistro" type="date">
+      <column length="7" name="FECHA_REGISTRO"/>
+    </property>
+    <property name="precioVentaMayor" type="big_decimal">
+      <column name="PRECIO_VENTA_MAYOR" precision="22" scale="0"/>
+    </property>
+    <property name="precioVentaPublico" type="big_decimal">
+      <column name="PRECIO_VENTA_PUBLICO" precision="22" scale="0"/>
+    </property>
+    <property name="precioVentaCredito" type="big_decimal">
+      <column name="PRECIO_VENTA_CREDITO" precision="22" scale="0"/>
+    </property>
+    <property name="stockMin" type="big_decimal">
+      <column name="STOCK_MIN" precision="22" scale="0"/>
+    </property>
+    <property name="stockMax" type="big_decimal">
+      <column name="STOCK_MAX" precision="22" scale="0"/>
+    </property>
+  </class>
+</hibernate-mapping>

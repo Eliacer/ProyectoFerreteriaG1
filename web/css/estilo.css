@@ -1,0 +1,69 @@
+
+#sha{
+    max-width: 340px;
+    -webkit-box-shadow: 0px 0px 18px 0px rgba(48, 50, 50, 0.48);
+    -moz-box-shadow: 0px 0px 18px 0px rgba(48, 50, 50, 0.48);
+    box-shadow: 0px 0px 18px 0px rgba(48, 50, 50, 0.48);
+    border-radius: 6%;
+    margin-top: 30px;
+}
+
+.fondo{
+    background: #212121; 
+    border-radius: 0.7em 0.7em 0 0;
+}
+
+#back0{
+    background: #FAAC58;
+}
+
+#back{
+    background: #A9D0F5;
+}
+.logo{
+    margin-top: 17px;
+    margin-left: 15px;
+}
+
+#aler{
+    text-align: center;  
+}
+
+.form1_1{
+    margin-left: -135px;
+}
+.text1{
+    color: #FA8258;
+    font-size: 370%;
+    margin-top: 50px;
+    text-shadow: 5px 5px 10px rgba(255,255,255,0.5);
+    text-align: center;
+}
+
+.text2{
+    color: #FA8258;
+    font-size: 100%;
+    margin-top: 20px;
+    text-shadow: 5px 5px 10px rgba(255,255,255,0.5);
+    text-align: center;
+}
+
+.text3{
+    color: orangered;
+    margin-top: 40px;
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+
+
+footer
+{
+	margin-top: 20px;
+	background-color: #666;
+	border-radius: 0 0 0.5em 0.5em;
+        text-align: center;
+        height: auto;
+}
+

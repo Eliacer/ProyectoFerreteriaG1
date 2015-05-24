@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07/05/2015 07:26:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="proy01.modelo.entidad.DetalleCompra" optimistic-lock="version" schema="FERRETERIA_DANIEL" table="DETALLE_COMPRA">
+    <composite-id class="proy01.modelo.entidad.DetalleCompraId" name="id">
+      <key-property name="idCompra" type="string">
+        <column length="20" name="ID_COMPRA"/>
+      </key-property>
+      <key-property name="idProducto" type="string">
+        <column length="20" name="ID_PRODUCTO"/>
+      </key-property>
+    </composite-id>
+    <many-to-one class="proy01.modelo.entidad.Compra" fetch="select" insert="false" name="compra" update="false">
+      <column length="20" name="ID_COMPRA" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="proy01.modelo.entidad.Producto" fetch="select" insert="false" name="producto" update="false">
+      <column length="20" name="ID_PRODUCTO" not-null="true"/>
+    </many-to-one>
+    <property name="cantidad" type="big_decimal">
+      <column name="CANTIDAD" precision="22" scale="0"/>
+    </property>
+    <property name="precioUnitario" type="java.lang.Double">
+      <column name="PRECIO_UNITARIO" precision="126" scale="0"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="detalleCompraDevs" table="DETALLE_COMPRA_DEV">
+      <key>
+        <column length="20" name="ID_COMPRA" not-null="true"/>
+        <column length="20" name="ID_PRODUCTO" not-null="true"/>
+      </key>
+      <one-to-many class="proy01.modelo.entidad.DetalleCompraDev"/>
+    </set>
+    <one-to-one class="proy01.modelo.entidad.ProductoDetalle" name="productoDetalle"/>
+  </class>
+</hibernate-mapping>

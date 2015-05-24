@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ferreter&iacute;a el arca</title>
+        <link rel="stylesheet" href="css/estilo.css">
+        <link rel="stylesheet" href="css/estilo_1.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+</head>
+<body >
+    <header>   
+        <div class="container">
+            <div class="fondo">
+                <div class="row">          
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="Inicio.jsp"><img src="recursos/img/logo_arca.png" class="img-responsive" alt="Imagen responsive"></a>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text1">
+                            <p>Ferreter&iacute;a "El Arca"</p>
+                        </div>
+                        <div class="text2">
+                            <p>Propietario: Daniel Rios San Miguel</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="text3">
+                            <h3>Encuentranos en:</h3>
+                            
+                        </div>                      
+                    </div>
+                </div>
+                <br>
+            </div>        
+        </div>
+        <div class="container">
+            <div class="row">           
+                <div class="col-md-12">
+                    <nav class="navbar navbar-inverse">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="bienvenida.jsp">
+                                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Inicio
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                      <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Gesti&oacute;n de datos y reportes <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li class="divider"></li>
+                                        <li class="dropdown-header">Registro</li>
+                                        <li><a href="Registro_personas.jsp">Registro de personas</a></li>
+                                        <li><a href="Registro_productos.jsp">Registro de productos</a></li>
+                                        <li><a href="Caract_Producto.jsp">A&ntilde;adir Categor&iacute;as,Marcas,Ubicaci&oacute;n</a></li>
+                                        <li class="divider"></li>
+                                        <li class="dropdown-header">Reportes</li>
+                                        <li><a href="Rep_Productos.jsp">Reportes de Productos</a></li>
+                                        <li><a href="Rep_Personas.jsp">Reportes de Personas</a></li>   
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Gestión de compras <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Registro de compras a proveedores</a></li>   
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Gesti&oacute;n de ventas<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li class="disabled"><a href="#">Registrar ventas a clientes</a></li>         
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                            <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>Devoluciones<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li class="disabled"><a href="#">Devoluciones a clientes</a></li>
+                                        <li class="disabled"><a href="#">Devoluciones a proveedores</a></li>         
+                                    </ul>
+                                </li>   
+                                <li>
+                                    <a href="Login.jsp">
+                                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>Cerrar sesi&oacute;n
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!--/.nav-collapse -->  
+                    </nav>
+                </div>
+            </div>
+        </div>       
+    </header>

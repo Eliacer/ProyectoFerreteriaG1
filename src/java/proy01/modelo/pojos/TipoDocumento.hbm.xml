@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07/05/2015 07:26:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="proy01.modelo.entidad.TipoDocumento" optimistic-lock="version" schema="FERRETERIA_DANIEL" table="TIPO_DOCUMENTO">
+    <id name="idTipoDocumento" type="string">
+      <column length="10" name="ID_TIPO_DOCUMENTO"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="nombre" type="string">
+      <column length="20" name="NOMBRE"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="personas" table="PERSONA">
+      <key>
+        <column length="10" name="ID_TIPO_DOCUMENTO"/>
+      </key>
+      <one-to-many class="proy01.modelo.entidad.Persona"/>
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+    <property name="hibernate.connection.username">ferreteria_daniel</property>
+    <property name="hibernate.connection.password">fernandez</property>
+    <mapping resource="proy01/modelo/pojos/Usuario.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Cliente.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/ProductoDetalle.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Ubicacion.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/UndMedida.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/DetalleCompra.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/CompraDevolucion.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Comprobante.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/DetalleCompraDev.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/TipoUsuario.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/TipoDocumento.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/DetalleDevolucion.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/DetalleVenta.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Compra.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Devolucion.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Categoria.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Producto.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Persona.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Marca.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Venta.hbm.xml"/>
+    <mapping resource="proy01/modelo/pojos/Proveedor.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

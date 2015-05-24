@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07/05/2015 07:26:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="proy01.modelo.entidad.Compra" optimistic-lock="version" schema="FERRETERIA_DANIEL" table="COMPRA">
+    <id name="idCompra" type="string">
+      <column length="20" name="ID_COMPRA"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="proy01.modelo.entidad.Usuario" fetch="select" name="usuario">
+      <column length="20" name="ID_USUARIO"/>
+    </many-to-one>
+    <many-to-one class="proy01.modelo.entidad.Comprobante" fetch="select" name="comprobante">
+      <column length="10" name="ID_COMPROBANTE"/>
+    </many-to-one>
+    <many-to-one class="proy01.modelo.entidad.Proveedor" fetch="select" name="proveedor">
+      <column length="20" name="ID_PROVEEDOR"/>
+    </many-to-one>
+    <property name="numComprobante" type="string">
+      <column length="15" name="NUM_COMPROBANTE" not-null="true" unique="true"/>
+    </property>
+    <property name="fechaCompra" type="date">
+      <column length="7" name="FECHA_COMPRA" not-null="true"/>
+    </property>
+    <property name="total" type="java.lang.Double">
+      <column name="TOTAL" precision="126" scale="0"/>
+    </property>
+    <property name="descripcion" type="string">
+      <column length="100" name="DESCRIPCION"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="detalleCompras" table="DETALLE_COMPRA">
+      <key>
+        <column length="20" name="ID_COMPRA" not-null="true"/>
+      </key>
+      <one-to-many class="proy01.modelo.entidad.DetalleCompra"/>
+    </set>
+  </class>
+</hibernate-mapping>
