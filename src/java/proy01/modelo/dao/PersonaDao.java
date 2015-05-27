@@ -7,7 +7,8 @@ package proy01.modelo.dao;
 
 import java.util.List;
 import proy01.modelo.entidad.Persona;
-import proy01.modelo.entidad.TipoDocumento;
+import proy01.modelo.entidad.Proveedor;
+import proy01.modelo.entidad.Usuario;
 
 /**
  *
@@ -17,8 +18,13 @@ public interface PersonaDao {
     
     public boolean InsertarPersona(Persona persona);
     public List<Persona> ListarPersona();
+    public List<Persona> ListarProveedor(String proveedor);
     public boolean UpdatePersona(Persona persona);
     public boolean DeletePersona(String id);
-    
+    public List<Persona> ObtenerPersona (String nombre,String dni);
+    public List<Persona> ObtenerPersonaId (String id);
+    public List<Persona> ObtenerPersonaDni (String dni);
+    public boolean RegistrarProveedor(Proveedor proveedor);
+    public boolean RegistrarUsuario(Usuario usuario);
     
 }

@@ -32,10 +32,10 @@ public class CaracteristicasProductoDaoImpl implements CaracteristicasProductoDa
     @Override
     public List<Marca> ListarMarca() {
         
-       Statement st=null;
+        Statement st=null;
         ResultSet rs=null;
         String sql = "select id_marca,initcap(nombre_marca) as nombre,estado from marca where estado='1' "
-                + "order by nombre_marca asc ";
+                + "order by id_marca asc ";
         List<Marca> lista = new ArrayList<Marca>();
         Marca ma= null;
         try {
@@ -99,7 +99,7 @@ public class CaracteristicasProductoDaoImpl implements CaracteristicasProductoDa
        Statement st=null;
         ResultSet rs=null;
         String sql = "select id_ubicacion,initcap(nombre_ubicacion) as nombre,estado from ubicacion where estado='1' "
-                + "order by nombre_ubicacion desc ";
+                + "order by id_ubicacion asc";
         List<Ubicacion> lista = new ArrayList<Ubicacion>();
         Ubicacion ub= null;
         try {
@@ -108,8 +108,8 @@ public class CaracteristicasProductoDaoImpl implements CaracteristicasProductoDa
             
             while (rs.next()) {                    
                 ub = new Ubicacion();              
-                ub.setIdUbicacion(rs.getString("id_ubicacion"));
-                ub.setNombreUbicacion(rs.getString("nombre"));
+                ub.setId_ubicacion(rs.getString("id_ubicacion"));
+                ub.setNombre_ubicacion(rs.getString("nombre"));
                 ub.setEstado(rs.getString("estado"));
                 lista.add(ub);   
             }  
@@ -129,8 +129,8 @@ public class CaracteristicasProductoDaoImpl implements CaracteristicasProductoDa
     public List<UndMedida> ListarUniMedida() {
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select id_und_medida,initcap(nombre) as nombre,abreviatura from und_medida "
-                + "order by nombre asc";
+        String sql = "select id_unidad_medida,initcap(nombre_und_medida) as nombre,abreviatura from unidad_medida "
+                + "where estado='1' order by nombre asc";
         List<UndMedida> lista = new ArrayList<UndMedida>();
         UndMedida um= null;
         try {
@@ -139,7 +139,7 @@ public class CaracteristicasProductoDaoImpl implements CaracteristicasProductoDa
             
             while (rs.next()) {                    
                 um = new UndMedida();              
-                um.setIdUndMedida(rs.getString("id_und_medida"));
+                um.setIdUndMedida(rs.getString("id_unidad_medida"));
                 um.setNombre(rs.getString("nombre"));
                 um.setAbreviatura(rs.getString("abreviatura"));
                 lista.add(um);   

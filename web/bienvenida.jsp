@@ -1,7 +1,10 @@
 
 <%@include file="WEB-INF/jspf/top.jspf" %>
-<section>
-            <div class="container">
+
+<%
+    
+%>
+    <div class="container">
         <div class="row">           
 	        <div class="col-md-7">
                     <section class="well" id="back0">
@@ -63,7 +66,6 @@
 	        </div>
             </div>
       </div>
-</section>
 <%@include file="WEB-INF/jspf/botton.jspf" %>       			
 	
 

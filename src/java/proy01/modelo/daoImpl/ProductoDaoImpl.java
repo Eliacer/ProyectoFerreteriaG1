@@ -33,44 +33,22 @@ public class ProductoDaoImpl implements ProductoDao{
         String query = "insert into producto "
                 + "(codigo, "
                 + " nombre, "
-                + " unidad_medida, "
-                + " medida, "
-                + " precio_publico, "
-                + " precio_mayor, "
-                + " precio_credito, "
+                + " id_unidad_medida, "
+                + " concentracion, "
+                + " color, "
                 + " id_categoria, "
                 + " id_marca, "
                 + " id_ubicacion, "
-                + " color, "
-                + " descripcion, "
-                + " id_unidad, "
-                + " cantidad, "
-                + " p_compra, "
-                + " porc_publico, "
-                + " porc_mayor, "
-                + " porc_cred, "
-                + " igv, "
-                + " flete) "
+                + " descripcion) "
                 + " values ("+"'"+producto.getCodigo()
                 +"','" +producto.getNombre()
-                +"','" +producto.getUndMedida()
-                +"','" +producto.getMedida()
-                +"', " +producto.getPrecioPublico()
-                +" , " +producto.getPrecioMayor()
-                +" , " +producto.getPrecioCredito()    
-                +" ,'" +producto.getId_categoria()
+                +"','" +producto.getIdUndMedida()
+                +"', " +producto.getConcentracion()
+                +" ,'" +producto.getColor()
+                +"','" +producto.getId_categoria()
                 +"','" +producto.getId_marca()
                 +"','" +producto.getId_ubicacion()
-                +"','" +producto.getColor()              
-                +"','" +producto.getDescripcion()
-                +"','" +producto.getId_unidad()
-                +"', " +producto.getCantidad()
-                +" , " +producto.getPrecioCompra()
-                +" , " +producto.getPorc_pub()
-                +" , " +producto.getPorc_mayor()
-                +" , " +producto.getPorc_cred()
-                +" , " +producto.getIgv()
-                +" , " +producto.getFlete()+")";
+                +"','" +producto.getDescripcion()+"')";
 
         try {
             st = open().createStatement();
@@ -108,25 +86,16 @@ public class ProductoDaoImpl implements ProductoDao{
                 pr.setIdProducto(rs.getString("id_producto"));
                 pr.setCodigo(rs.getString("codigo"));
                 pr.setNombre(rs.getString("nombre"));
-                pr.setUndMedida(rs.getString("unidad_medida"));
-                pr.setMedida(rs.getString("medida"));
-                pr.setFechaReg(rs.getString("fecha_reg"));
-                pr.setPrecioPublico(rs.getDouble("precio_publico"));
-                pr.setPrecioMayor(rs.getDouble("precio_mayor"));
-                pr.setPrecioCredito(rs.getDouble("precio_credito"));
+                pr.setIdUndMedida(rs.getString("id_unidad_medida"));
+                pr.setConcentracion(rs.getDouble("concentracion"));
+                pr.setColor(rs.getString("color"));
+                pr.setCosto(rs.getDouble("costo"));
+                pr.setStock(rs.getInt("stock"));
+                pr.setFecha_reg(rs.getString("fecha_reg"));
                 pr.setId_categoria(rs.getString("id_categoria"));
                 pr.setId_marca(rs.getString("id_marca"));
                 pr.setId_ubicacion(rs.getString("id_ubicacion"));
-                pr.setColor(rs.getString("color"));
-                pr.setDescripcion(rs.getString("descripcion"));   
-                pr.setId_unidad(rs.getString("id_unidad")); 
-                pr.setCantidad(rs.getString("cantidad")); 
-                pr.setPrecioCompra(rs.getDouble("p_compra"));  
-                pr.setPorc_pub(rs.getDouble("porc_publico")); 
-                pr.setPorc_mayor(rs.getDouble("porc_mayor")); 
-                pr.setPorc_cred(rs.getDouble("porc_cred")); 
-                pr.setIgv(rs.getDouble("igv"));
-                pr.setFlete(rs.getDouble("flete"));
+                pr.setDescripcion(rs.getString("descripcion"));              
                 lista.add(pr);
             }
             open().close();
@@ -172,25 +141,16 @@ public class ProductoDaoImpl implements ProductoDao{
         String query = "update producto set "
                 +"  codigo='"+producto.getCodigo()
                 +"',nombre='"+producto.getNombre()
-                +"',unidad_medida='"+producto.getUndMedida()
-                +"',medida='"+producto.getMedida()
-                +"',porc_publico="+producto.getPorc_pub()
-                +" ,porc_mayor="+producto.getPorc_mayor()
-                +" ,porc_cred="+producto.getPorc_cred()
+                +"',id_unidad_medida='"+producto.getIdUndMedida()
+                +"',concentracion="+producto.getConcentracion()
+                +",color='"+producto.getColor()
+                +"',costo="+producto.getCosto()
+                +" ,stock="+producto.getStock()
                 +" ,id_categoria='"+producto.getId_categoria()
                 +"',id_marca='"+producto.getId_marca()
                 +"',id_ubicacion='"+producto.getId_ubicacion()
-                +"',color='"+producto.getColor()
                 +"',descripcion='"+producto.getDescripcion()
-                +"',id_unidad='"+producto.getId_unidad()
-                +"',cantidad="+producto.getCantidad()
-                +" ,p_compra="+producto.getPrecioCompra()
-                +" ,precio_publico="+producto.getPrecioPublico()
-                +" ,precio_mayor="+producto.getPrecioMayor()
-                +" ,precio_credito="+producto.getPrecioCredito()
-                +" ,igv="+producto.getIgv()
-                +" ,flete="+producto.getFlete()
-                +" where id_producto='"+producto.getIdProducto()+"'";
+                +"' where id_producto='"+producto.getIdProducto()+"'";
        
         try {
             st = open().createStatement();
@@ -219,11 +179,11 @@ public class ProductoDaoImpl implements ProductoDao{
         ResultSet rs = null;
         Producto producto = null;
         String query = "select p.id_producto as id_producto,p.nombre||' ('||m.nombre_marca||')' as nombre, "
-                     + "round(p.precio_publico,2) as precio_publico, round(p.precio_mayor,2) as precio_mayor, "
-                     + "round(p.precio_credito,2) as precio_credito, u.nombre_ubicacion as ubicacion "
-                     + "from producto p, marca m, ubicacion u "
-                     + "where m.id_marca=nvl(p.id_marca,'00007') and "
-                     + "u.id_ubicacion=nvl(p.id_ubicacion,'00006') and "
+                     + "concentracion||''||um.abreviatura as id_um,p.costo as costo, p.stock as stock, "
+                     + "u.nombre_ubicacion as ubicacion "
+                     + "from producto p, marca m, ubicacion u,unidad_medida um "
+                     + "where m.id_marca=nvl(p.id_marca,'00001') and "
+                     + "u.id_ubicacion=nvl(p.id_ubicacion,'00001') and um.id_unidad_medida=p.id_unidad_medida and "
                      + "upper(p."+Buscar_por+") like upper('%"+Buscar+"%') "
                      + "and rownum <=10 "
                      + "order by nombre asc";   
@@ -234,9 +194,9 @@ public class ProductoDaoImpl implements ProductoDao{
                 producto = new Producto();
                 producto.setIdProducto(rs.getString("id_producto"));
                 producto.setNombre(rs.getString("nombre"));
-                producto.setPrecioMayor(rs.getDouble("precio_mayor"));
-                producto.setPrecioPublico(rs.getDouble("precio_publico"));
-                producto.setPrecioCredito(rs.getDouble("precio_credito"));
+                producto.setIdUndMedida(rs.getString("id_um"));           
+                producto.setCosto(rs.getDouble("costo"));
+                producto.setStock(rs.getInt("stock"));           
                 producto.setId_ubicacion(rs.getString("ubicacion"));
                 lista.add(producto);      
             }

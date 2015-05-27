@@ -1,3 +1,6 @@
+<%@page import="proy01.modelo.entidad.Compra"%>
+<%@page import="proy01.modelo.daoImpl.CompraDaoImpl"%>
+<%@page import="proy01.modelo.dao.CompraDao"%>
 <%@page import="proy01.modelo.daoImpl.ProductoDaoImpl"%>
 <%@page import="proy01.modelo.dao.ProductoDao"%>
 <%@page import="proy01.modelo.entidad.Producto"%>
@@ -6,8 +9,8 @@
 <div class="container">
 
 <%
-    String buscar_por = request.getParameter("buscar_por");buscar_por = buscar_por==null?"nombre": buscar_por;
-    String buscar = request.getParameter("buscar");buscar = buscar==null?"": buscar;
+    //String buscar_por = request.getParameter("buscar_por");buscar_por = buscar_por==null?"nombre": buscar_por;
+    //String buscar = request.getParameter("buscar");buscar = buscar==null?"": buscar;
     String opcion = request.getParameter("opcion");opcion = opcion == null ? "" : opcion;
     String id_producto = request.getParameter("id_producto");id_producto = id_producto == null ? "" : id_producto;
     String mensaje="";
@@ -27,7 +30,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <form class="form-horizontal" action="Rep_Productos.jsp" method="post">              
+            <form class="form-horizontal" action="Rep_Compras.jsp" method="post">              
                 <div class="form-group">
                     <label class="control-label col-xs-3">Buscar Por: </label>
                     <div class="col-xs-3">
@@ -72,34 +75,34 @@
                     <thead>
                         <tr>
                             <td width="5%" bgcolor="#FFEFCE"><strong>#</strong></td>
-                            <td width="28%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
-                            <td width="12%" bgcolor="#FFEFCE"><strong>Precio Mayor</strong></td>
-                            <td width="13%" bgcolor="#FFEFCE"><strong>Precio P&uacute;blico</strong></td>
-                            <td width="13%" bgcolor="#FFEFCE"><strong>Precio Cr&eacute;dito</strong></td>
-                            <td width="12%" align="center" bgcolor="#FFEFCE"><strong>Ubicacion</strong></td>
-                            <td width="18%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></th>
+                            <td width="28%" bgcolor="#FFEFCE"><strong>Usuario</strong></td>
+                            <td width="12%" bgcolor="#FFEFCE"><strong>Proveedor</strong></td>
+                            <td width="13%" align="center" bgcolor="#FFEFCE"><strong>Comprobante</strong></td>
+                            <td width="13%" align="center" bgcolor="#FFEFCE"><strong>Nro. Comprobante.</strong></td>
+                            <td width="12%" align="center" bgcolor="#FFEFCE"><strong>F. Compra</strong></td>
+                            <td width="18%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
                         </tr>
                     </thead>
                     <tbody>
                         <%
                         String espacio="  ";
                         int count=0;
-                        ProductoDao dao = new ProductoDaoImpl();
-                        for(Producto producto :dao.BuscarProducto(buscar_por, buscar)){
+                        CompraDao cd = new CompraDaoImpl();
+                        for(Compra compra :cd.ListarCompraT()){
                              count++;
                         %>
           
                         <tr>     
-                            <input type="hidden" name="id_producto"  value="<%=producto.getIdProducto()%>" size="10">
+                            <input type="hidden" name="id_compra"  value="<%=compra.getId_compra()%>" size="10">
                             <td><%=count%>.-</td> 
-                            <td><%=producto.getNombre()%></td>
-                            <td align="center"><%=producto.getPrecioMayor()%></td>
-                            <td align="center"><%=producto.getPrecioPublico()%></td>
-                            <td align="center"><%=producto.getPrecioCredito()%></td> 
-                            <td align="center"><%=producto.getId_ubicacion()%></td>
+                            <td><%=compra.getId_usuario()%></td>
+                            <td align="center"><%=compra.getId_proveedor()%></td>
+                            <td align="center"><%=compra.getId_comprobante()%></td>
+                            <td align="center"><%=compra.getNumComprobante()%></td> 
+                            <td align="center"><%=compra.getFechaCompra()%></td>
                             <td>
-                                <a href="Registro_productos.jsp?opcion=Actualizar&id_producto=<%=producto.getIdProducto()%>">[Actualizar]<%=espacio%></a>
-                                <a href="Rep_Productos.jsp?opcion=eliminar&id_producto=<%=producto.getIdProducto()%>">[Eliminar]</a></td>
+                                <a href="Registro_productos.jsp?opcion=Actualizar&id_producto=<%=compra.getId_compra()%>">[Actualizar]<%=espacio%></a>
+                                <a href="Rep_Productos.jsp?opcion=eliminar&id_producto=<%=compra.getId_compra()%>">[Eliminar]</a></td>
                         </tr>
                         <%}%>
                     </tbody>

@@ -13,12 +13,17 @@
 </head>
 <body >
     <header>   
+        <%
+            
+        String id_usuario=request.getParameter("id_usuario");id_usuario = id_usuario==null?"":id_usuario;
+        
+        %>
         <div class="container">
             <div class="fondo">
                 <div class="row">          
                     <div class="col-md-3">
                         <div class="logo">
-                            <a href="Inicio.jsp"><img src="recursos/img/logo_arca.png" class="img-responsive" alt="Imagen responsive"></a>
+                            <a href="bienvenida.jsp"><img src="recursos/img/logo_arca.png" class="img-responsive" alt="Imagen responsive"></a>
                             
                         </div>
                     </div>
@@ -31,10 +36,9 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="text3">
-                            <h3>Encuentranos en:</h3>
-                            
-                        </div>                      
+                        <div class="logo1">
+                            <a href="bienvenida.jsp"><img src="recursos/img/logo_arca.png" class="img-responsive" alt="Imagen responsive"></a>
+                        </div>
                     </div>
                 </div>
                 <br>
@@ -76,7 +80,7 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Gestión de compras <span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Registro de compras a proveedores</a></li>   
+                                        <li><a href="Compras.jsp">Registro de compras a proveedores</a></li>   
                                     </ul>
                                 </li>
                                 <li class="dropdown">

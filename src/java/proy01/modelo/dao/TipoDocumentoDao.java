@@ -6,6 +6,7 @@
 package proy01.modelo.dao;
 
 import java.util.List;
+import proy01.modelo.entidad.Rol;
 import proy01.modelo.entidad.TipoDocumento;
 
 /**
@@ -15,5 +16,6 @@ import proy01.modelo.entidad.TipoDocumento;
 public interface TipoDocumentoDao {
     
     public List<TipoDocumento> ListarTipoDocumento();
+    public List<Rol> ListarRoles();
     
 }

@@ -5,6 +5,10 @@
  */
 package proy01.modelo.dao;
 
+import java.util.List;
+import proy01.modelo.entidad.Comprobante;
+import proy01.modelo.entidad.Privilegio;
+import proy01.modelo.entidad.TipoMoneda;
 import proy01.modelo.entidad.Usuario;
 
 /**
@@ -15,5 +19,8 @@ public interface UsuarioDao {
     
     public Usuario validarusuario (String usuario,String password);
     public boolean agragar_usuario(Usuario usuario);
+    public List<Usuario> ObtenerUsuario(String usuario,String password);
+    public List<Privilegio> ObtenerPrivUsuario(String id_usuario);
+    
     
 }

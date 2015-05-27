@@ -1,26 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
-  <schema-selection match-schema="FERRETERIA_DANIEL"/>
-  <table-filter match-name="TIPO_DOCUMENTO"/>
-  <table-filter match-name="DEVOLUCION"/>
-  <table-filter match-name="PRODUCTO"/>
-  <table-filter match-name="CATEGORIA"/>
-  <table-filter match-name="UND_MEDIDA"/>
-  <table-filter match-name="COMPROBANTE"/>
-  <table-filter match-name="PROVEEDOR"/>
-  <table-filter match-name="COMPRA_DEVOLUCION"/>
-  <table-filter match-name="VENTA"/>
-  <table-filter match-name="PERSONA"/>
+  <schema-selection match-schema="DANIEL"/>
   <table-filter match-name="USUARIO"/>
-  <table-filter match-name="UBICACION"/>
-  <table-filter match-name="DETALLE_COMPRA"/>
-  <table-filter match-name="MARCA"/>
-  <table-filter match-name="DETALLE_DEVOLUCION"/>
-  <table-filter match-name="PRODUCTO_DETALLE"/>
-  <table-filter match-name="CLIENTE"/>
-  <table-filter match-name="COMPRA"/>
-  <table-filter match-name="DETALLE_COMPRA_DEV"/>
-  <table-filter match-name="TIPO_USUARIO"/>
-  <table-filter match-name="DETALLE_VENTA"/>
 </hibernate-reverse-engineering>

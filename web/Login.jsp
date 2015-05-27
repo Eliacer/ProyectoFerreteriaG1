@@ -23,17 +23,23 @@
   <body>
       
 <%
+    String id_usuario="";
     String usuario=request.getParameter("usuario");usuario = usuario==null?"":usuario;
     String password=request.getParameter("password");password = password==null?"":password;
     String mensaje="";
     
     if(!usuario.equals("") && !password.equals("")){ 
+        
         UsuarioDao ud=new UsuarioDaoImpl();
         
-        Usuario u= ud.validarusuario(usuario, password);
+        Usuario u= new Usuario();
     
-        if(u!=null){
-            response.sendRedirect("bienvenida.jsp");
+        if(ud.validarusuario(usuario, password)!=null){
+            for(Usuario u1: ud.ObtenerUsuario(usuario, password)){
+            id_usuario=u1.getIdUsuario();
+            response.sendRedirect("bienvenida.jsp?id_usuario="+id_usuario);
+            }
+            
         }else{
 
          mensaje="Usuario o password incorrecto";
