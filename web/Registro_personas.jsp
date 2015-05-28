@@ -37,7 +37,7 @@
     String opcion = request.getParameter("opcion");opcion = opcion == null ? "Continuar" : opcion;
     
     String mensaje="";
-    
+    String alert="";
     if(opcion.equals("Continuar")||opcion.equals("Actualizando")){
         if(!nombres.equals("") && !t_doc.equals("")&& !num_doc.equals("")
                 && (!telefono.equals("") || !celular.equals(""))){
@@ -62,8 +62,10 @@
                 if(ppd.InsertarPersona(persona))
                 {
                     opcion="Registrar";
+                    alert="info";
                     mensaje = "Se registró corerctamente...";
                 }else{
+                    alert="warning";
                     mensaje="No se pudo registrar";
                 }
             }
@@ -73,9 +75,11 @@
                 
                 if(ppd.UpdatePersona(persona)){
                     opcion="Registrar";
+                    alert="success";
                     mensaje = "Se actualizó corerctamente...<a href='Rep_Personas.jsp'>[Reportes] </a>";
                 }
                 else{
+                    alert="warning";
                     mensaje = "No se pudo actualizar";
                 }
             }
@@ -128,9 +132,11 @@
                     if(dao.RegistrarUsuario(usuario)){
 
                         opcion="termino";
+                        alert="success";
                         mensaje="Se registro el usuario correcamente...";
                     }
                     else{
+                         alert="warning";
                          mensaje="ocurrio un error al registrar este usuario...";
                     }
                 }  
@@ -148,9 +154,11 @@
                     if(dao.RegistrarProveedor(proveedor)){
 
                         opcion="termino";
+                        alert="success";
                         mensaje="Se registro el proveedor correcamente...";
                     }
                     else{
+                        alert="warning";
                          mensaje="ocurrio un error al registrar este proveedor...";
                     }
                 }
@@ -169,7 +177,7 @@
         <%
             if(!mensaje.equals("")){
         %>
-        <div class="alert alert-danger"><%=mensaje%></div> 
+        <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
         <%}%>
     </div>
 </div>

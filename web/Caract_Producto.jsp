@@ -9,15 +9,18 @@
     String nombre=request.getParameter("nombre");nombre = nombre==null?"": nombre;
     String dato=request.getParameter("dato");dato = dato==null?"": dato;
     String mensaje="";
+    String alert="";
     
     if(opcion.equals("agregar")){
         
         CaracteristicasProductoDao dao = new CaracteristicasProductoDaoImpl();
         
         if(dao.Add_Caracteristicas(nombre, dato)){
+            alert="success";
             mensaje = "Se añadió corerctamente la "+nombre+"... <a href='Caract_Producto.jsp'>[Seguir Añadiendo] </a><a href='bienvenida.jsp'> [Terminar] </a>";
         }
         else{
+            alert="warning";
             mensaje = "No se pudo agregar.";
         }
     }
@@ -30,7 +33,7 @@
         <%
             if(!mensaje.equals("")){
         %>
-        <div class="alert alert-danger"><%=mensaje%></div> 
+        <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
         <%}%>
     </div>
     <div class="col-md-3"></div>

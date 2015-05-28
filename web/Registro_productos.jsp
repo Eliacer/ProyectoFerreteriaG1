@@ -32,6 +32,7 @@
     String opcion = request.getParameter("opcion");opcion = opcion == null ? "Enviar" : opcion;
 
     String mensaje="";
+    String alert="";
     if(opcion.equals("Enviar")||opcion.equals("Actualizando")){
         if(!nombre.equals("") && !concentracion.equals("")&& !unidad_medida.equals("")){
             
@@ -52,12 +53,14 @@
   
             if(opcion.equals("Enviar")){
                 if(pd.InsertProducto(producto))
-                {
+                {        
                     opcion="ok";
+                    alert="success";
                     mensaje = "Se añadió corerctamente el producto... <a href='Registro_productos.jsp'>[Seguir Añadiendo] </a><a href='bienvenida.jsp'> [Terminar] </a>";
 
 
                 }else{
+                    alert="danger";
                     mensaje="No se pudo agregar";
                 }
             }
@@ -65,10 +68,13 @@
                 producto.setIdProducto(id_producto);
 
                 if(pd.UpdateProducto(producto)){
+                    
+                    alert="success";
                     opcion="ok";
                     mensaje = "Se actualizó corerctamente...<a href='Rep_Productos.jsp'>[Reportes] </a>";
                 }
                 else{
+                    alert="warning";
                     mensaje = "No se pudo actualizar";
                 }
             
@@ -108,7 +114,7 @@
         <%
             if(!mensaje.equals("")){
         %>
-        <div class="alert alert-danger"><%=mensaje%></div> 
+        <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
         <%}%>
     </div>
     <div class="col-md-3"></div>

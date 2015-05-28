@@ -10,12 +10,18 @@
         String id_persona = request.getParameter("id_persona");id_persona = id_persona == null ? "" : id_persona;
         String opcion = request.getParameter("opcion");opcion = opcion == null ? "" : opcion;
         String mensaje="";
+        String alert="";
         if(opcion.equals("eliminar")){
         
             if(!id_persona.equals("")){
                 PersonaDao dao = new PersonaDaoImpl();
                 if(dao.DeletePersona(id_persona)){
+                    alert="success";
                     mensaje="Se eliminó correctamente.";
+                }
+                else{
+                    alert="danger";
+                    mensaje="No se pudo eliminar.";
                 }
             }
         }
@@ -29,7 +35,7 @@
             <%
                 if(!mensaje.equals("")){
             %>
-            <div class="alert alert-danger"><%=mensaje%></div> 
+            <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
             <%}%>
         </div>
     <div class="col-md-1"></div>

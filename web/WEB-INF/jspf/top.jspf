@@ -15,7 +15,7 @@
     <header>   
         <%
             
-        String id_usuario=request.getParameter("id_usuario");id_usuario = id_usuario==null?"":id_usuario;
+        //String id_usuario=request.getParameter("id_usuario");id_usuario = id_usuario==null?"":id_usuario;
         
         %>
         <div class="container">

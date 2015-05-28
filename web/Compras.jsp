@@ -27,7 +27,7 @@
     String descripcion=request.getParameter("descripcion");descripcion = descripcion==null?"":descripcion;
     String opcion = request.getParameter("opcion");opcion = opcion == null ? "Continuar" : opcion;
     String mensaje="";
-    
+    String alert="";
     if(opcion.equals("Continuar")){
         
     id_usuario="P-EL2405201507120733";
@@ -53,9 +53,11 @@
 
             if(cd.RegistrarCompra(compra)){
                 opcion="ok";
+                alert="info";
                 mensaje="Se registro correctamente la compra...";        
             }
             else{
+                alert="danger";
                 mensaje="No se pudo registrar la compra...";
             }
 
@@ -71,7 +73,7 @@
         <%
             if(!mensaje.equals("")){
         %>
-        <div class="alert alert-danger"><%=mensaje%></div> 
+        <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
         <%}%>
     </div>
 </div>
