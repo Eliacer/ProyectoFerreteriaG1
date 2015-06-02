@@ -5,12 +5,16 @@
  */
 package Vista;
 
+import proy01.modelo.dao.CompraDao;
 import proy01.modelo.dao.PersonaDao;
 import proy01.modelo.dao.ProductoDao;
 import proy01.modelo.dao.UsuarioDao;
+import proy01.modelo.daoImpl.CompraDaoImpl;
 import proy01.modelo.daoImpl.PersonaDaoImpl;
 import proy01.modelo.daoImpl.ProductoDaoImpl;
 import proy01.modelo.daoImpl.UsuarioDaoImpl;
+import proy01.modelo.entidad.Compra;
+import proy01.modelo.entidad.DetalleCompra;
 import proy01.modelo.entidad.Persona;
 import proy01.modelo.entidad.Privilegio;
 import proy01.modelo.entidad.Producto;
@@ -31,8 +35,10 @@ public class NewMain {
 //        main.insertprod();
 //        main.obtUsuario();
 //        main.obtUsuariopriv();
-        main.actPersona();
+//        main.actPersona();
 //        main.obtPersona();
+//        main.obt_compra();
+        main.insertCompra();
     }
     
     public void insertprod()
@@ -43,8 +49,8 @@ public class NewMain {
     
         p.setCodigo("566565");
         p.setNombre("hghgh");
-        p.setColor("blanco");
-        p.setConcentracion(23.4);
+        //p.setColor("blanco");
+        //p.setConcentracion(23.4);
         p.setIdUndMedida("0001");
         p.setId_categoria("00004");
         p.setId_marca("00003");
@@ -84,9 +90,11 @@ public class NewMain {
         Persona persona = new Persona();
         PersonaDao dao = new PersonaDaoImpl();
         
-        dao.ObtenerPersonaDni("77573082");
+        persona=dao.ObtenerPersonaId("P-EL2405201507120733");
         
-        System.out.println("nombre: "+persona.getNombre_razon());
+        
+        
+        System.out.println("nombre: "+persona.getNombres());
     
     }
     
@@ -95,7 +103,7 @@ public class NewMain {
         Persona p = new Persona();
         PersonaDao dao = new PersonaDaoImpl();
         
-        p.setNombre_razon("Eliacerfer");
+        p.setNombres("Eliacerfer");
         p.setApellidos("hghghghg");
         p.setGenero("M");
         p.setId_persona("P-EL2405201507120733");
@@ -111,5 +119,40 @@ public class NewMain {
         
         
         
+    }
+    
+    public void obt_compra(){
+        
+        
+        //Compra compra = new Compra();
+        CompraDao cd= new CompraDaoImpl();
+        
+        for(Compra c:cd.ListarCompra("0001-0056")){
+        System.out.println("id: "+c.getId_compra());
+    
+        }
+    }
+    
+    public void insertCompra(){
+    
+        DetalleCompra detalleCompra = new DetalleCompra();
+        CompraDao compraDao = new CompraDaoImpl();
+                
+                detalleCompra.setId_compra("COMPRA-3005201521160794");
+                detalleCompra.setId_producto("P-2405201512075428");
+                detalleCompra.setId_unidad("00003");
+                detalleCompra.setCantMayor(Integer.parseInt("5"));
+                detalleCompra.setCantMenor(Integer.parseInt("100"));
+                detalleCompra.setCostoMayor(Double.parseDouble("56"));
+                
+                if(compraDao.RegistrarDetCompra(detalleCompra)){
+                    System.out.println("Se añadió el producto...");
+                    
+                }
+                else{
+                    System.out.println("No se pudo añadir el producto...");
+                   
+                }
+    
     }
 }

@@ -21,10 +21,10 @@
     String codigo=request.getParameter("codigo");codigo = codigo==null?"":codigo;
     String nombre=request.getParameter("nombre");nombre = nombre==null?"":nombre;
     String unidad_medida=request.getParameter("und_medida");unidad_medida = unidad_medida==null?"":unidad_medida;
-    String concentracion=request.getParameter("concentracion");concentracion = concentracion==null?"":concentracion;
+    String porc_ganan=request.getParameter("porc_ganan");porc_ganan = porc_ganan==null?"":porc_ganan;
     //String stock=request.getParameter("stock");stock = stock==null?"":stock;
     //String costo=request.getParameter("costo");costo = costo==null?"":costo;
-    String color=request.getParameter("color");color = color==null?"":color;  
+    //String color=request.getParameter("color");color = color==null?"":color;  
     String id_marca=request.getParameter("id_marca");id_marca = id_marca==null?"":id_marca;
     String id_categoria=request.getParameter("id_categoria");id_categoria = id_categoria==null?"":id_categoria;
     String id_ubicacion=request.getParameter("id_ubicacion");id_ubicacion = id_ubicacion==null?"":id_ubicacion;
@@ -34,7 +34,7 @@
     String mensaje="";
     String alert="";
     if(opcion.equals("Enviar")||opcion.equals("Actualizando")){
-        if(!nombre.equals("") && !concentracion.equals("")&& !unidad_medida.equals("")){
+        if(!nombre.equals("") && !porc_ganan.equals("")&& !unidad_medida.equals("")){
             
             //out.println("opcion="+opcion);
             Producto producto=new Producto();
@@ -44,8 +44,7 @@
             producto.setCodigo(codigo);
             producto.setNombre(nombre);
             producto.setIdUndMedida(unidad_medida); 
-            producto.setConcentracion(Double.parseDouble(concentracion));
-            producto.setColor(color);
+            producto.setPorc_ganacia(Double.parseDouble(porc_ganan));
             producto.setId_marca(id_marca);
             producto.setId_categoria(id_categoria);
             producto.setId_ubicacion(id_ubicacion);
@@ -85,24 +84,22 @@
     if(opcion.equals("Actualizar"))
     {      
         //out.println("Id_producto:"+id_producto); 
-            if(!id_producto.equals("")){
-                
-                ProductoDao pd=new ProductoDaoImpl();
+        if(!id_producto.equals("")){
+            Producto producto = new Producto();
+            ProductoDao pd=new ProductoDaoImpl();
+            producto = pd.ObtenerProducto(id_producto);
 
-                for(Producto producto :pd.ObtenerProducto(id_producto)){
-
-                codigo=producto.getCodigo();codigo = codigo==null?"":codigo;
-                //out.println("codigo:"+codigo);
-                nombre=producto.getNombre();nombre = nombre==null?"":nombre;
-                unidad_medida=producto.getIdUndMedida();unidad_medida = unidad_medida==null?"":unidad_medida;              
-                concentracion=String.valueOf(producto.getConcentracion());concentracion = concentracion==null?"":concentracion;
-                color=producto.getColor();color = color==null?"":color;
-                id_marca=producto.getId_marca();id_marca = id_marca==null?"":id_marca;
-                id_categoria=producto.getId_categoria();id_categoria = id_categoria==null?"":id_categoria;
-                id_ubicacion=producto.getId_ubicacion();id_ubicacion = id_ubicacion==null?"":id_ubicacion;
-                descripcion=producto.getDescripcion();descripcion = descripcion==null?"":descripcion;               
-                opcion="Actualizando";
-            }
+            codigo=producto.getCodigo();codigo = codigo==null?"":codigo;
+            //out.println("codigo:"+codigo);
+            nombre=producto.getNombre();nombre = nombre==null?"":nombre;
+            unidad_medida=producto.getIdUndMedida();unidad_medida = unidad_medida==null?"":unidad_medida;              
+            porc_ganan=String.valueOf(producto.getPorc_ganacia());porc_ganan = porc_ganan==null?"":porc_ganan;
+            id_marca=producto.getId_marca();id_marca = id_marca==null?"":id_marca;
+            id_categoria=producto.getId_categoria();id_categoria = id_categoria==null?"":id_categoria;
+            id_ubicacion=producto.getId_ubicacion();id_ubicacion = id_ubicacion==null?"":id_ubicacion;
+            descripcion=producto.getDescripcion();descripcion = descripcion==null?"":descripcion;               
+            opcion="Actualizando";
+            
         }
 }
 %>
@@ -166,25 +163,18 @@
                         </td>
                     </tr> 
                     <tr>
-                        <td><label class="col-sm-8 control-label" >Concentracion:</label></td>
+                        <td><label class="col-sm-8 control-label" >Porc. de Ganancia:</label></td>
                         <td>
                             <div class="col-sm-15">
-                                <input type="text" class="form-control" placeholder="Concentraci&oacute;n" name="concentracion" value="<%=concentracion%>">
+                                <input type="text" class="form-control" placeholder="Porcentaje de Ganancia" name="porc_ganan" value="<%=porc_ganan%>">
                             </div>
                         </td>
                     </tr>                                 
                     <tr>
-                        <td><label class="col-sm-8 control-label" >Color</label></td>
-                        <td>
-                            <div class="col-sm-15">
-                                <input type="text" class="form-control" placeholder="Color" name="color" value="<%=color%>">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
                         <td><label class="col-sm-8 control-label" >Marca:</label></td>
                             <td>
-                                <select class="form-control" name="id_marca" selected="selected" <%if(id_marca.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
+                                <select class="form-control" name="id_marca">
+                                <option value="00001">[--Selecciona--]</option>                 
                                 <%
                                     CaracteristicasProductoDao marcaDao = new CaracteristicasProductoDaoImpl();
 
@@ -199,7 +189,8 @@
                     <tr>
                         <td><label class="col-sm-8 control-label" >Categor&iacute;a:</label></td>
                             <td>
-                                <select class="form-control" name="id_categoria" selected="selected" <%if(id_categoria.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
+                                <select class="form-control" name="id_categoria">
+                                <option value="00001">[--Selecciona--]</option>                 
                                 <%
                                     CaracteristicasProductoDao categoriaDao = new CaracteristicasProductoDaoImpl();
 
@@ -214,7 +205,8 @@
                     <tr>
                         <td><label class="col-sm-8 control-label">Ubicacion</label></td>
                         <td>
-                            <select class="form-control" name="id_ubicacion" selected="selected" <%if(id_ubicacion.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
+                            <select class="form-control" name="id_ubicacion"
+                            <option value="00001">[--Selecciona--]</option>                 
                             <%
                                 CaracteristicasProductoDao ub = new CaracteristicasProductoDaoImpl();
                                 

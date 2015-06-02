@@ -7,10 +7,10 @@ public class Producto {
      private String codigo;
      private String nombre;
      private String IdUndMedida;
-     private Double concentracion;
-     private String color;
+     private Double porc_ganacia;
      private Double costo;
-     private int stock;
+     private int stock_actual;
+     private int stock_min;
      private String fecha_reg;
      private String id_categoria;
      private String id_marca;
@@ -52,20 +52,12 @@ public class Producto {
         this.IdUndMedida = IdUndMedida;
     }
 
-    public Double getConcentracion() {
-        return concentracion;
+    public Double getPorc_ganacia() {
+        return porc_ganacia;
     }
 
-    public void setConcentracion(Double concentracion) {
-        this.concentracion = concentracion;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setPorc_ganacia(Double porc_ganacia) {
+        this.porc_ganacia = porc_ganacia;
     }
 
     public Double getCosto() {
@@ -76,12 +68,20 @@ public class Producto {
         this.costo = costo;
     }
 
-    public int getStock() {
-        return stock;
+    public int getStock_actual() {
+        return stock_actual;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setStock_actual(int stock_actual) {
+        this.stock_actual = stock_actual;
+    }
+
+    public int getStock_min() {
+        return stock_min;
+    }
+
+    public void setStock_min(int stock_min) {
+        this.stock_min = stock_min;
     }
 
     public String getFecha_reg() {
@@ -123,6 +123,8 @@ public class Producto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    
     
 }
 

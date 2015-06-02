@@ -15,13 +15,15 @@
     <%
     String id_persona=request.getParameter("id_persona");id_persona = id_persona==null?"":id_persona;;
     String nombres=request.getParameter("nombres");nombres = nombres==null?"":nombres;
+    String razon_social=request.getParameter("razon_social");razon_social = razon_social==null?"":razon_social;
     String apellidos=request.getParameter("apellidos");apellidos = apellidos==null?"":apellidos;
     String genero=request.getParameter("genero");genero = genero==null?"":genero;
     String fecha_nacimiento=request.getParameter("fecha_nac");fecha_nacimiento = fecha_nacimiento==null?"":fecha_nacimiento;
     String telefono=request.getParameter("telefono");telefono = telefono==null?"":telefono;
     String celular=request.getParameter("celular");celular = celular==null?"":celular;
     String t_doc=request.getParameter("t_doc");t_doc = t_doc==null?"":t_doc;
-    String num_doc=request.getParameter("num_doc");num_doc = num_doc==null?"":num_doc; 
+    String num_doc=request.getParameter("num_doc");num_doc = num_doc==null?"":num_doc;
+    String ruc=request.getParameter("ruc");ruc = ruc==null?"":ruc;
     String direccion=request.getParameter("direccion");direccion = direccion==null?"":direccion;
     String estado=request.getParameter("estado");estado = estado == null ? "" : estado;
     
@@ -39,7 +41,7 @@
     String mensaje="";
     String alert="";
     if(opcion.equals("Continuar")||opcion.equals("Actualizando")){
-        if(!nombres.equals("") && !t_doc.equals("")&& !num_doc.equals("")
+        if((!nombres.equals("") || !razon_social.equals("")) && !t_doc.equals("")&& (!num_doc.equals("")||!ruc.equals(""))
                 && (!telefono.equals("") || !celular.equals(""))){
             
             //out.println("id:"+id_persona);
@@ -47,10 +49,12 @@
             Persona persona=new Persona();
             PersonaDao ppd=new PersonaDaoImpl();
             
-            persona.setNombre_razon(nombres);
+            persona.setNombres(nombres);
             persona.setApellidos(apellidos);
+            persona.setRazon_social(razon_social);
             persona.setId_tipo_doc(t_doc);
             persona.setNumero_doc(num_doc);
+            persona.setRuc(ruc);
             persona.setFecha_nac(fecha_nacimiento);
             persona.setTelefono(telefono);
             persona.setCelular(celular);
@@ -90,22 +94,24 @@
         //out.println("Id_persona:"+id_persona); 
         if(!id_persona.equals("")){
 
-                //Persona persona=new Persona();
+                Persona persona=new Persona();
                 PersonaDao dao=new PersonaDaoImpl();
 
-                for(Persona persona :dao.ObtenerPersonaId(id_persona)){
+                persona = dao.ObtenerPersonaId(id_persona);
                 //dao.ObtenerPersonaDni(id_persona);
-                nombres=persona.getNombre_razon();nombres = nombres==null?"":nombres;
+                nombres=persona.getNombres();nombres = nombres==null?"":nombres;
                 apellidos=persona.getApellidos();apellidos = apellidos==null?"":apellidos;
+                razon_social=persona.getRazon_social();razon_social = razon_social==null?"":razon_social;
                 genero=persona.getGenero();genero = genero==null?"": genero;              
                 telefono=persona.getTelefono();telefono = telefono==null?"": telefono;
                 celular=persona.getCelular();celular = celular==null?"": celular;
                 t_doc=persona.getId_tipo_doc();t_doc = t_doc==null?"": t_doc;
                 num_doc=persona.getNumero_doc();num_doc = num_doc==null?"": num_doc;
+                ruc=persona.getRuc();ruc = ruc==null?"": ruc;
                 direccion=persona.getDireccion();direccion = direccion==null?"": direccion;
                 estado=persona.getEstado();estado = estado==null?"": estado;
                 opcion="Actualizando";
-            }
+            
         }
     }    
     if(opcion.equals("Registrar")){
@@ -196,7 +202,7 @@
                 <tr>
                     <input type="hidden" name="opcion"  value="<%=opcion%>" size="10">
                     <input type="hidden" name="id_persona"  value="<%=id_persona%>" size="10">
-                    <td><label class="col-sm-8 control-label">Nombres:</label> </td> 
+                    <td><label class="col-sm-12 control-label">Nombres:</label> </td> 
                     <td>
                         <div class="col-sm-15">
                             <input type="text" class="form-control" placeholder="Nombres" name="nombres" value="<%=nombres%>">
@@ -204,7 +210,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label class="col-sm-8 control-label">Apellidos:</label></td>
+                    <td><label class="col-sm-12 control-label">Apellidos:</label></td>
                     <td>
                         <div class="col-sm-15">
                             <input type="text" class="form-control" placeholder="Apellidos" name="apellidos" value="<%=apellidos%>">
@@ -212,7 +218,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label class="col-sm-8 control-label">Tipo Doc.:</label></td>
+                    <td><label class="col-sm-12 control-label">Raz&oacute;n Social</label></td>
+                    <td>
+                        <div class="col-sm-15">
+                            <input type="text" class="form-control" placeholder="Razón Social" name="razon_social" value="<%=razon_social%>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-12 control-label">Tipo Doc.:</label></td>
                     <td>
                         <select class="form-control" name="t_doc" selected="selected" <%if(t_doc.equals("")){%> selected<%}%>>> 
                             <option>Seleciona el tipo de documento</option>
@@ -229,15 +243,23 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label class="col-sm-8 control-label">N&deg; Doc:</label></td>
+                    <td><label class="col-sm-12 control-label">N&deg; Doc:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Numero del documento" name="num_doc" value="<%=num_doc%>" required="">
+                            <input type="text" class="form-control" placeholder="Numero del documento" name="num_doc" value="<%=num_doc%>">
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td><label class="col-sm-8 control-label" >Tel&eacute;fono:</label></td>
+                    <td><label class="col-sm-12 control-label">RUC:</label></td>
+                    <td>
+                        <div class="col-sm-15">
+                            <input type="text" class="form-control" placeholder="RUC" name="ruc" value="<%=ruc%>">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="col-sm-12 control-label" >Tel&eacute;fono:</label></td>
                     <td>
                         <div class="col-sm-15">
                             <input type="text" class="form-control" placeholder="Telefono" name="telefono" value="<%=telefono%>">
@@ -245,7 +267,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label class="col-sm-8 control-label" >Celular:</label></td>
+                    <td><label class="col-sm-12 control-label" >Celular:</label></td>
                     <td>
                         <div class="col-sm-15">
                             <input type="text" class="form-control" placeholder="Celular" name="celular" value="<%=celular%>">
@@ -254,7 +276,7 @@
                 </tr>  
                 <%if(!opcion.equals("Actualizando")){%>
                 <tr>
-                    <td><label class="col-sm-8 control-label" >F. Nacimiento:</label></td>
+                    <td><label class="col-sm-12 control-label" >F. Nacimiento:</label></td>
                     <td>
                         <div class="col-sm-15">
                             <input type="date" class="form-control" placeholder="Fecha de nacimiento" name="fecha_nac" value="<%=fecha_nacimiento%>">
@@ -263,7 +285,7 @@
                 </tr>
                 <%}%>
                 <tr>
-                    <td><label class="col-sm-8 control-label">G&eacute;nero:</label></td>
+                    <td><label class="col-sm-12 control-label">G&eacute;nero:</label></td>
                     <td>
                         <label class="radio-inline">
                             <input type="radio" name="genero" value="M"<%if(genero.equals("M")){%> checked<%}%>> Masculino
@@ -274,7 +296,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label class="col-sm-8 control-label">Dirección:</label></td>
+                    <td><label class="col-sm-12 control-label">Dirección:</label></td>
                     <td>
                         <div class="col-sm-15">
                             <textarea rows="3" class="form-control" placeholder="Dirección" name="direccion"><%=direccion%></textarea>
@@ -283,7 +305,7 @@
                 </tr>
                 <%if(opcion.equals("Actualizando")){%>
                 <tr>
-                    <td><label class="col-sm-8 control-label">Estado:</label></td>
+                    <td><label class="col-sm-12 control-label">Estado:</label></td>
                     <td>
                         <label class="radio-inline">
                             <input type="radio" name="estado" value="1"<%if(estado.equals("1")){%> checked<%}%>> Activo
@@ -410,9 +432,7 @@
             </form>
         </div>
         <div class="col-md-3"></div>     
-</div>
-        
-       
+</div>      
  <%}%>
 </div>       
 <%@include file="WEB-INF/jspf/botton.jspf" %>

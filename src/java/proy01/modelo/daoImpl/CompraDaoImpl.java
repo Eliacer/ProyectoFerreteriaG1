@@ -14,7 +14,9 @@ import proy01.modelo.conexion.ConectarOracle;
 import proy01.modelo.dao.CompraDao;
 import proy01.modelo.entidad.Compra;
 import proy01.modelo.entidad.Comprobante;
+import proy01.modelo.entidad.DetalleCompra;
 import proy01.modelo.entidad.FormaPago;
+import proy01.modelo.entidad.Rep_compras;
 import proy01.modelo.entidad.TipoMoneda;
 
 /**
@@ -121,12 +123,13 @@ public class CompraDaoImpl implements CompraDao{
     }
 
     @Override
-    public Compra ListarCompra(String num_com) {
+    public List<Compra> ListarCompra(String num_com) {
         
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select * from compra where num_comprobante='"+num_com+"' ";
+        String sql = "select * from compra where num_comprobante='"+num_com+"'";
         Compra compra= null;
+        List<Compra> lista = new ArrayList<Compra>();
         try {
             st = open().createStatement();
             rs = st.executeQuery(sql);
@@ -136,14 +139,15 @@ public class CompraDaoImpl implements CompraDao{
                 compra.setId_compra(rs.getString("id_compra"));
                 compra.setId_usuario(rs.getString("id_usuario")); 
                 compra.setId_proveedor(rs.getString("id_proveedor"));   
-                compra.setId_tipoMoneda(rs.getString("id_tipo_moneda")); 
+                compra.setId_tipoMoneda(rs.getString("id_moneda")); 
                 compra.setId_comprobante(rs.getString("id_comprobante")); 
                 compra.setNumComprobante(rs.getString("num_comprobante")); 
                 compra.setId_formaPago(rs.getString("id_forma_pago")); 
                 compra.setFechaCompra(rs.getString("fecha_compra"));
                 compra.setDescripcion(rs.getString("descripcion"));
                 compra.setIgv(rs.getString("igv"));
-                compra.setFlete(rs.getString("flete"));     
+                compra.setFlete(rs.getString("flete"));   
+                lista.add(compra);
             }  
             open().close();
         } catch (Exception e) {
@@ -154,7 +158,7 @@ public class CompraDaoImpl implements CompraDao{
                 
             }
         }
-        return compra; 
+        return lista; 
     
     }
 
@@ -170,6 +174,7 @@ public class CompraDaoImpl implements CompraDao{
                     + "id_comprobante, "
                     + "num_comprobante, "
                     + "id_forma_pago, "
+                    + "valor_moneda, "
                     + "fecha_compra, "
                     + "descripcion, "
                     + "igv, "
@@ -180,6 +185,7 @@ public class CompraDaoImpl implements CompraDao{
                     + "'"+compra.getId_comprobante()+"',"
                     + "'"+compra.getNumComprobante()+"',"
                     + "'"+compra.getId_formaPago()+"',"
+                    + "valor_mon('"+compra.getId_tipoMoneda()+"'),"
                     + " to_date('"+compra.getFechaCompra()+"','yyyy-mm-dd'),"
                     + "'"+compra.getDescripcion()+"',"
                     + ""+Double.parseDouble(compra.getIgv())+","
@@ -204,35 +210,73 @@ public class CompraDaoImpl implements CompraDao{
     }
 
     @Override
-    public List<Compra> ListarCompraT() {
+    public Rep_compras ListarCompraT(String num_comp) {
         
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select c.id_compra as id,nombre(u.id_usuario) as user,per.nombre as prov,m.nombre as money, co.nombre as comp "
-                + "c.num_comprobante as num_comp,fp.nombre as fpago,c.fecha_compra as date,c.descripcion as desc,c.igv as igv, c.flete as flete "
-                + "from persona per, usuario u, proveedor p, comprobante co, tipo_modena tm,forma_pago fp, compra c "
-                + "where per.id_persona=p.id_proveedor and u.id_usuario=c.id_usuario and p.id_proveedor=c.id_proveedor "
-                + "and tm.id_moneda=c.id_moneda and co.id_comprobante=c.id_comprobante and fp.id_forma_pago=c.id_forma_pago ";
-        List<Compra> lista = new ArrayList<Compra>();
-        Compra compra= null;
+        String sql = "select id_compra, nombre_usuario(id_usuario) as usuario,nombre_proveedor(id_proveedor) as proveedor, "
+                    + "nombre_tipo_moneda(id_moneda) as moneda, valor_mon(id_moneda) as valor, nombre_comp(id_comprobante) as comprobante, "
+                    + "num_comprobante, nombre_forma_pago(id_forma_pago) as fpago, to_char(fecha_compra,'dd/mm/yyyy') as fecha_compra, "
+                    + " igv, flete,precio_fijado,fecha_precio,direccion_proveedor(id_proveedor) as direccion "
+                    + "from compra where num_comprobante='"+num_comp+"'";
+        Rep_compras rep_compras= null;
         try {
             st = open().createStatement();
             rs = st.executeQuery(sql);
             
             while (rs.next()) {                    
-                compra = new Compra();              
-                compra.setId_compra(rs.getString("id"));
-                compra.setId_usuario(rs.getString("user")); 
-                compra.setId_proveedor(rs.getString("prov"));   
-                compra.setId_tipoMoneda(rs.getString("money")); 
-                compra.setId_comprobante(rs.getString("comp")); 
-                compra.setNumComprobante(rs.getString("num_comp")); 
-                compra.setId_formaPago(rs.getString("fpago")); 
-                compra.setFechaCompra(rs.getString("date"));
-                compra.setDescripcion(rs.getString("desc"));
-                compra.setIgv(rs.getString("igv"));
-                compra.setFlete(rs.getString("flete"));   
-                lista.add(compra);
+                rep_compras = new Rep_compras();              
+                rep_compras.setId_compra(rs.getString("id_compra"));
+                rep_compras.setNombre_usuario(rs.getString("usuario")); 
+                rep_compras.setNombre_proveedor(rs.getString("proveedor"));   
+                rep_compras.setNombre_tipo_moneda(rs.getString("moneda")); 
+                rep_compras.setValor_moneda(rs.getString("valor"));
+                rep_compras.setNombre_comprobante(rs.getString("comprobante")); 
+                rep_compras.setNum_com(rs.getString("num_comprobante")); 
+                rep_compras.setNombre_forma_pago(rs.getString("fpago")); 
+                rep_compras.setFecha_compra(rs.getString("fecha_compra"));
+                rep_compras.setIgv(rs.getString("igv"));
+                rep_compras.setFlete(rs.getString("flete"));  
+                rep_compras.setPrecio_fijado(rs.getDouble("precio_fijado")); 
+                rep_compras.setFecha_precio(rs.getString("fecha_precio")); 
+                rep_compras.setDireccion_prov(rs.getString("direccion")); 
+            }  
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+                
+            }
+        }
+        return rep_compras;
+    }
+
+    @Override
+    public List<DetalleCompra> ListarProductosCompra(String id_compra) {
+        
+        Statement st=null;
+        ResultSet rs=null;
+        String sql = "select id_compra,id_producto,cant_mayor as cant,und_producto(id_compra,id_producto) as und, "
+                + "nombre_producto(id_producto) as producto,costo_mayor,cant_mayor*costo_mayor as importe "
+                + "from compra_detalle where id_compra='"+id_compra+"'";
+        List<DetalleCompra> lista = new ArrayList<DetalleCompra>();
+        DetalleCompra detalleCompra= null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            
+            while (rs.next()) {                    
+                detalleCompra = new DetalleCompra();              
+                detalleCompra.setId_compra(rs.getString("id_compra"));
+                detalleCompra.setCantMayor(rs.getInt("cant")); 
+                detalleCompra.setId_unidad(rs.getString("und"));   
+                detalleCompra.setId_producto(rs.getString("id_producto")); 
+                detalleCompra.setProducto(rs.getString("producto")); 
+                detalleCompra.setCostoMayor(rs.getDouble("costo_mayor")); 
+                detalleCompra.setImporte(rs.getDouble("importe")); 
+                lista.add(detalleCompra);
             }  
             open().close();
         } catch (Exception e) {
@@ -244,6 +288,103 @@ public class CompraDaoImpl implements CompraDao{
             }
         }
         return lista;
+    }
+
+    @Override
+    public boolean RegistrarDetCompra(DetalleCompra detalleCompra) {
+        
+        boolean estado = false;
+        Statement st = null;
+        String query="insert into compra_detalle "
+                    + "(id_compra, "
+                    + "id_producto, "
+                    + "id_unidad, "
+                    + "cant_mayor, "
+                    + "cant_menor, "
+                    + "costo_mayor) "
+                    + "values('"+detalleCompra.getId_compra()+"',"
+                    + "'"+detalleCompra.getId_producto()+"',"
+                    + "'"+detalleCompra.getId_unidad()+"',"
+                    + detalleCompra.getCantMayor()+","
+                    + detalleCompra.getCantMenor()+","
+                    + detalleCompra.getCostoMayor()+")";
+        
+        try {
+            st = open().createStatement();
+            st.executeQuery(query);
+            open().commit();
+            open().close();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                estado = false;
+                open().rollback();
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+        return estado;
+    }
+
+    @Override
+    public DetalleCompra ObtenerDetCompra(String id_compra, String id_producto) {
+        
+        Statement st=null;
+        ResultSet rs=null;
+        String sql = "select id_compra,id_producto,cant_mayor,cant_menor,id_unidad as und,costo_mayor "
+                + "from compra_detalle where id_compra='"+id_compra+"' and id_producto='"+id_producto+"'";
+        DetalleCompra detalleCompra= null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            
+            while (rs.next()) {                    
+                detalleCompra = new DetalleCompra();              
+                detalleCompra.setId_compra(rs.getString("id_compra"));
+                detalleCompra.setId_producto(rs.getString("id_producto"));
+                detalleCompra.setCantMayor(rs.getInt("cant_mayor")); 
+                detalleCompra.setCantMenor(rs.getInt("cant_menor")); 
+                detalleCompra.setId_unidad(rs.getString("und"));   
+                detalleCompra.setId_producto(rs.getString("id_producto")); 
+                detalleCompra.setCostoMayor(rs.getDouble("costo_mayor")); 
+                 
+            }  
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+                
+            }
+        }
+        return detalleCompra;
+    }
+
+    @Override
+    public boolean StockCompra(String id_compra) {
+        
+        boolean estado = false;
+        Statement st = null;
+        String query="BEGIN STOCK_PRODUCTO('"+id_compra+"'); END;";
+        
+        try {
+            st = open().createStatement();
+            st.executeQuery(query);
+            open().commit();
+            open().close();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                estado = false;
+                open().rollback();
+                open().close();
+            } catch (Exception ex) {
+            }
+        }  
+        return estado;
     }
     
 }

@@ -4,11 +4,14 @@ public class DetalleCompra {
 
      private String id_compra;
      private String id_producto;
+     private String producto;
      private String id_unidad;
      private Integer cantMayor;
      private Integer cantMenor;
      private Double costoMayor;
      private Double costoUnidad;
+     private Double costototal;
+     private double importe;
 
     public DetalleCompra() {
     }
@@ -17,6 +20,30 @@ public class DetalleCompra {
         return id_compra;
     }
 
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
+    }
+    
+    public double getImporte() {
+        return importe;
+    }
+
+    public void setImporte(double importe) {
+        this.importe = importe;
+    }
+    
+    public Double getCostototal() {
+        return costototal;
+    }
+
+    public void setCostototal(Double costototal) {
+        this.costototal = costototal;
+    }
+    
     public void setId_compra(String id_compra) {
         this.id_compra = id_compra;
     }

@@ -14,7 +14,8 @@ import proy01.modelo.entidad.Producto;
  */
 public interface ProductoDao {
     
-    public List<Producto> ObtenerProducto(String id);   
+    public Producto ObtenerProducto(String id);
+    public Producto ObtenerDatProducto(String id);
     public boolean InsertProducto(Producto producto);
     public boolean UpdateProducto(Producto producto);
     public boolean DeleteProducto(String id);

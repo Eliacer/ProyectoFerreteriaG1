@@ -34,8 +34,7 @@ public class ProductoDaoImpl implements ProductoDao{
                 + "(codigo, "
                 + " nombre, "
                 + " id_unidad_medida, "
-                + " concentracion, "
-                + " color, "
+                + " porc_ganancia, "
                 + " id_categoria, "
                 + " id_marca, "
                 + " id_ubicacion, "
@@ -43,8 +42,7 @@ public class ProductoDaoImpl implements ProductoDao{
                 + " values ("+"'"+producto.getCodigo()
                 +"','" +producto.getNombre()
                 +"','" +producto.getIdUndMedida()
-                +"', " +producto.getConcentracion()
-                +" ,'" +producto.getColor()
+                +"', " +producto.getPorc_ganacia()
                 +"','" +producto.getId_categoria()
                 +"','" +producto.getId_marca()
                 +"','" +producto.getId_ubicacion()
@@ -70,13 +68,12 @@ public class ProductoDaoImpl implements ProductoDao{
     }
     
     @Override
-    public List<Producto> ObtenerProducto (String id_producto)
+    public Producto ObtenerProducto (String id_producto)
     {
         Statement st = null;
         ResultSet rs= null;
         String query = "select * from producto where id_producto='"+id_producto+"'";
         Producto pr = null;
-        List<Producto> lista = new ArrayList<Producto>();
         
         try {
             st = open().createStatement();
@@ -87,16 +84,14 @@ public class ProductoDaoImpl implements ProductoDao{
                 pr.setCodigo(rs.getString("codigo"));
                 pr.setNombre(rs.getString("nombre"));
                 pr.setIdUndMedida(rs.getString("id_unidad_medida"));
-                pr.setConcentracion(rs.getDouble("concentracion"));
-                pr.setColor(rs.getString("color"));
+                pr.setPorc_ganacia(rs.getDouble("porc_ganancia"));
                 pr.setCosto(rs.getDouble("costo"));
-                pr.setStock(rs.getInt("stock"));
+                pr.setStock_actual(rs.getInt("stock_actual"));
                 pr.setFecha_reg(rs.getString("fecha_reg"));
                 pr.setId_categoria(rs.getString("id_categoria"));
                 pr.setId_marca(rs.getString("id_marca"));
                 pr.setId_ubicacion(rs.getString("id_ubicacion"));
                 pr.setDescripcion(rs.getString("descripcion"));              
-                lista.add(pr);
             }
             open().close();
         } catch (Exception e) {
@@ -106,7 +101,7 @@ public class ProductoDaoImpl implements ProductoDao{
             } catch (Exception ex) {
             }
         }
-    return lista;
+    return pr;
     }
     @Override
     public boolean DeleteProducto(String id) {
@@ -139,14 +134,11 @@ public class ProductoDaoImpl implements ProductoDao{
         boolean estado = false;
         Statement st = null;
         String query = "update producto set "
-                +"  codigo='"+producto.getCodigo()
-                +"',nombre='"+producto.getNombre()
-                +"',id_unidad_medida='"+producto.getIdUndMedida()
-                +"',concentracion="+producto.getConcentracion()
-                +",color='"+producto.getColor()
-                +"',costo="+producto.getCosto()
-                +" ,stock="+producto.getStock()
-                +" ,id_categoria='"+producto.getId_categoria()
+                +"  codigo=upper('"+producto.getCodigo()
+                +"'),nombre=upper('"+producto.getNombre()
+                +"'),id_unidad_medida='"+producto.getIdUndMedida()
+                +"',porc_ganancia="+producto.getPorc_ganacia()
+                +",id_categoria='"+producto.getId_categoria()
                 +"',id_marca='"+producto.getId_marca()
                 +"',id_ubicacion='"+producto.getId_ubicacion()
                 +"',descripcion='"+producto.getDescripcion()
@@ -178,8 +170,8 @@ public class ProductoDaoImpl implements ProductoDao{
         Statement st = null;
         ResultSet rs = null;
         Producto producto = null;
-        String query = "select p.id_producto as id_producto,p.nombre||' ('||m.nombre_marca||')' as nombre, "
-                     + "concentracion||''||um.abreviatura as id_um,p.costo as costo, p.stock as stock, "
+        String query = "select p.id_producto as id_producto,p.nombre as nombre,m.nombre_marca as marca, "
+                     + "um.abreviatura as id_um,p.costo as costo, p.stock_actual as stock, "
                      + "u.nombre_ubicacion as ubicacion "
                      + "from producto p, marca m, ubicacion u,unidad_medida um "
                      + "where m.id_marca=nvl(p.id_marca,'00001') and "
@@ -194,9 +186,10 @@ public class ProductoDaoImpl implements ProductoDao{
                 producto = new Producto();
                 producto.setIdProducto(rs.getString("id_producto"));
                 producto.setNombre(rs.getString("nombre"));
+                producto.setId_marca(rs.getString("marca"));
                 producto.setIdUndMedida(rs.getString("id_um"));           
                 producto.setCosto(rs.getDouble("costo"));
-                producto.setStock(rs.getInt("stock"));           
+                producto.setStock_actual(rs.getInt("stock"));           
                 producto.setId_ubicacion(rs.getString("ubicacion"));
                 lista.add(producto);      
             }
@@ -211,6 +204,34 @@ public class ProductoDaoImpl implements ProductoDao{
         
         
         return lista;
+    }
+
+    @Override
+    public Producto ObtenerDatProducto(String id_pro) {
+        
+        Statement st = null;
+        ResultSet rs= null;
+        String query = "select nombre,nombre_marca(id_marca) as marca from producto where id_producto='"+id_pro+"'";
+        Producto pr = null;
+        
+        try {
+            st = open().createStatement();
+            rs=st.executeQuery(query);          
+            while (rs.next()) {
+                pr= new Producto();
+                pr.setNombre(rs.getString("nombre"));
+                pr.setId_marca(rs.getString("marca"));                           
+            }
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+    return pr;
+    
     }
     
     

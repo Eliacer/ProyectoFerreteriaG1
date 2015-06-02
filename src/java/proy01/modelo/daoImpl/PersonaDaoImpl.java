@@ -31,23 +31,27 @@ public class PersonaDaoImpl implements PersonaDao{
         boolean estado=false;
         Statement st;
         String sql = "insert into persona "
-                    + " (nombre_razon, "
+                    + " (nombres, "
                     + " apellidos, "
+                    + " razon_social, "
                     + " genero, "
                     + " fecha_nac, "
                     + " telefono, "
                     + " celular, "
                     + " id_tipo_doc, "
                     + " numero_doc, "
+                    + " ruc, "
                     + " direccion) "
-                    + " values('"+ persona.getNombre_razon()+"',"
+                    + " values('"+ persona.getNombres()+"',"
                     + " '"+ persona.getApellidos()          +"',"
+                    + " '"+ persona.getRazon_social()       +"',"
                     + " '"+ persona.getGenero()             +"',"
                     + " to_date('"+ persona.getFecha_nac()+"','yyyy-mm-dd'),"
                     + " '"+ persona.getTelefono()           +"',"
                     + " '"+ persona.getCelular()            +"',"
                     + " '"+ persona.getId_tipo_doc()        +"',"
                     + " '"+ persona.getNumero_doc()         +"',"
+                    + " '"+ persona.getRuc()                +"',"
                     + " '"+ persona.getDireccion()          +"')";
         try {
             st=open().createStatement();
@@ -73,7 +77,7 @@ public class PersonaDaoImpl implements PersonaDao{
         
         Statement st;
         ResultSet rs;
-        String sql = "SELECT id_persona as id,nombre_razon||' '||apellidos as nombres, numero_doc as doc, "
+        String sql = "SELECT id_persona as id,nombres||' '||apellidos as nombres, numero_doc as doc, "
                    + "to_char(fecha_nac,'dd/mm/yyyy') as fecha, "
                    + "telefono||' / '||celular as tel, direccion, estado FROM persona order by fecha_nac desc";
         List<Persona> lista = new ArrayList<Persona>();
@@ -84,7 +88,7 @@ public class PersonaDaoImpl implements PersonaDao{
             while (rs.next()) {                
                 persona = new Persona();
                 persona.setId_persona(rs.getString("id"));
-                persona.setNombre_razon(rs.getString("nombres"));
+                persona.setNombres(rs.getString("nombres"));
                 persona.setFecha_nac(rs.getString("fecha"));
                 persona.setTelefono(rs.getString("tel"));
                 persona.setNumero_doc(rs.getString("doc"));
@@ -110,14 +114,16 @@ public class PersonaDaoImpl implements PersonaDao{
         boolean estado = false;
         Statement st = null;
         String query = "update persona set "
-                +"  nombre_razon=initcap('"+persona.getNombre_razon()
+                +"  nombres=initcap('"+persona.getNombres()
                 +"'),apellidos=initcap('"+persona.getApellidos()
                 //+"',fecha_nac= to_date('"+persona.getFecha_nac()+"','yyyy-mm-dd')"
+                +"'),razon_social=upper('"+persona.getRazon_social()
                 +"'),genero='"+persona.getGenero()
                 +"',telefono='"+persona.getTelefono()
                 +"',celular='"+persona.getCelular()
                 +"',id_tipo_doc='"+persona.getId_tipo_doc()
                 +"',numero_doc='"+persona.getNumero_doc()
+                +"',ruc='"+persona.getRuc()
                 +"',direccion=initcap('"+persona.getDireccion()
                 +"'),estado='"+persona.getEstado()
                 +"' where id_persona='"+persona.getId_persona()+"'";
@@ -170,7 +176,7 @@ public class PersonaDaoImpl implements PersonaDao{
     {
         Statement st = null;
         ResultSet rs= null;
-        String query = "select id_persona, nombre_razon||' '||apellidos as nombre,numero_doc, fecha_nac, "
+        String query = "select id_persona, nombres||' '||apellidos as nombre,numero_doc, fecha_nac, "
                         + "telefono||' '||celular as telcel, direccion "
                         + "from persona where upper(nombre_razon)=upper('"+nombre+"') or "
                         + "numero_doc='"+dni+"' "
@@ -184,7 +190,7 @@ public class PersonaDaoImpl implements PersonaDao{
             while (rs.next()) {
                 per= new Persona();
                 per.setId_persona(rs.getString("id_persona"));
-                per.setNombre_razon(rs.getString("nombre"));
+                per.setNombres(rs.getString("nombre"));
                 per.setNumero_doc(rs.getString("numero_doc"));
                 per.setFecha_nac(rs.getString("fecha_nac"));
                 per.setTelefono(rs.getString("telcel"));
@@ -207,10 +213,10 @@ public class PersonaDaoImpl implements PersonaDao{
         
         Statement st;
         ResultSet rs;
-        String sql = "select p.id_persona as id,p.nombre_razon||' ('||p.numero_doc||' )' as nombre "
+        String sql = "select pr.id_proveedor as id,p.razon_social||' ( '||p.ruc||' )' as nombre "
                     + "from persona p, proveedor pr "
                     + "where p.id_persona=pr.id_proveedor and "
-                    + "upper(p.nombre_razon) like upper('%"+proveedor+"%') and "
+                    + "upper(p.razon_social) like upper('%"+proveedor+"%') and "
                     + "rownum <=3 order by nombre asc";
         List<Persona> lista = new ArrayList<Persona>();
         Persona persona = null;
@@ -220,7 +226,7 @@ public class PersonaDaoImpl implements PersonaDao{
             while (rs.next()) {                
                 persona = new Persona();
                 persona.setId_persona(rs.getString("id"));
-                persona.setNombre_razon(rs.getString("nombre"));
+                persona.setRazon_social(rs.getString("nombre"));
                 lista.add(persona);                
             }
             open().close();
@@ -251,7 +257,8 @@ public class PersonaDaoImpl implements PersonaDao{
             if (rs.next()) {
                 per= new Persona();
                 per.setId_persona(rs.getString("id_persona"));
-                per.setNombre_razon(rs.getString("nombre_razon"));
+                per.setNombres(rs.getString("nombres"));
+                per.setRazon_social(rs.getString("razon_social"));
                 per.setApellidos(rs.getString("apellidos"));         
                 per.setFecha_nac(rs.getString("fecha_nac"));
                 per.setGenero(rs.getString("genero"));
@@ -259,6 +266,7 @@ public class PersonaDaoImpl implements PersonaDao{
                 per.setCelular(rs.getString("celular"));
                 per.setId_tipo_doc(rs.getString("id_tipo_doc"));
                 per.setNumero_doc(rs.getString("numero_doc"));
+                per.setRuc(rs.getString("ruc"));
                 per.setEstado(rs.getString("estado"));
                 per.setDireccion(rs.getString("direccion")); 
                 lista.add(per);
@@ -339,21 +347,21 @@ public class PersonaDaoImpl implements PersonaDao{
     }
 
     @Override
-    public List<Persona> ObtenerPersonaId(String id_persona) {
+    public Persona ObtenerPersonaId(String id_persona) {
         
         Statement st = null;
         ResultSet rs= null;
         String query = "select * from persona where id_persona='"+id_persona+"'";
         Persona per = null;
-        List<Persona> lista = new ArrayList<Persona>();
-        
+        System.out.println(query);
         try {
             st = open().createStatement();
             rs=st.executeQuery(query);          
             if (rs.next()) {
                 per= new Persona();
                 per.setId_persona(rs.getString("id_persona"));
-                per.setNombre_razon(rs.getString("nombre_razon"));
+                per.setNombres(rs.getString("nombres"));
+                per.setRazon_social(rs.getString("razon_social"));
                 per.setApellidos(rs.getString("apellidos"));         
                 per.setFecha_nac(rs.getString("fecha_nac"));
                 per.setGenero(rs.getString("genero"));
@@ -361,9 +369,10 @@ public class PersonaDaoImpl implements PersonaDao{
                 per.setCelular(rs.getString("celular"));
                 per.setId_tipo_doc(rs.getString("id_tipo_doc"));
                 per.setNumero_doc(rs.getString("numero_doc"));
+                per.setRuc(rs.getString("ruc"));
                 per.setEstado(rs.getString("estado"));
                 per.setDireccion(rs.getString("direccion")); 
-                lista.add(per);
+                System.out.println(per.getNombres());
             }
             open().close();
         } catch (Exception e) {
@@ -373,6 +382,7 @@ public class PersonaDaoImpl implements PersonaDao{
             } catch (Exception ex) {
             }
         }
-        return lista;
+        return per;
     }
+    
 }

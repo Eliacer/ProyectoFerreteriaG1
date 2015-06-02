@@ -48,9 +48,9 @@
               <thead>
                 <tr>
                   <td width="2%" bgcolor="#FFEFCE"><strong>#</strong></td>
-                  <td width="22%" bgcolor="#FFEFCE"><strong>Nombres/Razon Soc.</strong></td>
-                  <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>N. Documento</strong></td>
-                  <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>Fecha de Nac.</strong></td>
+                  <td width="22%" bgcolor="#FFEFCE"><strong>Nombres</strong></td>
+                  <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>N&deg;. Doc.</strong></td>
+                  <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>Fecha Nac.</strong></td>
                   <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>Telefono</strong></td>
                   <td width="23%" bgcolor="#FFEFCE"><strong>Direcci&oacute;n</strong></td>
                   <td width="18%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
@@ -63,7 +63,7 @@
                       for(Persona persona: dao.ListarPersona()){
                           count++;
                           String espacio="  ";
-                          String nombre=persona.getNombre_razon();nombre = nombre == null ? "" : nombre;
+                          String nombre=persona.getNombres();nombre = nombre == null ? "" : nombre;
                           String num_doc=persona.getNumero_doc();num_doc = num_doc == null ? "" : num_doc;
                           String fecha_nac=persona.getFecha_nac();fecha_nac = fecha_nac == null ? "" : fecha_nac;
                           String telefono=persona.getTelefono();telefono = telefono == null ? "" : telefono; 

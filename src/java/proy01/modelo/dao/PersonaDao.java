@@ -22,7 +22,8 @@ public interface PersonaDao {
     public boolean UpdatePersona(Persona persona);
     public boolean DeletePersona(String id);
     public List<Persona> ObtenerPersona (String nombre,String dni);
-    public List<Persona> ObtenerPersonaId (String id);
+    //public List<Persona> ObtenerPersonaId (String id);
+    public Persona ObtenerPersonaId (String id);
     public List<Persona> ObtenerPersonaDni (String dni);
     public boolean RegistrarProveedor(Proveedor proveedor);
     public boolean RegistrarUsuario(Usuario usuario);

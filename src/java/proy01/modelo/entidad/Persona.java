@@ -3,19 +3,22 @@ package proy01.modelo.entidad;
 public class Persona {
 
 
-     private String id_persona="";
-     private String id_tipo_doc="";
-     private String nombre_razon="";
-     private String apellidos="";
-     private String genero="";
-     private String fecha_nac="";
-     private String telefono="";
-     private String celular="";
-     private String numero_doc="";
-     private String direccion="";
-     private String estado="";
+     private String id_persona;
+     private String id_tipo_doc;
+     private String nombres;
+     private String razon_social;
+     private String apellidos;
+     private String genero;
+     private String fecha_nac;
+     private String telefono;
+     private String celular;
+     private String numero_doc;
+     private String ruc;
+     private String direccion;
+     private String estado;
 
     public Persona() {
+        
     }
 
     public String getId_persona() {
@@ -34,12 +37,20 @@ public class Persona {
         this.id_tipo_doc = id_tipo_doc;
     }
 
-    public String getNombre_razon() {
-        return nombre_razon;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setNombre_razon(String nombre_razon) {
-        this.nombre_razon = nombre_razon;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getRazon_social() {
+        return razon_social;
+    }
+
+    public void setRazon_social(String razon_social) {
+        this.razon_social = razon_social;
     }
 
     public String getApellidos() {
@@ -90,6 +101,14 @@ public class Persona {
         this.numero_doc = numero_doc;
     }
 
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
     public String getDireccion() {
         return direccion;
     }
@@ -105,8 +124,8 @@ public class Persona {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
 
+    
 }
 
 

@@ -54,7 +54,8 @@
             if(cd.RegistrarCompra(compra)){
                 opcion="ok";
                 alert="info";
-                mensaje="Se registro correctamente la compra...";        
+                response.sendRedirect("Detalle_compra.jsp?num_comp="+num_comp);
+                mensaje="Se registro correctamente la compra...<a href='Detalle_compra.jsp'>[Detallar Compra] </a>";        
             }
             else{
                 alert="danger";
@@ -159,7 +160,7 @@
                             for(Persona prov: dao.ListarProveedor(proveedor)){             
 
                         %>
-                        <option value="<%=prov.getId_persona()%>" <%if(id_proveedor.equals(prov.getId_persona())){%> selected<%}%>> <%=prov.getNombre_razon()%></option>
+                        <option value="<%=prov.getId_persona()%>" <%if(id_proveedor.equals(prov.getId_persona())){%> selected<%}%>> <%=prov.getRazon_social()%></option>
                          <%}%>
                         </select>
                     </td>

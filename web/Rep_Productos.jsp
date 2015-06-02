@@ -19,6 +19,9 @@
             if(dao.DeleteProducto(id_producto)){
                 mensaje="Se eliminó correctamente.";
             }
+            else{
+                mensaje="No se puede eliminar este producto....";
+            }
         }
     }
 
@@ -73,9 +76,10 @@
                         <tr>
                             <td width="5%" bgcolor="#FFEFCE"><strong>#</strong></td>
                             <td width="28%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
-                            <td width="12%" bgcolor="#FFEFCE"><strong>Concentraci&oacute;n</strong></td>
-                            <td width="13%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
-                            <td width="13%" align="center" bgcolor="#FFEFCE"><strong>Stock</strong></td>
+                            <td width="10%" align="center" bgcolor="#FFEFCE"><strong>Marca</strong></td>
+                            <td width="9%" bgcolor="#FFEFCE"><strong>Concentr.</strong></td>
+                            <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
+                            <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Stock</strong></td>
                             <td width="12%" align="center" bgcolor="#FFEFCE"><strong>Ubicacion</strong></td>
                             <td width="18%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
                         </tr>
@@ -87,15 +91,17 @@
                         ProductoDao dao = new ProductoDaoImpl();
                         for(Producto producto :dao.BuscarProducto(buscar_por, buscar)){
                              count++;
+                             String marca=producto.getId_marca();marca = marca==null?"":marca; 
                         %>
           
                         <tr>     
                             <input type="hidden" name="id_producto"  value="<%=producto.getIdProducto()%>" size="10">
                             <td><%=count%>.-</td> 
                             <td><%=producto.getNombre()%></td>
+                            <td align="center"><%=marca%></td>
                             <td align="center"><%=producto.getIdUndMedida()%></td>
                             <td align="center"><%=producto.getCosto()%></td>
-                            <td align="center"><%=producto.getStock()%></td> 
+                            <td align="center"><%=producto.getStock_actual()%></td> 
                             <td align="center"><%=producto.getId_ubicacion()%></td>
                             <td>
                                 <a href="Registro_productos.jsp?opcion=Actualizar&id_producto=<%=producto.getIdProducto()%>">[Actualizar]<%=espacio%></a>

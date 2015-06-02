@@ -161,7 +161,7 @@ public class CaracteristicasProductoDaoImpl implements CaracteristicasProductoDa
    
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select id_unidad as id_unidad , initcap(nombre_unidad) as nombre_unidad, abre_unidad as abre_unidad "
+        String sql = "select id_unidad as id_unidad , initcap(nombre_unidad) as nombre_unidad, abreviatura "
                    + "from unidad ";
         List<Unidad> lista = new ArrayList<Unidad>();
         Unidad um= null;
@@ -173,7 +173,7 @@ public class CaracteristicasProductoDaoImpl implements CaracteristicasProductoDa
                 um = new Unidad();              
                 um.setId_unidad(rs.getString("id_unidad"));
                 um.setNombre_unidad(rs.getString("nombre_unidad"));
-                um.setAbrev_unidad(rs.getString("abre_unidad"));
+                um.setAbrev_unidad(rs.getString("abreviatura"));
                 lista.add(um);   
             }  
             open().close();
