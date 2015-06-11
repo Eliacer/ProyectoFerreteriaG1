@@ -24,10 +24,16 @@ public interface CompraDao {
     public List<Comprobante> ListarComprobante();
     public List<FormaPago> ListarFormapago();
     public List<TipoMoneda> ListarMoneda();
-    public List<Compra> ListarCompra( String num_com);
+    public Compra ListarCompra( String id_compra);
     public Rep_compras ListarCompraT(String num_comp);
     public List<DetalleCompra> ListarProductosCompra(String id_compra);
     public DetalleCompra ObtenerDetCompra(String id_compra,String id_producto);
     public boolean StockCompra(String id_compra);
+    public boolean DeleteProdCompra(String id_compra,String id_producto);
+    public boolean UpdateDeompra(DetalleCompra detalleCompra);
+    public List<Rep_compras> ListarCompraTotal();
+    
+    
+   
     
 }

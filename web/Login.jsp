@@ -1,8 +1,4 @@
 
-
-<%@page import="proy01.modelo.daoImpl.UsuarioDaoImpl"%>
-<%@page import="proy01.modelo.dao.UsuarioDao"%>
-<%@page import="proy01.modelo.entidad.Usuario"%>
 <!DOCTYPE html>
 <!-- saved from url=(0040)http://getbootstrap.com/examples/signin/ -->
     <html lang="en"><head>
@@ -16,36 +12,15 @@
     <title>Login ferreteria</title>
     <link rel="shortcut icon" type="image/x-icon" href="recursos/img/favicon.ico"/>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/estilo_1.css" rel="stylesheet">
-    <link href="css/estilo.css" rel="stylesheet">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/estilo_1.css">
+	
   </head>
   <body>
       
 <%
-    String id_usuario="";
-    String usuario=request.getParameter("usuario");usuario = usuario==null?"":usuario;
-    String password=request.getParameter("password");password = password==null?"":password;
-    String mensaje="";
-    
-    if(!usuario.equals("") && !password.equals("")){ 
-        
-        UsuarioDao ud=new UsuarioDaoImpl();
-        
-        Usuario u= new Usuario();
-    
-        if(ud.validarusuario(usuario, password)!=null){
-            for(Usuario u1: ud.ObtenerUsuario(usuario, password)){
-            id_usuario=u1.getIdUsuario();
-            response.sendRedirect("bienvenida.jsp?id_usuario="+id_usuario);
-            }
-            
-        }else{
-
-         mensaje="Usuario o password incorrecto";
-
-        }
-    }
+    String mensaje=request.getParameter("mensaje");mensaje = mensaje==null?"":mensaje;
             
 %>
       <header>   
@@ -86,7 +61,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <form class="" action="Login.jsp" method="post">
+                    <form class="" action="control" method="post">
                     <div class="form-group">
                         <%/*<div class="input-group">
                                <%/*<span class="input-group-addon">@</span>*/%>
@@ -100,6 +75,7 @@
                     <strong>Iniciar seci&oacute;n</strong>
                     </button>
                 </form>
+                
                 </div>
             </div>          
         </div>

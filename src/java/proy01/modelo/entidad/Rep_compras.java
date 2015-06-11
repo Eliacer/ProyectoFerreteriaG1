@@ -19,7 +19,7 @@ public class Rep_compras {
     private String fecha_compra;
     private String nombre_usuario;
     private String direccion_prov;
-    private String valor_moneda;
+    private double valor_moneda;
     private String fecha_precio;
     private Double precio_fijado;
     private String igv;
@@ -117,11 +117,11 @@ public class Rep_compras {
         this.direccion_prov = direccion_prov;
     }
 
-    public String getValor_moneda() {
+    public double getValor_moneda() {
         return valor_moneda;
     }
 
-    public void setValor_moneda(String valor_moneda) {
+    public void setValor_moneda(double valor_moneda) {
         this.valor_moneda = valor_moneda;
     }
 

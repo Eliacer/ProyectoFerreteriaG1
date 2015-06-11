@@ -8,7 +8,7 @@ public class Producto {
      private String nombre;
      private String IdUndMedida;
      private Double porc_ganacia;
-     private Double costo;
+     private Double precio;
      private int stock_actual;
      private int stock_min;
      private String fecha_reg;
@@ -60,13 +60,15 @@ public class Producto {
         this.porc_ganacia = porc_ganacia;
     }
 
-    public Double getCosto() {
-        return costo;
+    public Double getPrecio() {
+        return precio;
     }
 
-    public void setCosto(Double costo) {
-        this.costo = costo;
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
+
+    
 
     public int getStock_actual() {
         return stock_actual;

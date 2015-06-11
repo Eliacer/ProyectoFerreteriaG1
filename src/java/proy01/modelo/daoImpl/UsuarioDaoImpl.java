@@ -76,13 +76,12 @@ public class UsuarioDaoImpl implements UsuarioDao{
     }
 
     @Override
-    public List<Usuario> ObtenerUsuario(String usuario, String password) {
+    public Usuario ObtenerUsuario(String usuario, String password) {
         
         Statement st = null;
         ResultSet rs= null;
         String query = "select * from usuario where login='"+usuario+"' and password='"+password+"' and estado='1'";
         Usuario u = null;
-        List<Usuario> lista = new ArrayList<Usuario>();
         
         try {
             st = open().createStatement();
@@ -93,7 +92,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
                 u.setIdRol(rs.getString("id_rol"));
                 u.setLogin(rs.getString("login"));
                 u.setPassword(rs.getString("password"));             
-                lista.add(u);
+                
             }
             open().close();
         } catch (Exception e) {
@@ -103,7 +102,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
             } catch (Exception ex) {
             }
         }
-    return lista;
+    return u;
     }
     
 

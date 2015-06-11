@@ -1,9 +1,9 @@
 
+<%@page import="proy01.modelo.daoImpl.CompraDaoImpl"%>
+<%@page import="proy01.modelo.dao.CompraDao"%>
 <%@page import="proy01.modelo.entidad.Compra"%>
 <%@page import="proy01.modelo.entidad.TipoMoneda"%>
 <%@page import="proy01.modelo.entidad.FormaPago"%>
-<%@page import="proy01.modelo.daoImpl.CompraDaoImpl"%>
-<%@page import="proy01.modelo.dao.CompraDao"%>
 <%@page import="proy01.modelo.daoImpl.PersonaDaoImpl"%>
 <%@page import="proy01.modelo.dao.PersonaDao"%>
 <%@page import="proy01.modelo.entidad.Persona"%>
@@ -13,12 +13,10 @@
 <%@include file="WEB-INF/jspf/top.jspf" %>
 
 <%
-    String id_usuario=request.getParameter("id_usuario");id_usuario = id_usuario==null?"":id_usuario;
     String id_comprobante=request.getParameter("id_comprobante");id_comprobante = id_comprobante==null?"":id_comprobante;
     String num_comp=request.getParameter("num_comp");num_comp = num_comp==null?"":num_comp;
     String id_forma_pago=request.getParameter("id_forma_pago");id_forma_pago = id_forma_pago==null?"":id_forma_pago;
     String id_moneda=request.getParameter("id_moneda");id_moneda = id_moneda==null?"":id_moneda;
-    //String id_compra=request.getParameter("id_compra");id_compra = id_compra==null?"":id_compra;
     String id_proveedor=request.getParameter("id_proveedor");id_proveedor = id_proveedor==null?"":id_proveedor;
     String proveedor=request.getParameter("proveedor");proveedor = proveedor==null?"":proveedor;//busqueda....
     String fecha_comp=request.getParameter("fecha_comp");fecha_comp = fecha_comp==null?"":fecha_comp;  
@@ -30,8 +28,7 @@
     String alert="";
     if(opcion.equals("Continuar")){
         
-    id_usuario="P-EL2405201507120733";
-        if(!id_usuario.equals("") && !id_proveedor.equals("") && !id_moneda.equals("") &&!id_comprobante.equals("")
+        if(!id_proveedor.equals("") && !id_moneda.equals("") &&!id_comprobante.equals("")
                 && !num_comp.equals("") && !id_forma_pago.equals("") && !fecha_comp.equals("")){
 
             Compra compra = new Compra();
@@ -40,7 +37,7 @@
             igv = igv.equals("")?"0":igv;
             flete = flete.equals("")?"0":flete;
             
-            compra.setId_usuario(id_usuario);
+            compra.setId_usuario(id);
             compra.setId_comprobante(id_comprobante);
             compra.setNumComprobante(num_comp);
             compra.setId_formaPago(id_forma_pago);
@@ -54,17 +51,15 @@
             if(cd.RegistrarCompra(compra)){
                 opcion="ok";
                 alert="info";
-                response.sendRedirect("Detalle_compra.jsp?num_comp="+num_comp);
-                mensaje="Se registro correctamente la compra...<a href='Detalle_compra.jsp'>[Detallar Compra] </a>";        
+                response.sendRedirect("buyproducts?num_comp="+num_comp);
+               // mensaje="Se registro correctamente la compra...<a href='Detalle_compra.jsp'>[Detallar Compra] </a>";        
             }
             else{
                 alert="danger";
                 mensaje="No se pudo registrar la compra...";
             }
-
         }
     }
-    
 %>
 
 <div class="container">
@@ -81,16 +76,16 @@
 <%if(opcion.equals("Continuar")){%>
 <div class="row">
     <div class="col-md-3"></div>
-    <div class="col-md-6 well">
+    <div class="col-md-6 well" id="reg2">
         <h2>Registro de Compra</h2>
         <br><br>
-        <form action="Compras.jsp" method="get">
+        <form action="Compra.jsp" method="get">
             <table class="table table-condensed">
                 <tbody>
                 <tr>    
                     <td><label class="col-sm-12 control-label" >Forma de pago:</label></td>
                     <td colspan="2">
-                        <input type="hidden" name="id_usuario"  value="<%=id_usuario%>" size="10">
+                        <input type="hidden" name="id_usuario"  value="<%=id%>" size="10">
                     <select class="form-control" name="id_forma_pago" selected="selected" <%if(id_comprobante.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
                     <%
                         CompraDao CompDao = new CompraDaoImpl();
@@ -108,10 +103,7 @@
                     <td colspan="2">
                         <select class="form-control" name="id_moneda" selected="selected" <%if(id_comprobante.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
                         <%
-                            //CompraDao CompDao = new CompraDaoImpl();
-
-                            for(TipoMoneda tm: CompDao.ListarMoneda()){             
-
+                           for(TipoMoneda tm: CompDao.ListarMoneda()){             
                         %>
                         <option value="<%=tm.getIdMoneda()%>" <%if(id_comprobante.equals(tm.getIdMoneda())){%> selected<%}%>> <%=tm.getNombre()%></option>
                          <%}%>
@@ -156,9 +148,8 @@
                         <select class="form-control" name="id_proveedor" selected="selected" <%if(id_proveedor.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
                         <%
                             PersonaDao dao = new PersonaDaoImpl();
-
                             for(Persona prov: dao.ListarProveedor(proveedor)){             
-
+                            
                         %>
                         <option value="<%=prov.getId_persona()%>" <%if(id_proveedor.equals(prov.getId_persona())){%> selected<%}%>> <%=prov.getRazon_social()%></option>
                          <%}%>

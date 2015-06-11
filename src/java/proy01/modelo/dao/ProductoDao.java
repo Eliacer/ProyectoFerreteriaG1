@@ -7,6 +7,7 @@ package proy01.modelo.dao;
 
 import java.util.List;
 import proy01.modelo.entidad.Producto;
+import proy01.modelo.entidad.Rep_Inventario;
 
 /**
  *
@@ -20,7 +21,7 @@ public interface ProductoDao {
     public boolean UpdateProducto(Producto producto);
     public boolean DeleteProducto(String id);
     public List<Producto> BuscarProducto(String Buscar_por, String Buscar);
-    
+    public List<Rep_Inventario> ListarInventProducto();
     
     
 }

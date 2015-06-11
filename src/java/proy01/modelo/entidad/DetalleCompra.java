@@ -11,7 +11,14 @@ public class DetalleCompra {
      private Double costoMayor;
      private Double costoUnidad;
      private Double costototal;
+     private Double valor_moneda;
      private double importe;
+     private String pf;
+     
+     private double psugerido;
+     
+     private  String precio;
+     
 
     public DetalleCompra() {
     }
@@ -95,6 +102,39 @@ public class DetalleCompra {
     public void setCostoUnidad(Double costoUnidad) {
         this.costoUnidad = costoUnidad;
     }
+
+    public double getPsugerido() {
+        return psugerido;
+    }
+
+    public void setPsugerido(double psugerido) {
+        this.psugerido = psugerido;
+    }
+
+    public Double getValor_moneda() {
+        return valor_moneda;
+    }
+
+    public void setValor_moneda(Double valor_moneda) {
+        this.valor_moneda = valor_moneda;
+    }
+
+    public String getPf() {
+        return pf;
+    }
+
+    public void setPf(String pf) {
+        this.pf = pf;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+    
     
 }
 

@@ -13,6 +13,7 @@ import java.util.List;
 import proy01.modelo.conexion.ConectarOracle;
 import proy01.modelo.dao.ProductoDao;
 import proy01.modelo.entidad.Producto;
+import proy01.modelo.entidad.Rep_Inventario;
 
 
 /**
@@ -85,7 +86,7 @@ public class ProductoDaoImpl implements ProductoDao{
                 pr.setNombre(rs.getString("nombre"));
                 pr.setIdUndMedida(rs.getString("id_unidad_medida"));
                 pr.setPorc_ganacia(rs.getDouble("porc_ganancia"));
-                pr.setCosto(rs.getDouble("costo"));
+                pr.setPrecio(rs.getDouble("precio"));
                 pr.setStock_actual(rs.getInt("stock_actual"));
                 pr.setFecha_reg(rs.getString("fecha_reg"));
                 pr.setId_categoria(rs.getString("id_categoria"));
@@ -170,14 +171,14 @@ public class ProductoDaoImpl implements ProductoDao{
         Statement st = null;
         ResultSet rs = null;
         Producto producto = null;
-        String query = "select p.id_producto as id_producto,p.nombre as nombre,m.nombre_marca as marca, "
-                     + "um.abreviatura as id_um,p.costo as costo, p.stock_actual as stock, "
+        String query = "select p.id_producto as id_producto,p.nombre as nombre,initcap(m.nombre_marca) as marca, "
+                     + "um.abreviatura as id_um,p.precio as precio, p.stock_actual as stock, "
                      + "u.nombre_ubicacion as ubicacion "
                      + "from producto p, marca m, ubicacion u,unidad_medida um "
                      + "where m.id_marca=nvl(p.id_marca,'00001') and "
                      + "u.id_ubicacion=nvl(p.id_ubicacion,'00001') and um.id_unidad_medida=p.id_unidad_medida and "
                      + "upper(p."+Buscar_por+") like upper('%"+Buscar+"%') "
-                     + "and rownum <=10 "
+                     + "and rownum <=8 "
                      + "order by nombre asc";   
         try {
             st = open().createStatement();
@@ -188,7 +189,7 @@ public class ProductoDaoImpl implements ProductoDao{
                 producto.setNombre(rs.getString("nombre"));
                 producto.setId_marca(rs.getString("marca"));
                 producto.setIdUndMedida(rs.getString("id_um"));           
-                producto.setCosto(rs.getDouble("costo"));
+                producto.setPrecio(rs.getDouble("precio"));
                 producto.setStock_actual(rs.getInt("stock"));           
                 producto.setId_ubicacion(rs.getString("ubicacion"));
                 lista.add(producto);      
@@ -200,9 +201,7 @@ public class ProductoDaoImpl implements ProductoDao{
                 open().close();
             } catch (Exception ex) {
             }
-        }
-        
-        
+        } 
         return lista;
     }
 
@@ -211,7 +210,8 @@ public class ProductoDaoImpl implements ProductoDao{
         
         Statement st = null;
         ResultSet rs= null;
-        String query = "select nombre,nombre_marca(id_marca) as marca from producto where id_producto='"+id_pro+"'";
+        String query = "select stock_actual,nombre,nombre_marca(id_marca)as marca,precio from producto "
+                    + "where id_producto='"+id_pro+"'";
         Producto pr = null;
         
         try {
@@ -220,7 +220,9 @@ public class ProductoDaoImpl implements ProductoDao{
             while (rs.next()) {
                 pr= new Producto();
                 pr.setNombre(rs.getString("nombre"));
-                pr.setId_marca(rs.getString("marca"));                           
+                pr.setId_marca(rs.getString("marca"));
+                pr.setPrecio(rs.getDouble("precio"));
+                pr.setStock_actual(rs.getInt("stock_actual"));
             }
             open().close();
         } catch (Exception e) {
@@ -232,6 +234,40 @@ public class ProductoDaoImpl implements ProductoDao{
         }
     return pr;
     
+    }
+
+    @Override
+    public List<Rep_Inventario> ListarInventProducto() {
+        
+        List<Rep_Inventario> lista = new ArrayList<Rep_Inventario>();
+        Statement st = null;
+        ResultSet rs = null;
+        Rep_Inventario producto = null;
+        String query = "select nombre_producto(id_producto) as producto,stock_actual, trunc(costo_promedio(id_producto),2) as costo, "
+                     + "trunc(precio_promedio(id_producto),2) as precio, "
+                     + "trunc(porcentaje_utilidad(id_producto),2) as utilidad from producto order by producto asc";
+        
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) { 
+                producto = new Rep_Inventario();
+                producto.setProducto(rs.getString("producto"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setStock_actual(rs.getInt("stock_actual"));           
+                producto.setCosto(rs.getDouble("costo"));
+                producto.setUtilidad(rs.getDouble("utilidad"));
+                lista.add(producto);      
+            }
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+            }
+        } 
+        return lista;
     }
     
     

@@ -14,6 +14,7 @@ public class Compra {
      private String descripcion;
      private String igv;
      private String flete;
+     private String precio_fijado;
 
     public Compra() {
     }
@@ -105,6 +106,15 @@ public class Compra {
     public void setFlete(String flete) {
         this.flete = flete;
     }
+
+    public String getPrecio_fijado() {
+        return precio_fijado;
+    }
+
+    public void setPrecio_fijado(String precio_fijado) {
+        this.precio_fijado = precio_fijado;
+    }
+    
     
 }
 

@@ -1,3 +1,5 @@
+<%@page import="proy01.modelo.entidad.Cliente"%>
+<%@page import="proy01.modelo.entidad.CatCliente"%>
 <%@page import="proy01.modelo.entidad.Proveedor"%>
 <%@page import="proy01.modelo.entidad.Usuario"%>
 <%@page import="proy01.modelo.entidad.Rol"%>
@@ -30,8 +32,10 @@
     String t_per=request.getParameter("t_per");t_per = t_per == null ? "" : t_per;
     
     String login=request.getParameter("login");login = login == null ? "" : login;
-    String password=request.getParameter("password");password = password == null ? "" : password;
+    String pass=request.getParameter("pass");pass = pass == null ? "" : pass;
     String id_rol=request.getParameter("id_rol");id_rol = id_rol == null ? "" : id_rol;
+    
+    String id_categoria=request.getParameter("id_categoria");id_categoria = id_categoria == null ? "" : id_categoria;
     
     String correo=request.getParameter("correo");correo = correo == null ? "" : correo;
     String num_cuenta=request.getParameter("num_cuenta");num_cuenta = num_cuenta == null ? "" : num_cuenta;
@@ -78,7 +82,7 @@
                 persona.setId_persona(id_persona);
                 
                 if(ppd.UpdatePersona(persona)){
-                    opcion="Registrar";
+                    //opcion="Registrar";
                     alert="success";
                     mensaje = "Se actualizó corerctamente...<a href='Rep_Personas.jsp'>[Reportes] </a>";
                 }
@@ -117,25 +121,34 @@
     if(opcion.equals("Registrar")){
         
         if(!num_doc.equals("")){
+            Persona  persona = new Persona();
             PersonaDao dao= new PersonaDaoImpl();
-            for(Persona persona :dao.ObtenerPersonaDni(num_doc)){
-                //opcion=""
+            out.println("num_doc: "+num_doc);
+            if(!num_doc.equals("")){
+                persona =dao.ObtenerPersonaDni(num_doc);
                 id_persona=persona.getId_persona();
+                
             }
+            if(!ruc.equals("")){
+                persona =dao.ObtenerPersonaDni(ruc);
+                id_persona=persona.getId_persona();
+            
+            }
+            
         } 
         if(!t_per.equals("") && !id_persona.equals("")){
             
             if(t_per.equals("User")){
                 
-                if(!login.equals("") && !password.equals("") && !id_rol.equals("")){
-                    Usuario usuario = new Usuario();
+                if(!login.equals("") && !pass.equals("") && !id_rol.equals("")){
+                    Usuario us = new Usuario();
                     PersonaDao dao= new PersonaDaoImpl();
-                    usuario.setIdUsuario(id_persona);
-                    usuario.setLogin(login);
-                    usuario.setPassword(password);
-                    usuario.setIdRol(id_rol);
+                    us.setIdUsuario(id_persona);
+                    us.setLogin(login);
+                    us.setPassword(pass);
+                    us.setIdRol(id_rol);
 
-                    if(dao.RegistrarUsuario(usuario)){
+                    if(dao.RegistrarUsuario(us)){
 
                         opcion="termino";
                         alert="success";
@@ -165,13 +178,27 @@
                     }
                     else{
                         alert="warning";
-                         mensaje="ocurrio un error al registrar este proveedor...";
+                        mensaje="ocurrio un error al registrar este proveedor...";
                     }
                 }
             }
             if(t_per.equals("Cliente")){
-                              
-                PersonaDao dao= new PersonaDaoImpl();
+                
+                if(!id_categoria.equals("")){
+                    PersonaDao dao= new PersonaDaoImpl();
+                    Cliente cliente = new Cliente();
+                    cliente.setIdCliente(id_persona);
+                    cliente.setIdTipoCliente(id_categoria);
+                    if(dao.RegistrarCliente(cliente)){
+                        opcion="termino";
+                        alert="success";
+                        mensaje="Se registro el cliente correcamente...";
+                    }
+                    else{
+                        alert="warning";
+                        mensaje="ocurrio un error al registrar este cliente...";
+                    }
+                }
             }  
         } 
     }
@@ -192,7 +219,7 @@
 <div class="row">      
         <div class="col-md-3">           
         </div>
-        <div class="col-md-6 well">
+        <div class="col-md-6 well" id="reg2">
             
                 <h2 align="center">Registro de personas</h2>
             <br>
@@ -349,7 +376,7 @@
                   <tr>
                     <td align="center"><input type="radio" name="t_per" id="radio6" value="User" <%if(t_per.equals("User")){%> checked<%}%> onclick="submit()"></td>
                     <td align="center"><input type="radio" name="t_per" id="radio9" value="Prov" <%if(t_per.equals("Prov")){%> checked<%}%> onclick="submit()"></td>
-                    <td align="center"><input type="radio" name="t_per" id="radio8" value="Client" <%if(t_per.equals("Cliente")){%> checked<%}%> onclick="submit()"></td>
+                    <td align="center"><input type="radio" name="t_per" id="radio8" value="Cliente" <%if(t_per.equals("Cliente")){%> checked<%}%> onclick="submit()"></td>
                   </tr>
                 </table>
             </form>
@@ -374,7 +401,7 @@
                                 <td><label class="col-sm-7 control-label">Password:</label></td>
                                 <td>
                                     <div class="col-sm-15">
-                                        <input rows="3" class="form-control" placeholder="Password" name="password" value="<%=password%>">
+                                        <input rows="3" class="form-control" placeholder="pass" name="password" value="<%=pass%>">
                                     </div>
                                 </td>
                             </tr>
@@ -425,7 +452,27 @@
                             </tr>
                             <%}%>
                             <%if(t_per.equals("Cliente")){%>
+                            <tr>
+                                <td><label class="col-sm-8 control-label">Cat. Cliente:</label></td>
+                                <td>
+                                    <select class="form-control" name="id_categoria" selected="selected" <%if(id_categoria.equals("")){%> selected<%}%>>> 
+                                        <option>Seleciona el rol</option>
+                                    <%
+                                        TipoDocumentoDao tdd = new TipoDocumentoDaoImpl();
 
+                                        for(CatCliente cc : tdd.ListarCatCliente()){
+                                    %>
+                                     <option value="<%=cc.getIdCategoria()%>" <%if(t_doc.equals(cc.getIdCategoria())){%> selected<%}%>> <%=cc.getNombre()%></option>
+                                     <%}%>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <input type="submit" class="btn btn-primary" value="<%=opcion%>">
+                                    <input type="reset" class="btn btn-default" value="Limpiar">
+                                </td> 
+                            </tr>
                             <%}%>
                     </tbody>
                 </table>

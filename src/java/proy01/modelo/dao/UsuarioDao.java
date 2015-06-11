@@ -19,7 +19,7 @@ public interface UsuarioDao {
     
     public Usuario validarusuario (String usuario,String password);
     public boolean agragar_usuario(Usuario usuario);
-    public List<Usuario> ObtenerUsuario(String usuario,String password);
+    public Usuario ObtenerUsuario(String usuario,String password);
     public List<Privilegio> ObtenerPrivUsuario(String id_usuario);
     
     

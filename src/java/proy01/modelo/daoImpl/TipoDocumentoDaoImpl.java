@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import proy01.modelo.dao.TipoDocumentoDao;
+import proy01.modelo.entidad.CatCliente;
 import proy01.modelo.entidad.Rol;
 import proy01.modelo.entidad.TipoDocumento;
 
@@ -72,6 +73,38 @@ public class TipoDocumentoDaoImpl implements TipoDocumentoDao{
                 r.setIdRol(rs.getString("id_rol"));
                 r.setNombre(rs.getString("nombre"));
                 lista.add(r);   
+            }  
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+                
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<CatCliente> ListarCatCliente() {
+        
+        Statement st=null;
+        ResultSet rs=null;
+        String sql = "select * from cat_cliente";
+        List<CatCliente> lista = new ArrayList<CatCliente>();
+        CatCliente catCliente= null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            
+            while (rs.next()) {                    
+                catCliente = new CatCliente();              
+                catCliente.setIdCategoria(rs.getString("id_categoria"));
+                catCliente.setNombre(rs.getString("nombre"));
+                catCliente.setDescuento(rs.getDouble("dcto"));
+                
+                lista.add(catCliente);   
             }  
             open().close();
         } catch (Exception e) {

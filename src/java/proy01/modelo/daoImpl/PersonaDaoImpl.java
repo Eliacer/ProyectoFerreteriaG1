@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import proy01.modelo.dao.PersonaDao;
+import proy01.modelo.entidad.CatCliente;
+import proy01.modelo.entidad.Cliente;
 import proy01.modelo.entidad.Persona;
 import proy01.modelo.entidad.Proveedor;
 import proy01.modelo.entidad.Usuario;
@@ -243,13 +245,12 @@ public class PersonaDaoImpl implements PersonaDao{
     }
 
     @Override
-    public List<Persona> ObtenerPersonaDni(String id_persona) {
+    public Persona ObtenerPersonaDni(String dni) {
         
         Statement st = null;
         ResultSet rs= null;
-        String query = "select * from persona where numero_doc='"+id_persona+"'";
+        String query = "select * from persona where numero_doc='"+dni+"' or ruc='"+dni+"'";
         Persona per = null;
-        List<Persona> lista = new ArrayList<Persona>();
         
         try {
             st = open().createStatement();
@@ -269,7 +270,7 @@ public class PersonaDaoImpl implements PersonaDao{
                 per.setRuc(rs.getString("ruc"));
                 per.setEstado(rs.getString("estado"));
                 per.setDireccion(rs.getString("direccion")); 
-                lista.add(per);
+                
             }
             open().close();
         } catch (Exception e) {
@@ -279,7 +280,7 @@ public class PersonaDaoImpl implements PersonaDao{
             } catch (Exception ex) {
             }
         }
-        return lista;
+        return per;
     }
 
     @Override
@@ -383,6 +384,99 @@ public class PersonaDaoImpl implements PersonaDao{
             }
         }
         return per;
+    }
+
+    @Override
+    public boolean RegistrarCliente(Cliente cliente) {
+        
+        boolean estado=false;
+        Statement st;
+        String sql = "insert into cliente "
+                    + " (id_cliente, "
+                    + " id_categoria) "
+                    + " values('"+ cliente.getIdCliente()+"',"
+                    + " '"+ cliente.getIdTipoCliente()   +"')";
+        try {
+            st=open().createStatement();
+            st.executeUpdate(sql);
+            open().commit();
+            open().close();
+            estado=true;
+            
+        } catch (Exception e) {
+            e.printStackTrace();    
+            estado=false;
+            try {
+                open().rollback();
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+      return estado;
+    }
+
+    @Override
+    public List<Persona> Listarcliente(String proveedor) {
+       
+        Statement st;
+        ResultSet rs;
+        String sql = "select cl.id_cliente as id,p.nombres||' '||p.apellidos||' '||p.razon_social ||'-'||p.numero_doc as nombre "
+                    + "from persona p, cliente cl "
+                    + "where p.id_persona=cl.id_cliente and "
+                    + "(p.numero_doc) like ('%"+proveedor+"%') and "
+                    + "rownum <=3 order by nombre asc";
+        List<Persona> lista = new ArrayList<Persona>();
+        Persona persona = null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {                
+                persona = new Persona();
+                persona.setId_persona(rs.getString("id"));
+                persona.setRazon_social(rs.getString("nombre"));
+                lista.add(persona);                
+            }
+            open().close();
+        } catch (Exception e) {
+            try {
+                e.printStackTrace();
+                open().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<CatCliente> ListarCatCliente() {
+        
+        Statement st=null;
+        ResultSet rs=null;
+        String sql = "select id_categoria,initcap(nombre) as nombre, dcto from cat_cliente ";
+        List<CatCliente> lista = new ArrayList<CatCliente>();
+        CatCliente catc= null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            
+            while (rs.next()) {                    
+                catc = new CatCliente();              
+                catc.setIdCategoria(rs.getString("id_categoria"));
+                catc.setNombre(rs.getString("nombre")); 
+                catc.setDescuento(rs.getDouble("dcto"));
+                lista.add(catc);   
+            }  
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+                
+            }
+        }
+        return lista; 
     }
     
 }

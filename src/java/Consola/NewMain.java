@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package Consola;
 
 import proy01.modelo.dao.CompraDao;
 import proy01.modelo.dao.PersonaDao;
@@ -36,9 +36,9 @@ public class NewMain {
 //        main.obtUsuario();
 //        main.obtUsuariopriv();
 //        main.actPersona();
-//        main.obtPersona();
+        main.obtPersona();
 //        main.obt_compra();
-        main.insertCompra();
+//        main.insertCompra();
     }
     
     public void insertprod()
@@ -66,14 +66,14 @@ public class NewMain {
         
     }
     
-    public void obtUsuario(){
-    
-        UsuarioDao dao = new UsuarioDaoImpl();
-        
-        for(Usuario u:dao.ObtenerUsuario("eliacer.fernandez", "77573082")){
-            System.out.println("id"+u.getIdUsuario());
-        }
-    }
+//    public void obtUsuario(){
+//    
+//        UsuarioDao dao = new UsuarioDaoImpl();
+//        
+//        for(Usuario u:dao.ObtenerUsuario("eliacer.fernandez", "77573082")){
+//            System.out.println("id"+u.getIdUsuario());
+//        }
+//    }
     
     public void obtUsuariopriv(){
     
@@ -90,11 +90,9 @@ public class NewMain {
         Persona persona = new Persona();
         PersonaDao dao = new PersonaDaoImpl();
         
-        persona=dao.ObtenerPersonaId("P-EL2405201507120733");
-        
-        
-        
-        System.out.println("nombre: "+persona.getNombres());
+        persona=dao.ObtenerPersonaDni("20134567891");
+
+        System.out.println("nombre: "+persona.getId_persona());
     
     }
     
@@ -121,18 +119,18 @@ public class NewMain {
         
     }
     
-    public void obt_compra(){
-        
-        
-        //Compra compra = new Compra();
-        CompraDao cd= new CompraDaoImpl();
-        
-        for(Compra c:cd.ListarCompra("0001-0056")){
-        System.out.println("id: "+c.getId_compra());
-    
-        }
-    }
-    
+//    public void obt_compra(){
+//        
+//        
+//        //Compra compra = new Compra();
+//        CompraDao cd= new CompraDaoImpl();
+//        
+//        for(Compra c:cd.ListarCompra("0001-0056")){
+//        System.out.println("id: "+c.getId_compra());
+//    
+//        }
+//    }
+//    
     public void insertCompra(){
     
         DetalleCompra detalleCompra = new DetalleCompra();
