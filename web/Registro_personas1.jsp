@@ -3,10 +3,10 @@
 <div class="container">
   
   <!-- Trigger the modal with a button -->
-  <center><button type="button" class="btn btn-default btn-lg" id="myBtn">Registrar</button></center>
+  <center><button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#Modal">Registrar</button></center>
 
   <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="Modal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -16,18 +16,7 @@
           <h4><span class="glyphicon glyphicon-lock"></span> Registrar</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-            <form role="form" action="RegistrarPersona.jsp" method="post">
-          <div class="col-xs-4">
-            <a href=""><button type="submit" class="btn btn-primary "><span class="glyphicon glyphicon-user"></span> Usuario</button></a>
-          </div>
-          <div class="col-xs-4">
-            <a href=""><button type="submit" class="btn btn-success "><span class="glyphicon glyphicon-user"></span> General</button></a>
-          </div>
-          <div class="col-xs-4">
-            <a href=""><button type="submit" class="btn btn-dangerus "><span class="glyphicon glyphicon-user"></span> Cliente</button></a>
-          </div>
-              
-          </form>
+            
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>

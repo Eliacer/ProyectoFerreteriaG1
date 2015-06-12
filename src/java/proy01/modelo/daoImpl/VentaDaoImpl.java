@@ -317,7 +317,7 @@ public class VentaDaoImpl implements VentaDao{
         Statement st=null;
         ResultSet rs=null;
         String sql = "select id_venta,id_usuario,id_cliente,to_char(fecha_venta,'dd/mm/yy') as fv,id_configuracion, "
-                + "num_comprobante,id_forma_pago,id_categoria,estado "
+                + "num_comprobante,id_forma_pago,id_categoria,estado,serieventa(id_configuracion) as serie "
                 + "from venta where num_comprobante='"+numComp+"' and id_configuracion=('"+config+"')";
         Venta venta= null;
         
@@ -333,6 +333,7 @@ public class VentaDaoImpl implements VentaDao{
                 venta.setFechaventa(rs.getString("fv")); 
                 venta.setId_configuracion(rs.getString("id_configuracion"));
                 venta.setNumComprobante(rs.getString("num_comprobante")); 
+                venta.setSerie(rs.getString("serie")); 
                 venta.setId_formaPago(rs.getString("id_forma_pago")); 
                 venta.setIdTipoCliente(rs.getString("id_categoria")); 
                 venta.setEstado(rs.getString("estado"));         
