@@ -41,6 +41,8 @@
         String marca1="";
         String nombre_prod="";
         
+        String espacio="  ";
+        
         if(opcion.equals("Buscar") || opcion.equals("add") || opcion.equals("Agregar") ||opcion.equals("Actualizar")
                 || opcion.equals("Actualizando") || opcion.equals("Eliminar")){
             
@@ -198,8 +200,9 @@
         <br><br>
 
         <%if(opcion.equals("Buscar") || opcion.equals("add")|| opcion.equals("Actualizar"))  {%>     
-        <h4 align="center">Productos de la compra</h4><br>
+        
         <div class="tab-pane">
+            <br><br><h4 align="center">Productos de la compra</h4>
             <table class="table table-hover table-striped table-bordered">
                 <thead>
                     <tr>
@@ -208,12 +211,12 @@
                         <td width="25%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
                         <td width="7%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
                         <td width="7%" align="center" bgcolor="#FFEFCE"><strong>Importe</strong></td>
-                        <td width="15%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
+                        <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                    String espacio="  ";
+                    
                     int count=0;
                     CompraDao dao = new CompraDaoImpl();
                     for(DetalleCompra dc : dao.ListarProductosCompra(id_compra)){
@@ -226,8 +229,17 @@
                         <td align="center"><%=dc.getCostoMayor()%></td> 
                         <td align="center"><%=dc.getImporte()%></td>
                         <td>
-                            <a href="Compra_detalle.jsp?opcion=Actualizar&id_producto=<%=dc.getId_producto()%>">[Editar]<%=espacio%></a>
-                            <a href="Compra_detalle.jsp?opcion=Eliminar&id_producto=<%=dc.getId_producto()%>">[Eliminar]</a></td>
+                            <a href="Compra_detalle.jsp?opcion=Actualizar&id_producto=<%=dc.getId_producto()%>" title="Actualizar">
+                                <button type="button" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                            </a>
+                            <a href="Compra_detalle.jsp?opcion=Eliminar&id_producto=<%=dc.getId_producto()%>" title="Eliminar">
+                                <button type="button" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </a>
+                        </td>
                     </tr>
                     <%}%>                   
                 </tbody>
@@ -246,31 +258,34 @@
         <%}%>
     </div>
     <div class="col-md-5"> 
+        <h4 allign="center"><strong>B&uacute;squeda de Productos</strong></h4><br>
         <%if(opcion.equals("Buscar")){%>
-            <form class="form-horizontal" action="Compra_detalle.jsp" method="post">              
-                <div class="form-group">
-                    <label class="control-label col-xs-3">Buscar por: </label>
-                    <input type="hidden" name="num_comp"  value="<%=num_comp%>" size="10">
-                    <input type="hidden" name="opcion"  value="<%=opcion%>" size="10">        
-                    <div class="col-xs-3">
-                        <select class="form-control" name="buscar_por">
+            <form class="form-horizontal" action="Compra_detalle.jsp" method="post">  
+                
+                <table>
+                    <tr>
+                        <input type="hidden" name="num_comp"  value="<%=num_comp%>" size="10">
+                        <input type="hidden" name="opcion"  value="<%=opcion%>" size="10">
+                        <td width="20%"><strong>Buscar Por:</strong></td>
+                        <td width="25%"><select class="form-control" name="buscar_por">
                             <option value="nombre">Nombre</option>
                             <option value="codigo">C&oacute;digo</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Realiza la b&uacute;squeda aqu&iacute;" name="buscar">
+                        </select></td>
+                        <td>
+                            <div class="input-group">
+                            <input type="text" class="form-control" placeholder="b&uacute;sca aqu&iacute;" name="buscar">
                             <span class="input-group-btn">
-                              <button type="submit" class="btn btn-primary">Buscar</button>
+                              <button type="submit" class="btn btn-success">Buscar<span class="glyphicon glyphicon-search" aria-hidden="true"></span><%=espacio%></button>
                             </span>
-                        </div><!-- /input-group -->
-                    </div>  
-                </div>
+                        </div>
+                        </td>        
+                    </tr>
+                </table>     
             </form>
             <div class="tab-pane" align="center">
                     <table class="table table-hover table-striped table-bordered">
                         <thead>
+                        <br>
                             <tr>
                                 <td width="3%" bgcolor="#FFEFCE"><strong>#</strong></td>
                                 <td width="30%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
@@ -281,7 +296,7 @@
                         </thead>
                         <tbody>
                             <%
-                            String espacio="  ";
+                            espacio=" ";
                             int count=0;
                             ProductoDao pro = new ProductoDaoImpl();
                             for(Producto producto :pro.BuscarProducto(buscar_por, buscar)){

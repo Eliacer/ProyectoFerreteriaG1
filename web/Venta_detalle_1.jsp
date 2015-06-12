@@ -188,25 +188,25 @@
         <table width="480" align="left" class="table-responsive">  
             <tbody>
             <tr>
-                <td width="50"><strong>Fecha:</strong></td>
-                <td width="100"><%=fecha_venta%></td>
+                <td width="10"><strong>Fecha:</strong></td>
+                <td width="60"><%=fecha_venta%></td>
                 <td width="30"></td>
-                <td width="50"><strong>Cliente:</strong></td>
-                <td width="100"><%=nombre_cliente%></td>
+                <td width="15"><strong>IGV:</strong></td>
+                <td width="60"><%=igv%></td>
             </tr>
             <tr>
-                <td width="50"><strong>F. Pago</strong></td>
-                <td width="100"><%=nombre_forma_pago%></td>
-                <td width="30"></td>
-                <td width="50"><strong>IGV</strong></td>
-                <td width="100"><%=igv%></td>
+                <td><strong>Usuario:</strong></td>
+                <td><%=nombre_usuario%></td>
+                <td></td>
+                <td><strong>N&deg;. Comprob:</strong></td>
+                <td width="10"><%=serie%>-<%=num_comp%></td>
             </tr>
             <tr>
-                <td width="50"><strong>Usuario</strong></td>
-                <td width="100"><%=nombre_usuario%></td>
-                <td width="30"></td>
-                <td width="50"><strong>N&deg;. Comprob:</strong></td>
-                <td width="100"><%=serie%>-<%=num_comp%></td>
+                <td><strong>Cliente:</strong></td>
+                <<td><%=nombre_cliente%></td>
+                <td></td>
+                <td><strong>F. Pago:</strong></td>
+                <td width="10"><%=nombre_forma_pago%></td>
             </tr>
             <br>
             <tr>
@@ -222,10 +222,10 @@
                 <thead>
                     <tr>
                         <td width="5%" bgcolor="#FFEFCE"><strong>Cant</strong></td>
-                        <td width="25%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
+                        <td width="27%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
                         <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
                         <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Importe</strong></td>
-                        <td width="18%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
+                        <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -242,8 +242,17 @@
                         <td align="center"><%=dv.getPreciounitario()%></td> 
                         <td align="center"><%=dv.getSubtotal()%></td>
                         <td>
-                            <a href="Venta_detalle_1.jsp?opcion=Actualizar&id_producto=<%=dv.getId_producto()%>&id_venta=<%=id_venta%>">[Actualizar]<%=espacio%></a>
-                            <a href="Venta_detalle_1.jsp?opcion=Eliminar&id_producto=<%=dv.getId_producto()%>&id_venta=<%=id_venta%>">[Eliminar]</a></td>
+                            <a href="Venta_detalle_1.jsp?opcion=Actualizar&id_producto=<%=dv.getId_producto()%>&id_venta=<%=id_venta%>" title="Actualizar">
+                                <button type="button" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                            </a>
+                            <a href="Venta_detalle_1.jsp?opcion=Eliminar&id_producto=<%=dv.getId_producto()%>&id_venta=<%=id_venta%>" title="Eliminar">
+                                <button type="button" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </a>
+                        </td>
                     </tr>
                     <%}%>                   
                 </tbody>
@@ -264,31 +273,33 @@
     <div class="col-md-5">
         <h4 allign="center"><strong>Buscar Productos</strong></h4><br>
         <%if(opcion.equals("Buscar")){%>
-        <form class="form-horizontal" action="Venta_detalle_1.jsp" method="post">              
-            <div class="form-group">
-                <label class="control-label col-xs-3">Buscar producto por: </label>
-                <input type="hidden" name="opcion"  value="<%=opcion%>" size="10">  
-                <input type="hidden" name="id_venta"  value="<%=id_venta%>" size="10">  
-
-                <div class="col-xs-3">
-                    <select class="form-control" name="buscar_por">
+        <form class="form-horizontal" action="Venta_detalle_1.jsp" method="post"> 
+            
+            <table>
+                <tr>
+                    <input type="hidden" name="opcion"  value="<%=opcion%>" size="10">  
+                    <input type="hidden" name="id_venta"  value="<%=id_venta%>" size="10">  
+                    <td width="20%"><strong>Buscar Por:</strong></td>
+                    <td width="25%"><select class="form-control" name="buscar_por">
                         <option value="nombre">Nombre</option>
                         <option value="codigo">C&oacute;digo</option>
-                    </select>
-                </div>
-                <div class="col-xs-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Realiza la b&uacute;squeda aqu&iacute;" name="buscar">
+                    </select></td>
+                    <td>
+                        <div class="input-group">
+                        <input type="text" class="form-control" placeholder="b&uacute;sca aqu&iacute;" name="buscar">
                         <span class="input-group-btn">
-                          <button type="submit" class="btn btn-primary">Buscar</button>
+                          <button type="submit" class="btn btn-success">Buscar<span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </span>
-                    </div><!-- /input-group -->
-                </div>  
-            </div>
+                    </div>
+                    </td>        
+                </tr>
+            </table>
+            <div class="form-group">
         </form>       
         <div class="tab-pane">
             <table class="table table-hover table-striped table-bordered">
                 <thead>
+                <br>
                     <tr>
                         <td width="5%" bgcolor="#FFEFCE"><strong>#</strong></td>
                         <td width="28%" bgcolor="#FFEFCE"><strong>Producto</strong></td>

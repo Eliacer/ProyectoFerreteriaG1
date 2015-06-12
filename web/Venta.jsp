@@ -23,7 +23,7 @@
     String id_cliente=request.getParameter("id_cliente");id_cliente = id_cliente==null?"":id_cliente;
     String tipo_cliente=request.getParameter("tipo_cliente");tipo_cliente = tipo_cliente==null?"":tipo_cliente;
     String cliente=request.getParameter("cliente");cliente = cliente==null?"":cliente;//busqueda....
-    String opcion = request.getParameter("opcion");opcion = opcion == null ? "Continuar" : opcion;
+    String opcion = request.getParameter("opcion");opcion = opcion == null ? "Conti" : opcion;
     String mensaje="";
     String alert="";
     
@@ -71,7 +71,7 @@
         <%}%>
     </div>
 </div>
-<%if(opcion.equals("Continuar")){%>
+<%if(opcion.equals("Conti")){%>
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6 well">
@@ -150,7 +150,7 @@
                 </tr>
                 <tr>
                 <td colspan="3" align="center">
-                    <input type="submit" class="btn btn-primary" value="<%=opcion%>">
+                    <input type="submit" class="btn btn-primary" name="opcion" value="Continuar">
                 </td>
                 </tr>
                 </tbody>

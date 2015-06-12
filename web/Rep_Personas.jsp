@@ -43,12 +43,12 @@
               <thead>
                 <tr>
                   <td width="2%" bgcolor="#FFEFCE"><strong>#</strong></td>
-                  <td width="22%" bgcolor="#FFEFCE"><strong>Nombres/Razon Soc.</strong></td>
-                  <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>N. Documento</strong></td>
+                  <td width="26%" bgcolor="#FFEFCE"><strong>Nombres/Razon Soc.</strong></td>
+                  <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>DNI</strong></td>
                   <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>Fecha de Nac.</strong></td>
                   <td  align="center" width="12%" bgcolor="#FFEFCE"><strong>Telefono</strong></td>
                   <td width="23%" bgcolor="#FFEFCE"><strong>Direcci&oacute;n</strong></td>
-                  <td width="18%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
+                  <td width="16%" align="center" bgcolor="#FFEFCE" colspan="2"><strong>Opciones</strong></td>
                 </tr>
               </thead>
               <tbody>             
@@ -65,16 +65,22 @@
                           String direccion=persona.getDireccion();direccion = direccion == null ? "" : direccion;                                     
                   %>
                 <tr>
-                  <td><%=count%>.-</td>
-                  <td><%=nombre%></td>
-                  <td  align="center"><%=num_doc%></td>
-                  <td  align="center"><%=fecha_nac%></td>
-                  <td  align="center"><%=telefono%></td>
-                  <td><%=direccion%></td>
-                  <td>
-                        <a href="Registro_personas.jsp?opcion=Actualizar&id_persona=<%=persona.getId_persona()%>">[Actualizar]<%=espacio%></a>
-                        <a href="Rep_Personas.jsp?opcion=eliminar&id_persona=<%=persona.getId_persona()%>">[Eliminar]</a>
-                  </td>
+                    <td><%=count%>.-</td>
+                    <td><%=nombre%></td>
+                    <td  align="center"><%=num_doc%></td>
+                    <td  align="center"><%=fecha_nac%></td>
+                    <td  align="center"><%=telefono%></td>
+                    <td><%=direccion%></td>
+                    <td align="center">
+                        <a href="Registro_personas.jsp?opcion=Actualizar&id_persona=<%=persona.getId_persona()%>">
+                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button><%=espacio%>
+                        </a>
+                    </td>
+                    <td align="center">
+                        <a href="Rep_Personas.jsp?opcion=eliminar&id_persona=<%=persona.getId_persona()%>">
+                            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        </a>
+                    </td>
                 </tr>
                 <%}%>
               </tbody>

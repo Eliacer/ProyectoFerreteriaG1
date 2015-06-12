@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row">           
-            <div class="col-md-7">
+            <div class=" col-xs-12 col-sm-12 col-md-7">
                 <section class="well" id="back0">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
                           <!-- Indicators -->
@@ -46,7 +46,7 @@
                     </div>
                 </section>
             </div>        
-            <div class="col-md-5 offset-1">
+            <div class="col-xs-12 col-sm-12 col-md-5">
                 <section class="well" id="back">
                 <br>
                 <h2>BIENVENIDOS A LA FERRETER&Iacute;A "El ARCA"</h2>

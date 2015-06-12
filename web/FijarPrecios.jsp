@@ -104,16 +104,15 @@
                     <td  align="center"><%=compra.getNumComprobante()%></td>
                     <td><%=compra.getId_proveedor()%></td>
                     <td align="center"><%=compra.getId_formaPago()%></td>
-                    <td>
-                        <label class="radio-inline">
-                            <input type="radio" name="fp<%=count%>" value="0"<%if(fp.equals("0")){%> checked<%}%>> No
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="fp<%=count%>" value="1"<%if(fp.equals("1")){%> checked<%}%>> Si
-                        </label>
-                        <label class="radio-inline">
+                    <td align="center">
+                        <%if(fp.equals("0")){%>
                             <a href="FijarPrecios.jsp?id_compra=<%=compra.getId_compra()%>&opcion=fijar"><input type="submit" name="opcion" class="btn btn-success" value="Fijar"></a>
-                        </label>
+                        <%}%>
+                        <%if(fp.equals("1")){%>
+                        <button type="button" class="btn btn-info">
+                            <span class="glyphicon glyphicon-ok" ></span>
+                        </button>
+                        <%}%>
                     </td>
                 </tr>
                 <%}%>

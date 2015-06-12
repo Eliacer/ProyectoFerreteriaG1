@@ -11,6 +11,7 @@
     String opcion = request.getParameter("opcion");opcion = opcion == null ? "" : opcion;
     String id_producto = request.getParameter("id_producto");id_producto = id_producto == null ? "" : id_producto;
     String mensaje="";
+    String esp="     ";
     
     if(opcion.equals("eliminar")){
         
@@ -43,7 +44,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Realiza la b&uacute;squeda aqu&iacute;" name="buscar">
                             <span class="input-group-btn">
-                              <button type="submit" class="btn btn-primary">Buscar</button>
+                              <button type="submit" class="btn btn-success">Buscar<%=esp%><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                             </span>
                         </div><!-- /input-group -->
                     </div>  
@@ -75,18 +76,18 @@
                     <thead>
                         <tr>
                             <td width="5%" bgcolor="#FFEFCE"><strong>#</strong></td>
-                            <td width="28%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
+                            <td width="30%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
                             <td width="10%" align="center" bgcolor="#FFEFCE"><strong>Marca</strong></td>
                             <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Unidad</strong></td>
                             <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
                             <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Stock</strong></td>
                             <td width="12%" align="center" bgcolor="#FFEFCE"><strong>Ubicacion</strong></td>
-                            <td width="18%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
+                            <td width="12%" align="center" bgcolor="#FFEFCE" colspan="2"><strong>Opciones</strong></td>
                         </tr>
                     </thead>
                     <tbody>
                         <%
-                        String espacio="  ";
+                        String espacio="        ";
                         int count=0;
                         ProductoDao dao = new ProductoDaoImpl();
                         for(Producto producto :dao.BuscarProducto(buscar_por, buscar)){
@@ -103,9 +104,14 @@
                             <td align="center"><%=producto.getPrecio()%></td>
                             <td align="center"><%=producto.getStock_actual()%></td> 
                             <td align="center"><%=producto.getId_ubicacion()%></td>
+                            <td align="center">
+                                <a href="Registro_productos.jsp?opcion=Actualizar&id_producto=<%=producto.getIdProducto()%>">
+                                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button><%=espacio%></a>
+                            </td>
                             <td>
-                                <a href="Registro_productos.jsp?opcion=Actualizar&id_producto=<%=producto.getIdProducto()%>">[Actualizar]<%=espacio%></a>
-                                <a href="ModificacionProducto.jsp?opcion=eliminar&id_producto=<%=producto.getIdProducto()%>">[Eliminar]</a></td>
+                                <a href="ModificacionProducto.jsp?opcion=eliminar&id_producto=<%=producto.getIdProducto()%>">
+                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
+                            </td>
                         </tr>
                         <%}%>
                     </tbody>

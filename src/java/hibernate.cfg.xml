@@ -5,8 +5,8 @@
     <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
     <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
-    <property name="hibernate.connection.username">ferr</property>
-    <property name="hibernate.connection.password">fer</property>
+    <property name="hibernate.connection.username">daniel</property>
+    <property name="hibernate.connection.password">eliacer</property>
     <mapping resource="proy01/modelo/pojos/Usuario.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
