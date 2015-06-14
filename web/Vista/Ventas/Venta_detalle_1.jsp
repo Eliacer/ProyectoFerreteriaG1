@@ -12,7 +12,7 @@
 <%@page import="proy01.modelo.entidad.DetalleCompra"%>
 <%@page import="proy01.modelo.entidad.Rep_compras"%>
 <%@page import="proy01.modelo.entidad.Compra"%>
-<%@include file="WEB-INF/jspf/top.jspf" %>
+<%@include file="../../WEB-INF/jspf/top.jspf" %>
 
 <div class="container">
     
@@ -382,4 +382,4 @@
 </div>
 <%}%>
 </div>
-<%@include file="WEB-INF/jspf/botton.jspf" %>
+<%@include file="../../WEB-INF/jspf/botton.jspf" %>

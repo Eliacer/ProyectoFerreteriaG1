@@ -3,14 +3,21 @@
 <%@page import="proy01.modelo.dao.VentaDao"%>
 <%@page import="proy01.modelo.entidad.Rep_compras"%>
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Reportes de Ventas</title>
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-</head>
+<!-- saved from url=(0040)http://getbootstrap.com/examples/signin/ -->
+    <html lang="en"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">   
+    <link rel="shortcut icon" type="image/x-icon" href="recursos/img/favicon.ico"/>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilo_1.css" rel="stylesheet">
+    <link href="css/estilo.css" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+  </head>
   <body>
 
 <div class="container">

@@ -538,13 +538,15 @@ public class VentaDaoImpl implements VentaDao{
     }  
 
     @Override
-    public List<Rep_ventas> ListarVentas() {
+    public List<Rep_ventas> ListarVentas(String f_in,String f_fn) {
         
         Statement st=null;
         ResultSet rs=null;
         String sql = "select to_char(fecha_venta,'dd/mm/yy') as fecha_venta,nombre_usuario(id_usuario) as usuario, "
                     + "nombre_cliente(id_cliente) as cliente,nombre_comp_venta(id_configuracion) as comprobante, "
-                    + " num_comprobante,nombre_forma_pago(id_forma_pago) as forma_pago from venta ";
+                    + "num_comprobante,nombre_forma_pago(id_forma_pago) as forma_pago from venta "
+                    + "where fecha_venta between to_date('"+f_in+"','yyyy-mm-dd') and to_date('"+f_fn+"','yyyy-mm-dd') " 
+                    + "order by fecha_venta asc";
         
         List<Rep_ventas> lista= new ArrayList<Rep_ventas>();
         Rep_ventas rep_ventas= null;

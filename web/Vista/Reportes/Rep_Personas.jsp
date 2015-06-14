@@ -2,7 +2,7 @@
 <%@page import="proy01.modelo.daoImpl.PersonaDaoImpl"%>
 <%@page import="proy01.modelo.dao.PersonaDao"%>
 <%@page import="proy01.modelo.entidad.Persona"%>
-<%@include file="WEB-INF/jspf/top.jspf" %>
+<%@include file="../../WEB-INF/jspf/top.jspf" %>
 
 <div class="container">  
     
@@ -88,4 +88,4 @@
     </div>
     
 </div>
-<%@include file="WEB-INF/jspf/botton.jspf" %>
+<%@include file="../../WEB-INF/jspf/botton.jspf" %>

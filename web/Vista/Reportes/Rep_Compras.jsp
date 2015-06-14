@@ -6,7 +6,7 @@
 <%@page import="proy01.modelo.daoImpl.ProductoDaoImpl"%>
 <%@page import="proy01.modelo.dao.ProductoDao"%>
 <%@page import="proy01.modelo.entidad.Producto"%>
-<%@include file="WEB-INF/jspf/top.jspf"%>
+<%@include file="../../WEB-INF/jspf/top.jspf"%>
 
 <div class="container">
 
@@ -55,5 +55,5 @@
     </div>
 <%}%>
 </div>
-<%@include file="WEB-INF/jspf/botton.jspf"%>
+<%@include file="../../WEB-INF/jspf/botton.jspf"%>
 

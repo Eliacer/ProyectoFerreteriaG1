@@ -38,7 +38,7 @@ public interface VentaDao {
     public boolean DeleteProdVenta(String id_venta,String id_producto);
     public boolean UpdateDetVenta(DetalleVenta detalleVenta);
     
-    public List<Rep_ventas> ListarVentas();
+    public List<Rep_ventas> ListarVentas(String f_in,String f_fn);
     
     
     

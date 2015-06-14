@@ -31,7 +31,7 @@ public interface CompraDao {
     public boolean StockCompra(String id_compra);
     public boolean DeleteProdCompra(String id_compra,String id_producto);
     public boolean UpdateDeompra(DetalleCompra detalleCompra);
-    public List<Rep_compras> ListarCompraTotal();
+    public List<Rep_compras> ListarCompraTotal(String f_in,String f_fn);
     
     
    

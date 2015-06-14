@@ -2,41 +2,34 @@
 <html>
 <head>
 	<meta charset="utf-8">
-  
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Ferreter&iacute;a el arca</title>
+        <link rel="shortcut icon" type="image/x-icon" href="recursos/img/icono.ico"/>
         <link rel="stylesheet" href="css/estilo.css">
         <link rel="stylesheet" href="css/estilo_1.css">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
+
 <body>
     <header>   
         <%
          HttpSession session1 = request.getSession();
          String id=(String)session1.getAttribute("id_usuario");
-         //String usuario=(String)session1.getAttribute("usuario");
-         //String password=(String)session1.getAttribute("password");
-         
          if(id==null){
-             response.sendRedirect("Login.jsp");
-         
+             response.sendRedirect("Login.jsp");     
          }
-       
-        //String id_usuario=request.getParameter("id_usuario");id_usuario = id_usuario==null?"":id_usuario;
-        
         %>
         <div class="container">
             <div class="fondo">
                 <div class="row">          
                     <div class=" col-xs-12 col-sm-3 col-md-3">
                         <div class="logo">
-                            <a href="bienvenida.jsp"><img src="recursos/img/logo.png" class="img-responsive" alt="Imagen responsive"></a>
-                            
+                            <a href="bienvenida.jsp"><img src="recursos/img/arca.png" class="img-responsive" alt="Imagen responsive"></a>                
                         </div>
                     </div>
-                    <div class="col-xs-10 col-sm-6 col-md-6">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="text1">
                             <p>Ferreter&iacute;a "El Arca"</p>
                         </div>
@@ -79,7 +72,7 @@
                                         <li><a href="Caract_Producto.jsp">A&ntilde;adir Categor&iacute;as,Marcas,Ubicaci&oacute;n</a></li>
                                         <li class="divider"></li>
                                         <li class="dropdown-header">Reportes</li>
-                                        <li><a href="Rep_Productos.jsp">Reportes de Productos</a></li>
+                                        <li><a href="Rep_Productos.jsp">Inventario</a></li>
                                         <li><a href="Rep_Personas.jsp">Reportes de Personas</a></li>   
                                         <li><a href="Rep_Compras.jsp">Reportes de Compras</a></li> 
                                         <li><a href="Rep_Ventas.jsp">Reportes de ventas</a></li>
@@ -90,6 +83,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="Compra.jsp">Registro de compras a proveedores</a></li>   
                                     </ul>
+                                    
                                 </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
