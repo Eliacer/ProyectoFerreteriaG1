@@ -123,7 +123,6 @@
         if(!num_doc.equals("")){
             Persona  persona = new Persona();
             PersonaDao dao= new PersonaDaoImpl();
-            out.println("num_doc: "+num_doc);
             if(!num_doc.equals("")){
                 persona =dao.ObtenerPersonaDni(num_doc);
                 id_persona=persona.getId_persona();
@@ -205,7 +204,8 @@
 %>
 
 <div class="row">
-    <div class="col-md-12" id="aler">
+    <div class="col-md-1"></div>
+    <div class="col-md-10" id="aler">
         <br>
         <%
             if(!mensaje.equals("")){
@@ -213,6 +213,7 @@
         <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
         <%}%>
     </div>
+    <div class="col-md-1"></div>
 </div>
         
 <% if(opcion.equals("Continuar") ||opcion.equals("Actualizar") || opcion.equals("Actualizando")){%>
@@ -223,7 +224,7 @@
             
                 <h2 align="center">Registro de personas</h2>
             <br>
-                <form action="Registro_personas.jsp" method="get"> 
+                <form action="Registro_personas.jsp" method="post"> 
                 <table class="table table-condensed">
                     <tbody>
                 <tr>

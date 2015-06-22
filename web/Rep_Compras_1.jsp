@@ -52,7 +52,7 @@
                             <td><%=count%>.-</td> 
                             <td align="center"><%=compra.getFecha_compra()%></td>
                             <td><%=compra.getNombre_usuario()%></td>
-                            <td align="center"><%=compra.getNombre_proveedor()%></td>
+                            <td><%=compra.getNombre_proveedor()%></td>
                             <td align="center"><%=compra.getNombre_comprobante()%></td>
                             <td align="center"><%=compra.getNum_com()%></td> 
                         </tr>

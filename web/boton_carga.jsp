@@ -84,6 +84,131 @@
         </div>
         <div class="col-md-3"></div>
     </div>
+    <style>
+        .row-fluid .span12 { width: 100%; *width:99.94680851063829%; margin-left: 0; }
+        
+        .rw-D {
+  background: #fff;padding:20px;
+}
+
+@media (max-width: 900px) {
+.rw-D >[class*="span"]{ width:100%; margin-left:0px}
+.home-lnk {padding: 0px 10px;}
+.home-lnk span {font-size: 12px;}
+}
+
+@media (max-width: 540px) {
+.rw-D >[class*="span"]>[class*="span"]{ width:100%; margin-left:0px}
+.md-announcement-links a {
+  line-height: 16px;
+  padding: 4px 10px;
+  font-size: 14px;
+  width:100%;
+  padding: 20px 30px;
+  border-bottom: 1px solid #fff;
+}
+.liner{ border-top: 1px solid #c0bfd1;padding-bottom: 50px !important;}
+
+.circle-icon-especial {
+  width: 70px;
+  height: 70px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  border: 16px solid #c9c7d2;
+  margin: auto;
+  -o-transition: all 750ms;
+  -moz-transition: all 750ms;
+  -webkit-transition: all 750ms;
+  transition: all 750ms;
+}
+
+.md-extra-links a{ padding-top:20px;}
+.md-extra-links a span{ width:100%; text-align:center; padding-top:10px;font-family: 'open_sanscondensed_bold'; font-size:21px; color:#939297; line-height:24px;}
+.md-extra-links a:hover span{ color:#000;}
+.md-extra-links a:hover .circle-icon-especial {
+  width: 70px;
+  height: 70px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  border: 16px solid #ec0000;
+  margin: auto;
+  -o-transition: all 750ms;
+  -moz-transition: all 750ms;
+  -webkit-transition: all 750ms;
+  transition: all 750ms;
+}
+
+.row-fluid .span3 { width: 23.404255319148934%; *width:23.351063829787233%;}
+
+
+.md-extra-links a{ padding-top:20px;}
+.md-extra-links a span{ width:100%; text-align:center; padding-top:10px;font-family: 'open_sanscondensed_bold'; font-size:21px; color:#939297; line-height:24px;}
+.md-extra-links a:hover span{ color:#000;}
+.md-extra-links a:hover .circle-icon-especial {
+  width: 70px;
+  height: 70px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  border: 16px solid #ec0000;
+  margin: auto;
+  -o-transition: all 750ms;
+  -moz-transition: all 750ms;
+  -webkit-transition: all 750ms;
+  transition: all 750ms;
+}
+.md-extra-links .seguro-salud{ background:url(recursos/img/arca.png) no-repeat center center; width:100%; height:100%; z-index:1;}
+.md-extra-links a:hover  .seguro-salud{ background:url(../img/seguro-salud2.png) no-repeat center center; width:100%; height:100%; z-index:1;}
+.md-extra-links .experiences-pronabec{ background:url(../img/experiences-pronabec.png) no-repeat center center; width:100%; height:100%; z-index:1;}
+.md-extra-links a:hover  .experiences-pronabec{ background:url(../img/experiences-pronabec2.png) no-repeat center center; width:100%; height:100%; z-index:1;}
+.md-extra-links .convocatorias{ background:url(../img/convocatorias.png) no-repeat center center; width:100%; height:100%; z-index:1;}
+.md-extra-links a:hover  .convocatorias{ background:url(../img/convocatorias2.png) no-repeat center center; width:100%; height:100%; z-index:1;}
+.md-extra-links .subvenciones{ background:url(../img/subvenciones.png) no-repeat center center; width:100%; height:100%; z-index:1;}
+.md-extra-links a:hover  .subvenciones{ background:url(../img/subvenciones2.png) no-repeat center center; width:100%; height:100%; z-index:1;}
+
+    </style>
+    
+    <div class="span12 rw-D liner">
+			                <div class="span12 md-extra-links">
+                    <a href="http://www.pronabec.gob.pe/subvenciones.php" class="span3 relative">
+                        <div class="circle-icon-especial">
+                            <div class="absolute subvenciones">
+                            </div>
+                        </div>
+                        <span class="span12">
+                            SUBVENCIONES
+                        </span>
+                    </a>
+                    <a href="http://www.pronabec.gob.pe/2015_guia_sistema_salud.php" class="span3 relative">
+                        <div class="circle-icon-especial ">
+                            <div class="absolute seguro-salud">
+                            </div>
+                        </div>
+                        <span class="span12">
+                            SEGURO INTEGRAL DE SALUD
+                        </span>
+                    </a>
+                    <a href="http://www.pronabec.gob.pe/experiencias_pronabec.php" class="span3 relative">
+                        <div class="circle-icon-especial">
+                            <div class="absolute experiences-pronabec">
+                            </div>
+                        </div>
+                        <span class="span12">
+                            EXPERIENCIAS PRONABEC
+                        </span>
+                    </a>
+                    <a href="http://www.pronabec.gob.pe/convocatorias.php" class="span3 relative">
+                        <div class="circle-icon-especial">
+                            <div class="absolute convocatorias">
+                            </div>
+                        </div>
+                        <span class="span12">
+                            CONVOCATORIAS DE PERSONAL
+                        </span>
+                    </a>
+                </div> 
     
 </div>
 <div class="container" id="contenedor">

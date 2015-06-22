@@ -15,9 +15,12 @@ public class DetalleCompra {
      private double importe;
      private String pf;
      
+     private Double igv;
+     
      private double psugerido;
      
      private  String precio;
+     private  String abrev;
      
 
     public DetalleCompra() {
@@ -133,6 +136,22 @@ public class DetalleCompra {
 
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    public Double getIgv() {
+        return igv;
+    }
+
+    public void setIgv(Double igv) {
+        this.igv = igv;
+    }
+
+    public String getAbrev() {
+        return abrev;
+    }
+
+    public void setAbrev(String abrev) {
+        this.abrev = abrev;
     }
     
     

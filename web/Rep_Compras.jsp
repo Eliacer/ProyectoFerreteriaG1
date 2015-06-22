@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3 align="center">Compras entre dos fechas</h3>
-            <form>
+            <form action="Rep_Compras.jsp" method="post">
                 <table align="center">
                     <tbody>
                         <tr>                 

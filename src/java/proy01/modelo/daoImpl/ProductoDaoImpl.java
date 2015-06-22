@@ -243,7 +243,7 @@ public class ProductoDaoImpl implements ProductoDao{
         Statement st = null;
         ResultSet rs = null;
         Rep_Inventario producto = null;
-        String query = "select nombre_producto(id_producto) as producto,stock_actual, trunc(costo_promedio(id_producto),2) as costo, "
+        String query = "select id_producto,nombre_producto(id_producto) as producto,stock_actual, trunc(costo_promedio(id_producto),2) as costo, "
                      + "trunc(precio_promedio(id_producto),2) as precio, "
                      + "trunc(porcentaje_utilidad(id_producto),2) as utilidad from producto order by producto asc";
         
@@ -252,11 +252,45 @@ public class ProductoDaoImpl implements ProductoDao{
             rs = st.executeQuery(query);
             while (rs.next()) { 
                 producto = new Rep_Inventario();
+                producto.setId_producto(rs.getString("id_producto"));
                 producto.setProducto(rs.getString("producto"));
                 producto.setPrecio(rs.getDouble("precio"));
                 producto.setStock_actual(rs.getInt("stock_actual"));           
                 producto.setCosto(rs.getDouble("costo"));
                 producto.setUtilidad(rs.getDouble("utilidad"));
+                lista.add(producto);      
+            }
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+            }
+        } 
+        return lista;
+    }
+
+    @Override
+    public List<Producto> ProductosPotencia() {
+        
+        List<Producto> lista = new ArrayList<Producto>();
+        Statement st = null;
+        ResultSet rs = null;
+        Producto producto = null;
+        String query = "select * from ( select distinct p.nombre as producto,nombre_marca(p.id_marca) as marca, "
+                    + "trunc(monto_producto(p.id_producto),2) as monto "
+                    + "from venta_detalle vd, producto p where p.id_producto=vd.id_producto order by monto desc) "
+                    + "where rownum<=4";  
+      
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) { 
+                producto = new Producto();
+                producto.setNombre(rs.getString("producto"));
+                producto.setId_marca(rs.getString("marca"));
+                producto.setPrecio(rs.getDouble("monto"));
                 lista.add(producto);      
             }
             open().close();

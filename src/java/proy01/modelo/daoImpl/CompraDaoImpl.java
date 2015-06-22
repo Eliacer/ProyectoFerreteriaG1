@@ -172,7 +172,6 @@ public class CompraDaoImpl implements CompraDao{
                     + "id_comprobante, "
                     + "num_comprobante, "
                     + "id_forma_pago, "
-                    + "valor_moneda, "
                     + "fecha_compra, "
                     + "descripcion, "
                     + "igv, "
@@ -183,8 +182,7 @@ public class CompraDaoImpl implements CompraDao{
                     + "'"+compra.getId_comprobante()+"',"
                     + "'"+compra.getNumComprobante()+"',"
                     + "'"+compra.getId_formaPago()+"',"
-                    + "valor_mon('"+compra.getId_compra()+"'),"
-                    + " to_date('"+compra.getFechaCompra()+"','yyyy-mm-dd'),"
+                    + "to_date('"+compra.getFechaCompra()+"','yyyy-mm-dd'),"
                     + "'"+compra.getDescripcion()+"',"
                     + ""+Double.parseDouble(compra.getIgv())+","
                     + ""+Double.parseDouble(compra.getFlete())+")";
@@ -215,7 +213,7 @@ public class CompraDaoImpl implements CompraDao{
         String sql = "select id_compra, nombre_usuario(id_usuario) as usuario,nombre_proveedor(id_proveedor) as proveedor, "
                     + "nombre_tipo_moneda(id_moneda) as moneda, valor_moneda, nombre_comp(id_comprobante) as comprobante, "
                     + "num_comprobante, nombre_forma_pago(id_forma_pago) as fpago, to_char(fecha_compra,'dd/mm/yyyy') as fecha_compra, "
-                    + " igv, flete,direccion_proveedor(id_proveedor) as direccion "
+                    + "igv, flete,direccion_proveedor(id_proveedor) as direccion,abrev_moneda(id_moneda) as abrev "
                     + "from compra where id_compra='"+id_compra+"'";
         Rep_compras rep_compras= null;
         try {
@@ -229,6 +227,7 @@ public class CompraDaoImpl implements CompraDao{
                 rep_compras.setNombre_proveedor(rs.getString("proveedor"));   
                 rep_compras.setNombre_tipo_moneda(rs.getString("moneda")); 
                 rep_compras.setValor_moneda(rs.getDouble("valor_moneda"));
+                rep_compras.setAbrev_moneda(rs.getString("abrev"));
                 rep_compras.setNombre_comprobante(rs.getString("comprobante")); 
                 rep_compras.setNum_com(rs.getString("num_comprobante")); 
                 rep_compras.setNombre_forma_pago(rs.getString("fpago")); 
@@ -289,8 +288,6 @@ public class CompraDaoImpl implements CompraDao{
     @Override
     public boolean RegistrarDetCompra(DetalleCompra detalleCompra) {
         
-        double costo_mayor=detalleCompra.getCostoMayor()*detalleCompra.getValor_moneda();
-        
         boolean estado = false;
         Statement st = null;
         String query="insert into compra_detalle "
@@ -305,7 +302,7 @@ public class CompraDaoImpl implements CompraDao{
                     + "'"+detalleCompra.getId_unidad()+"',"
                     + detalleCompra.getCantMayor()+","
                     + detalleCompra.getCantMenor()+","
-                    + costo_mayor+",'0')";
+                    + detalleCompra.getCostoMayor()+",'0')";
         
         try {
             st = open().createStatement();
@@ -442,7 +439,7 @@ public class CompraDaoImpl implements CompraDao{
         Statement st=null;
         ResultSet rs=null;
         String sql = "select id_compra, to_char(fecha_compra,'dd/mm/yyyy') as fecha_compra,nombre_comp(id_comprobante) as comprobante, "
-                    + "num_comprobante,nombre_usuario(id_usuario) as usuario,nombre_proveedor(id_proveedor) as proveedor, "
+                    + "num_comprobante,nombre_usuario(id_usuario) as usuario,nombre_proveedor(id_proveedor) as proveedor "
                     + "nombre_tipo_moneda(id_moneda) as moneda, nombre_forma_pago(id_forma_pago) as fpago,igv from compra "
                     + "where fecha_compra between to_date('"+f_in+"','yyyy-mm-dd') and to_date('"+f_fn+"','yyyy-mm-dd') " 
                     + "order by fecha_compra asc";

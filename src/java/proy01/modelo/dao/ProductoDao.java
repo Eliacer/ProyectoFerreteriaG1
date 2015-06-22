@@ -22,6 +22,6 @@ public interface ProductoDao {
     public boolean DeleteProducto(String id);
     public List<Producto> BuscarProducto(String Buscar_por, String Buscar);
     public List<Rep_Inventario> ListarInventProducto();
-    
+    public List<Producto> ProductosPotencia();
     
 }

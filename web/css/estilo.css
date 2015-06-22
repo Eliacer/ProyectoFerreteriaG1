@@ -7,6 +7,15 @@
     border-radius: 6%;
     margin-top: 30px;
 }
+a{
+    color: #57ABB8;
+    
+    text-decoration: none;
+}
+
+a:hover{
+    color: #f60;
+}
 
 .container{
     background: white url(../recursos/img/fondo-interno3.jpg);

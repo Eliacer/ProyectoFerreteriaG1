@@ -106,7 +106,7 @@
                             <td align="center"><%=producto.getId_ubicacion()%></td>
                             <td align="center">
                                 <a href="Registro_productos.jsp?opcion=Actualizar&id_producto=<%=producto.getIdProducto()%>">
-                                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button><%=espacio%></a>
+                                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button><%=espacio%></a>
                             </td>
                             <td>
                                 <a href="ModificacionProducto.jsp?opcion=eliminar&id_producto=<%=producto.getIdProducto()%>">

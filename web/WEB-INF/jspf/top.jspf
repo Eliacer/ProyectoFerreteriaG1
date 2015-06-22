@@ -7,9 +7,8 @@
         <title>Ferreter&iacute;a el arca</title>
         <link rel="shortcut icon" type="image/x-icon" href="recursos/img/icono.ico"/>
         <link rel="stylesheet" href="css/estilo.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="css/estilo_1.css">
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
 
 <body>
@@ -76,6 +75,7 @@
                                         <li><a href="Rep_Personas.jsp">Reportes de Personas</a></li>   
                                         <li><a href="Rep_Compras.jsp">Reportes de Compras</a></li> 
                                         <li><a href="Rep_Ventas.jsp">Reportes de ventas</a></li>
+                                        <li><a href="Rep_Decisivos.jsp">Reportes Importantes</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -96,8 +96,8 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>Configurac&oacute;n<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li class="disabled"><a href="ModificacionProducto.jsp">Atualizar productos</a></li>
-                                        <li class="disabled"><a href="#">Devoluciones a proveedores</a></li>         
+                                        <li><a href="ModificacionProducto.jsp">Atualizar productos</a></li>
+                                        <li><a href="Actualizar_Datos.jsp">Atualizar datos personales</a></li>
                                     </ul>
                                 </li>   
                                 <li>

@@ -146,7 +146,7 @@
     <div class="col-md-6 well">
         <h2>Registrar Ventas</h2>
         <br><br>
-        <form action="Venta.jsp" method="get">
+        <form action="Venta.jsp" method="post">
             <table class="table table-condensed">
                 <tbody>
                 <tr>    

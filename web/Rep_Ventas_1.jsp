@@ -46,11 +46,11 @@
                 <table class="table table-hover table-striped table-bordered">
                     <thead>
                         <tr>
-                            <td width="5%" bgcolor="#FFEFCE"><strong>#</strong></td>
-                            <td width="10%" align="center" bgcolor="#FFEFCE"><strong>F. Venta</strong></td>
-                            <td width="25%" bgcolor="#FFEFCE"><strong>Usuario</strong></td>
-                            <td width="18%" bgcolor="#FFEFCE"><strong>Cliente</strong></td>
-                            <td width="11%" align="center" bgcolor="#FFEFCE"><strong>Comprobante</strong></td>
+                            <td width="3%" bgcolor="#FFEFCE"><strong>#</strong></td>
+                            <td width="8%" align="center" bgcolor="#FFEFCE"><strong>F. Venta</strong></td>
+                            <td width="23%" bgcolor="#FFEFCE"><strong>Usuario</strong></td>
+                            <td width="22%" bgcolor="#FFEFCE"><strong>Cliente</strong></td>
+                            <td width="10%" align="center" bgcolor="#FFEFCE"><strong>Comprobante</strong></td>
                             <td width="13%" align="center" bgcolor="#FFEFCE"><strong>Nro. Comprobante.</strong></td>
                         </tr>
                     </thead>
@@ -67,7 +67,7 @@
                             <td><%=count%>.-</td> 
                             <td align="center"><%=venta.getFecha_compra()%></td>
                             <td><%=venta.getNombre_usuario()%></td>
-                            <td align="center"><%=venta.getNombre_cliente()%></td>
+                            <td><%=venta.getNombre_cliente()%></td>
                             <td align="center"><%=venta.getNombre_comprobante()%></td>
                             <td align="center"><%=venta.getNum_com()%></td> 
                         </tr>

@@ -42,6 +42,7 @@
         String nombre_prod="";
         String marca1="";
         int stock;
+        String alert="";
         
         if(opcion.equals("Buscar") || opcion.equals("add") || opcion.equals("Agregar") ||opcion.equals("Actualizar")
                 || opcion.equals("Actualizando") || opcion.equals("Eliminar")){
@@ -101,15 +102,18 @@
                     if(stock>=Double.parseDouble(cant)){
                         if(ventaDao.RegistrarDetVenta(dventa)){
                             mensaje="Se añadió el producto...";
+                            alert="success";
                             opcion="Buscar";
                         }
                         else{
                             mensaje="No se pudo añadir el producto...";
+                            alert="danger";
                             opcion="Buscar";
                         } 
                     }
                     else{
                             mensaje="Solo hay: "+stock+" en stock.";
+                            alert="danger";
                             opcion="Buscar";
                         } 
                 }
@@ -129,10 +133,12 @@
                 dv.setDescuento(descuento);
                 if(act.UpdateDetVenta(dv)){
                     mensaje="Se actualizo correctamente el producto comprado...";
+                    alert="success";
                     opcion="Buscar";
                 }
                 else{
                     mensaje="Ocurrio un error al actualizar el producto comprado...";
+                    alert="danger";
                     opcion="Buscar";
                 }
             }
@@ -140,10 +146,12 @@
                 VentaDao del = new VentaDaoImpl();
                 if(del.DeleteProdVenta(id_venta, id_producto)){
                     mensaje="Se elimino correctamente el producto comprado...";
+                    alert="success";
                     opcion="Buscar";
                 }
                 else{
                     mensaje="Ocurrio un error al eliminar el producto comprado...";
+                    alert="danger";
                     opcion="Buscar";
                 }
             }   
@@ -152,10 +160,11 @@
             if(!id_venta.equals("")){
                 VentaDao cd = new VentaDaoImpl();
                 if(cd.Stockventa(id_venta)){
-                    //opcion="ok";
+                    alert="success";
                     mensaje="Se registró correctamente la venta...";
                 }
                 else{
+                    alert="danger";
                     mensaje="Ocurrió un error al registrar la venta...";
                 }
             }
@@ -169,7 +178,7 @@
             <%
                 if(!mensaje.equals("")){
             %>
-            <div class="alert alert-danger"><%=mensaje%></div> 
+            <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
             <%}%>
         </div>
     <div class="col-md-1"></div>
@@ -321,7 +330,7 @@
                     %>        
                     <tr>     
                         <td><%=count%>.-</td> 
-                        <td><a href="Venta_detalle_1.jsp?id_producto=<%=producto.getIdProducto()%>&opcion=add"><%=producto.getNombre()%></a></td>
+                        <td><a class="btn" href="Venta_detalle_1.jsp?id_producto=<%=producto.getIdProducto()%>&opcion=add"><%=producto.getNombre()%></a></td>
                         <td align="center"><%=marca%></td>
                         <td align="center"><%=producto.getIdUndMedida()%></td>
                         <td align="center"><%=producto.getPrecio()%></td>

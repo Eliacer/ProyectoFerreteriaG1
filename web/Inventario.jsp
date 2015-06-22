@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Inventario</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="css/estilo.css">
 </head>
   <body>
 <div class="container">
@@ -43,7 +44,7 @@
           
                         <tr>     
                             <td><%=count%>.-</td> 
-                            <td><%=producto.getProducto()%></td>
+                            <td><a class="btn" href="Kardex.jsp?id_producto=<%=producto.getId_producto()%>"><%=producto.getProducto()%></a></td>
                             <td align="center"><%=producto.getStock_actual()%></td>
                             <td align="center"><%=producto.getCosto()%></td>
                             <td align="center"><%=producto.getPrecio()%></td>
@@ -59,5 +60,5 @@
 </div>
 </body>
 </html>
-<%@include file="WEB-INF/jspf/botton.jspf"%>
+
 

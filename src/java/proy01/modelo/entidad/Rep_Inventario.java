@@ -3,6 +3,7 @@ package proy01.modelo.entidad;
 public class Rep_Inventario {
 
 
+     private String id_producto;
      private String producto;
      private Double costo;
      private Double precio;
@@ -10,6 +11,14 @@ public class Rep_Inventario {
      private Double utilidad;
 
     public Rep_Inventario() {
+    }
+
+    public String getId_producto() {
+        return id_producto;
+    }
+
+    public void setId_producto(String id_producto) {
+        this.id_producto = id_producto;
     }
 
     public String getProducto() {

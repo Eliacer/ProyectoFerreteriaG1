@@ -8,6 +8,7 @@ package proy01.modelo.dao;
 import java.util.List;
 import proy01.modelo.entidad.Compra;
 import proy01.modelo.entidad.DetalleCompra;
+import proy01.modelo.entidad.KardexProducto;
 import proy01.modelo.entidad.Producto;
 
 
@@ -22,6 +23,7 @@ public interface FijarPreciosCompraDao {
     public boolean UpdateProdPrecio(Producto producto);
     public boolean Updatedetapf(String id_compra, String id_producto);
     public boolean UpdatePrecio(String id_compra);
+    public List<KardexProducto> Kardexproducto(String id_producto);
    
     
    

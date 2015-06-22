@@ -33,4 +33,10 @@ public interface PersonaDao {
     public boolean RegistrarUsuario(Usuario usuario);
     public boolean RegistrarCliente(Cliente cliente);
     
+    public List<Persona> ListarCliente();
+    public List<Persona> ListarProveedor();
+    public List<Persona> ListarUsuario();
+    public List<Persona> ListarClientePotencial();
+    public List<Proveedor> ListarProveedorPotencial();
+    
 }

@@ -16,6 +16,12 @@ public class Persona {
      private String ruc;
      private String direccion;
      private String estado;
+     
+     //Solo para Reportes...
+     private String usuario;
+     private String correo;
+     private String num_cuenta;
+     private String rol;
 
     public Persona() {
         
@@ -125,6 +131,39 @@ public class Persona {
         this.estado = estado;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getNum_cuenta() {
+        return num_cuenta;
+    }
+
+    public void setNum_cuenta(String num_cuenta) {
+        this.num_cuenta = num_cuenta;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    
     
 }
 

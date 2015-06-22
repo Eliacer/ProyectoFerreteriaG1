@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3 align="center">Ventas entre dos fechas</h3>
-            <form>
+            <form action="Rep_Ventas.jsp" method="post">
                 <table align="center">
                     <tbody>
                         <tr>                 

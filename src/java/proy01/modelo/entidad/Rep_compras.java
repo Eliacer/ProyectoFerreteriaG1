@@ -25,6 +25,7 @@ public class Rep_compras {
     private String igv;
     private String flete;
     private String num_com;
+    private String abrev_moneda;
 
     public Rep_compras() {
     }
@@ -139,6 +140,14 @@ public class Rep_compras {
 
     public void setPrecio_fijado(Double precio_fijado) {
         this.precio_fijado = precio_fijado;
+    }
+
+    public String getAbrev_moneda() {
+        return abrev_moneda;
+    }
+
+    public void setAbrev_moneda(String abrev_moneda) {
+        this.abrev_moneda = abrev_moneda;
     }
     
     

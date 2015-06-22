@@ -12,6 +12,7 @@
     <%  
     
         String fp="";
+        String sol="S/.  ";
         String opcion = request.getParameter("opcion");opcion = opcion == null ? "" : opcion;
         String id_compra = request.getParameter("id_compra");id_compra = id_compra == null ? "" : id_compra;
         String id_producto = request.getParameter("id_producto");id_producto = id_producto == null ? "" : id_producto;
@@ -48,6 +49,7 @@
         
             if(dao.UpdatePrecio(id_compra)){
                 mensaje="Se actualizó el precio...";
+                response.sendRedirect("bienvenida.jsp");
                 alert="success";
                 opcion="";
             }
@@ -150,8 +152,8 @@
                     <tr>
                         <td><%=count%>.-</td>
                         <td><%=compra.getProducto()%></td>
-                        <td  align="center"><%=compra.getCostoUnidad()%></td>
-                        <td  align="center"><%=compra.getPsugerido()%></td>       
+                        <td  align="center"><%=compra.getAbrev()%><%=espacio%><%=compra.getCostoUnidad()%></td>
+                        <td  align="center"><%=sol%><%=compra.getPsugerido()%></td>       
                         <td>
                         <form action="FijarPrecios.jsp">    
                         <div class="col-sm-7">

@@ -416,14 +416,14 @@ public class PersonaDaoImpl implements PersonaDao{
     }
 
     @Override
-    public List<Persona> Listarcliente(String proveedor) {
+    public List<Persona> Listarcliente(String cliente) {
        
         Statement st;
         ResultSet rs;
         String sql = "select cl.id_cliente as id,p.nombres||' '||p.apellidos||' '||p.razon_social ||'-'||p.numero_doc as nombre "
                     + "from persona p, cliente cl "
                     + "where p.id_persona=cl.id_cliente and "
-                    + "(p.numero_doc) like ('%"+proveedor+"%') and "
+                    + "(p.numero_doc) like ('%"+cliente+"%') and "
                     + "rownum <=3 order by nombre asc";
         List<Persona> lista = new ArrayList<Persona>();
         Persona persona = null;
@@ -477,6 +477,192 @@ public class PersonaDaoImpl implements PersonaDao{
             }
         }
         return lista; 
+    }
+
+    @Override
+    public List<Persona> ListarCliente() {
+        
+        Statement st;
+        ResultSet rs;
+        String sql = "SELECT p.nombres||' '||p.apellidos as nombres,p.razon_social as rz,p.numero_doc as doc, "
+                   + "to_char(p.fecha_nac,'dd/mm/yyyy') as fecha, "
+                   + "p.telefono||' / '||p.celular as tel, p.direccion as dir, p.estado as est "
+                   + "FROM persona p,cliente c where p.id_persona=c.id_cliente order by fecha desc";
+        List<Persona> lista = new ArrayList<Persona>();
+        Persona persona = null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {                
+                persona = new Persona();
+                persona.setNombres(rs.getString("nombres"));
+                persona.setRazon_social(rs.getString("rz"));
+                persona.setFecha_nac(rs.getString("fecha"));
+                persona.setTelefono(rs.getString("tel"));
+                persona.setNumero_doc(rs.getString("doc"));
+                persona.setDireccion(rs.getString("dir"));
+                persona.setEstado(rs.getString("est"));
+                lista.add(persona);                
+            }
+            open().close();
+        } catch (Exception e) {
+            try {
+                e.printStackTrace();
+                open().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Persona> ListarProveedor() {
+        
+        Statement st;
+        ResultSet rs;
+        String sql = "SELECT p.razon_social as rz,p.ruc as ruc, "
+                   + "pr.correo_electronico as correo,pr.num_cuenta as ncuenta, "
+                   + "p.telefono||' / '||p.celular as tel, p.direccion as dir, pr.estado as est "
+                   + "FROM persona p,proveedor pr where p.id_persona=pr.id_proveedor and pr.estado='1'";
+        List<Persona> lista = new ArrayList<Persona>();
+        Persona persona = null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {                
+                persona = new Persona();
+                persona.setRazon_social(rs.getString("rz"));
+                persona.setTelefono(rs.getString("tel"));
+                persona.setRuc(rs.getString("ruc"));
+                persona.setDireccion(rs.getString("dir"));
+                persona.setCorreo(rs.getString("correo"));
+                persona.setNum_cuenta(rs.getString("ncuenta"));
+                persona.setEstado(rs.getString("est"));
+                lista.add(persona);                
+            }
+            open().close();
+        } catch (Exception e) {
+            try {
+                e.printStackTrace();
+                open().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Persona> ListarUsuario() {
+        
+        Statement st;
+        ResultSet rs;
+        String sql = "SELECT p.nombres||' '||p.apellidos as nombres,p.numero_doc as doc, "
+                   + "to_char(p.fecha_nac,'dd/mm/yyyy') as fecha,u.login as login,nombre_rol(u.id_rol) as rol, "
+                   + "p.telefono||' / '||p.celular as tel, p.direccion as dir, p.estado as est "
+                   + "FROM persona p,usuario u where p.id_persona=u.id_usuario order by fecha asc";
+        List<Persona> lista = new ArrayList<Persona>();
+        Persona persona = null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {                
+                persona = new Persona();
+                persona.setNombres(rs.getString("nombres"));
+                persona.setFecha_nac(rs.getString("fecha"));
+                persona.setTelefono(rs.getString("tel"));
+                persona.setNumero_doc(rs.getString("doc"));
+                persona.setDireccion(rs.getString("dir"));
+                persona.setUsuario(rs.getString("login"));
+                persona.setRol(rs.getString("rol"));
+                persona.setEstado(rs.getString("est"));
+
+
+                lista.add(persona);                
+            }
+            open().close();
+        } catch (Exception e) {
+            try {
+                e.printStackTrace();
+                open().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Persona> ListarClientePotencial() {
+        
+        Statement st;
+        ResultSet rs;
+        String sql = "select * from(select nombre_cliente(c.id_cliente) as cliente, "
+                   + "p.numero_doc as dni,p.celular||' '||p.telefono as contacto, "
+                   + "trunc(monto_cliente(c.id_cliente),2) as monto "
+                   + "from cliente c,persona p where p.id_persona=c.id_cliente "
+                   + "order by monto desc) where rownum <=4 ";
+        
+        List<Persona> lista = new ArrayList<Persona>();
+        Persona persona = null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {                
+                persona = new Persona();
+                persona.setNombres(rs.getString("cliente"));
+                persona.setTelefono(rs.getString("contacto"));
+                persona.setNumero_doc(rs.getString("dni"));
+                persona.setEstado(rs.getString("monto"));
+                lista.add(persona);                
+            }
+            open().close();
+        } catch (Exception e) {
+            try {
+                e.printStackTrace();
+                open().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Proveedor> ListarProveedorPotencial() {
+        
+        Statement st;
+        ResultSet rs;
+        String sql = "select * from ( select distinct nombre_proveedor(c.id_proveedor) as proveedor,per.ruc as ruc, "
+                    + "p.correo_electronico as correo,round(monto_proveedor(c.id_proveedor),2) as monto "
+                    + "from compra c,proveedor p,persona per "
+                    + "where p.id_proveedor=c.id_proveedor and per.id_persona=p.id_proveedor order by monto desc) "
+                    + "where rownum <=4";
+        
+        List<Proveedor> lista = new ArrayList<Proveedor>();
+        Proveedor proveedor = null;
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {                
+                proveedor = new Proveedor();
+                proveedor.setId_proveedor(rs.getString("proveedor"));
+                proveedor.setCorreo_electronico(rs.getString("correo"));
+                proveedor.setNum_cuenta(rs.getString("ruc"));
+                proveedor.setEstado(rs.getString("monto"));
+                lista.add(proveedor);                
+            }
+            open().close();
+        } catch (Exception e) {
+            try {
+                e.printStackTrace();
+                open().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return lista;
     }
     
 }

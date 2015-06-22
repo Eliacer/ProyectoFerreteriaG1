@@ -144,15 +144,15 @@
 </div>
 <%if(opcion.equals("Continuar")){%>
 <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 well" id="reg2">
+    <div class="col-xs-3 col-sm-3 col-md-3"></div>
+    <div class="col-xs-6 col-sm-6 col-md-6 well" id="reg2">
         <h2>Registro de Compra</h2>
         <br><br>
-        <form action="Compra.jsp" method="get">
+        <form action="Compra.jsp" method="post">
             <table class="table table-condensed">
                 <tbody>
                 <tr>    
-                    <td><label class="col-sm-12 control-label" >Forma de pago:</label></td>
+                    <td><label class="col-sm-8 col-md-12 control-label" >Forma de pago:</label></td>
                     <td colspan="3">
                         <input type="hidden" name="id_usuario"  value="<%=id%>" size="10">
                     <select class="form-control" name="id_forma_pago" selected="selected" <%if(id_comprobante.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
@@ -168,7 +168,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label class="col-sm-12 control-label" >Tipo de Moneda:</label></td>
+                    <td><label class="col-sm-8 col-md-12 control-label" >Tipo de Moneda:</label></td>
                     <td colspan="3">
                         <select class="form-control" name="id_moneda" selected="selected" <%if(id_comprobante.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
                         <%
@@ -252,7 +252,7 @@
                 </tr>
                 <tr>
                     <td><label class="col-sm-12 control-label" >Descripcion:</label></td>
-                    <td colspan="2">
+                    <td colspan="3">
                         <div class="col-sm-15">
                             <textarea rows="3" class="form-control" placeholder="Descripcción" name="descripcion" value="<%=descripcion%>"></textarea>
                         </div>
@@ -267,7 +267,7 @@
             </table>
         </form>
     </div>
-    <div class="col-md-3"></div>
+    <div class="col-xs-3 col-sm-3 col-md-3"></div>
 </div> 
 
 <div class="modal fade" id="Modal" role="dialog">
@@ -280,7 +280,7 @@
           <h4><span class="glyphicon glyphicon-lock"></span> Registrar</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">    
-        <form action="Compra.jsp" method="get"> 
+        <form action="Compra.jsp" method="post"> 
                 <table class="table table-condensed">
                     <tbody>
                 <tr>
