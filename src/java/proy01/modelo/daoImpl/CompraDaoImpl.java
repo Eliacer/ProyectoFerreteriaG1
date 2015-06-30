@@ -254,7 +254,7 @@ public class CompraDaoImpl implements CompraDao{
         Statement st=null;
         ResultSet rs=null;
         String sql = "select id_compra,id_producto,cant_mayor as cant,und_producto(id_compra,id_producto) as und, "
-                + "nombre_producto(id_producto) as producto,costo_mayor,cant_mayor*costo_mayor as importe "
+                + "substr(nombre_producto(id_producto),0,20) as producto,costo_mayor,cant_mayor*costo_mayor as importe "
                 + "from compra_detalle where id_compra='"+id_compra+"'";
         List<DetalleCompra> lista = new ArrayList<DetalleCompra>();
         DetalleCompra detalleCompra= null;
@@ -434,12 +434,37 @@ public class CompraDaoImpl implements CompraDao{
     }
 
     @Override
+    public boolean UpdateMoneda(TipoMoneda moneda) {
+        
+        boolean estado = false;
+        Statement st = null;
+        String query="update tipo_moneda set valor_actual="+moneda.getValorActual()
+                + "where id_moneda='"+moneda.getIdMoneda()+"'";
+        
+        try {
+            st = open().createStatement();
+            st.executeQuery(query);
+            open().commit();
+            open().close();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                estado = false;
+                open().rollback();
+                open().close();
+            } catch (Exception ex) {
+            }
+        }  
+        return estado;
+    }
+    @Override
     public List<Rep_compras> ListarCompraTotal(String f_in,String f_fn) {
         
         Statement st=null;
         ResultSet rs=null;
         String sql = "select id_compra, to_char(fecha_compra,'dd/mm/yyyy') as fecha_compra,nombre_comp(id_comprobante) as comprobante, "
-                    + "num_comprobante,nombre_usuario(id_usuario) as usuario,nombre_proveedor(id_proveedor) as proveedor "
+                    + "num_comprobante,nombre_usuario(id_usuario) as usuario,nombre_proveedor(id_proveedor) as proveedor, "
                     + "nombre_tipo_moneda(id_moneda) as moneda, nombre_forma_pago(id_forma_pago) as fpago,igv from compra "
                     + "where fecha_compra between to_date('"+f_in+"','yyyy-mm-dd') and to_date('"+f_fn+"','yyyy-mm-dd') " 
                     + "order by fecha_compra asc";

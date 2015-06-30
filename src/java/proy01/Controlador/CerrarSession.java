@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controlador;
+package proy01.Controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,15 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import proy01.modelo.dao.CompraDao;
-import proy01.modelo.daoImpl.CompraDaoImpl;
-import proy01.modelo.entidad.Compra;
 
 /**
  *
  * @author Eliacer Fernandez
  */
-public class Compras extends HttpServlet {
+public class CerrarSession extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,32 +31,10 @@ public class Compras extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String num_comp=request.getParameter("num_comp");
+        HttpSession session = request.getSession();
+        session.removeAttribute("id_usuario");
         
-        HttpSession session1 = request.getSession();
-        String id_compra=(String)session1.getAttribute("id_compra");
-        String id_proveedor=(String)session1.getAttribute("id_proveedor");
-        String num_comprobante=(String)session1.getAttribute("num_comprobante");
-        
-        Compra compra = new Compra();
-        CompraDao cd = new CompraDaoImpl();
-        
-        if (!num_comp.equals("")) {
-            
-            compra=cd.ListarCompra(num_comp);
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("id_compra", compra.getId_compra());
-            session.setAttribute("id_proveedor", compra.getId_proveedor());
-            session.setAttribute("num_comprobante", compra.getNumComprobante());
-            
-            //request.setAttribute("id_compra", compra.getId_compra());
-            request.getRequestDispatcher("Compra_detalle.jsp").forward(request, response);
-            
-            
-        } else {
-        }
-    
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

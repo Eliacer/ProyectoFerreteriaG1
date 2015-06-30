@@ -14,6 +14,13 @@
 <%@page import="proy01.modelo.entidad.Compra"%>
 <%@include file="WEB-INF/jspf/top.jspf" %>
 
+<style>
+    #letra{
+        font-size: 10px;
+    }
+    
+</style>
+
 <div class="container">
     
     <%
@@ -106,13 +113,13 @@
                             opcion="Buscar";
                         }
                         else{
-                            mensaje="No se pudo añadir el producto...";
+                            mensaje="¡¡No se pudo añadir el producto...Es posible que este producto estea en la lista!!";
                             alert="danger";
                             opcion="Buscar";
                         } 
                     }
                     else{
-                            mensaje="Solo hay: "+stock+" en stock.";
+                            mensaje="¡¡No se pudo agregar segun lo solicitado...Solo hay: "+stock+" en stock!!";
                             alert="danger";
                             opcion="Buscar";
                         } 
@@ -187,8 +194,9 @@
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-        <h1 align="center">Ferreter&iacute;a El Arca</h1></div>
+        <h1 align="center">Ferreter&iacute;a El Arca</h1>
         <h5 align="center">JR. TAHUANTINSUYO CDRA. 9</h5>
+    </div>
     <div class="col-md-1"></div>
 </div>
 <div class="row">
@@ -231,10 +239,10 @@
                 <thead>
                     <tr>
                         <td width="5%" bgcolor="#FFEFCE"><strong>Cant</strong></td>
-                        <td width="27%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
+                        <td width="23%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
                         <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
                         <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Importe</strong></td>
-                        <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
+                        <td width="8%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -310,33 +318,30 @@
                 <thead>
                 <br>
                     <tr>
-                        <td width="5%" bgcolor="#FFEFCE"><strong>#</strong></td>
-                        <td width="28%" bgcolor="#FFEFCE"><strong>Producto</strong></td>
-                        <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Marca</strong></td>
-                        <td width="7%" bgcolor="#FFEFCE"><strong>Und</strong></td>
+                        <td width="3%" bgcolor="#FFEFCE"><strong>#</strong></td>
+                        <td width="15%" bgcolor="#FFEFCE"><strong>Producto</strong></td>
                         <td width="7%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
                         <td width="7%" align="center" bgcolor="#FFEFCE"><strong>Stock</strong></td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="letr">
+                
                     <%
                     String espacio="  ";
                     int count=0;
                     ProductoDao pro = new ProductoDaoImpl();
                     for(Producto producto :pro.BuscarProducto(buscar_por, buscar)){
                          count++;
-                         String marca=producto.getId_marca();marca = marca==null?"":marca; 
                          nombre_prod=producto.getNombre();
                     %>        
                     <tr>     
                         <td><%=count%>.-</td> 
                         <td><a class="btn" href="Venta_detalle_1.jsp?id_producto=<%=producto.getIdProducto()%>&opcion=add"><%=producto.getNombre()%></a></td>
-                        <td align="center"><%=marca%></td>
-                        <td align="center"><%=producto.getIdUndMedida()%></td>
                         <td align="center"><%=producto.getPrecio()%></td>
                         <td align="center"><%=producto.getStock_actual()%></td> 
                     </tr>
                     <%}%>
+                
                 </tbody>
             </table>
         </div>          
@@ -390,5 +395,6 @@
     </div>
 </div>
 <%}%>
+</div>
 </div>
 <%@include file="WEB-INF/jspf/botton.jspf" %>

@@ -44,7 +44,7 @@ public class ProductoDaoImpl implements ProductoDao{
                 +"','" +producto.getNombre()
                 +"','" +producto.getIdUndMedida()
                 +"', " +producto.getPorc_ganacia()
-                +"','" +producto.getId_categoria()
+                +",'" +producto.getId_categoria()
                 +"','" +producto.getId_marca()
                 +"','" +producto.getId_ubicacion()
                 +"','" +producto.getDescripcion()+"')";
@@ -171,7 +171,7 @@ public class ProductoDaoImpl implements ProductoDao{
         Statement st = null;
         ResultSet rs = null;
         Producto producto = null;
-        String query = "select p.id_producto as id_producto,p.nombre as nombre,initcap(m.nombre_marca) as marca, "
+        String query = "select p.id_producto as id_producto,p.nombre ||' '||upper(m.nombre_marca) as nombre, "
                      + "um.abreviatura as id_um,p.precio as precio, p.stock_actual as stock, "
                      + "u.nombre_ubicacion as ubicacion "
                      + "from producto p, marca m, ubicacion u,unidad_medida um "
@@ -187,7 +187,6 @@ public class ProductoDaoImpl implements ProductoDao{
                 producto = new Producto();
                 producto.setIdProducto(rs.getString("id_producto"));
                 producto.setNombre(rs.getString("nombre"));
-                producto.setId_marca(rs.getString("marca"));
                 producto.setIdUndMedida(rs.getString("id_um"));           
                 producto.setPrecio(rs.getDouble("precio"));
                 producto.setStock_actual(rs.getInt("stock"));           

@@ -32,6 +32,8 @@ public interface CompraDao {
     public boolean DeleteProdCompra(String id_compra,String id_producto);
     public boolean UpdateDeompra(DetalleCompra detalleCompra);
     public List<Rep_compras> ListarCompraTotal(String f_in,String f_fn);
+     public boolean UpdateMoneda(TipoMoneda moneda);
+    
     
     
    

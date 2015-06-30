@@ -79,7 +79,7 @@ public class PersonaDaoImpl implements PersonaDao{
         
         Statement st;
         ResultSet rs;
-        String sql = "SELECT id_persona as id,nombres||' '||apellidos as nombres, numero_doc as doc, "
+        String sql = "SELECT id_persona as id,nombres||' '||apellidos ||' '||razon_social as nombres, numero_doc as doc, "
                    + "to_char(fecha_nac,'dd/mm/yyyy') as fecha, "
                    + "telefono||' / '||celular as tel, direccion, estado FROM persona order by fecha_nac desc";
         List<Persona> lista = new ArrayList<Persona>();
@@ -249,7 +249,46 @@ public class PersonaDaoImpl implements PersonaDao{
         
         Statement st = null;
         ResultSet rs= null;
-        String query = "select * from persona where numero_doc='"+dni+"' or ruc='"+dni+"'";
+        String query = "select * from persona where numero_doc='"+dni+"'";
+        Persona per = null;
+        
+        try {
+            st = open().createStatement();
+            rs=st.executeQuery(query);          
+            if (rs.next()) {
+                per= new Persona();
+                per.setId_persona(rs.getString("id_persona"));
+                per.setNombres(rs.getString("nombres"));
+                per.setRazon_social(rs.getString("razon_social"));
+                per.setApellidos(rs.getString("apellidos"));         
+                per.setFecha_nac(rs.getString("fecha_nac"));
+                per.setGenero(rs.getString("genero"));
+                per.setTelefono(rs.getString("telefono"));
+                per.setCelular(rs.getString("celular"));
+                per.setId_tipo_doc(rs.getString("id_tipo_doc"));
+                per.setNumero_doc(rs.getString("numero_doc"));
+                per.setRuc(rs.getString("ruc"));
+                per.setEstado(rs.getString("estado"));
+                per.setDireccion(rs.getString("direccion")); 
+                
+            }
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+        return per;
+    }
+    
+    @Override
+    public Persona ObtenerPersonaRuc(String ruc) {
+        
+        Statement st = null;
+        ResultSet rs= null;
+        String query = "select * from persona where ruc='"+ruc+"'";
         Persona per = null;
         
         try {

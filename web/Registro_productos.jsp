@@ -91,8 +91,8 @@
 %>
 
 <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6" id="aler">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" id="aler">
         <br>
         <%
             if(!mensaje.equals("")){
@@ -100,7 +100,7 @@
         <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
         <%}%>
     </div>
-    <div class="col-md-3"></div>   
+    <div class="col-md-2"></div>   
 </div>     
 <% if(opcion.equals("Enviar") ||opcion.equals("Actualizar") || opcion.equals("Actualizando")){%>
 <div class="row"> 

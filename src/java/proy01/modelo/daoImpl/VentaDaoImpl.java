@@ -386,7 +386,7 @@ public class VentaDaoImpl implements VentaDao{
         
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select id_producto,cantidad,nombre_producto(id_producto) as producto, "
+        String sql = "select id_producto,cantidad,substr(nombre_producto(id_producto),0,20) as producto, "
                     + "precio_unitario,trunc(descuento,2) as dcto,cantidad*precio_unitario as subtotal "
                     + "from venta_detalle where id_venta='"+id_venta+"'";
         List<DetalleVenta> lista = new ArrayList<DetalleVenta>();

@@ -1,4 +1,5 @@
 
+<%@page import="proy01.modelo.entidad.Rep_compras"%>
 <%@page import="proy01.modelo.entidad.Proveedor"%>
 <%@page import="proy01.modelo.entidad.TipoDocumento"%>
 <%@page import="proy01.modelo.dao.TipoDocumentoDao"%>
@@ -48,8 +49,7 @@
     String num_cuenta=request.getParameter("num_cuenta");num_cuenta = num_cuenta == null ? "" : num_cuenta;
     
     if(opcion.equals("Registrar")){
-        if((!nombres.equals("") || !razon_social.equals("")) && !t_doc.equals("")&& (!num_doc.equals("")||!ruc.equals(""))
-            && (!telefono.equals("") || !celular.equals(""))){
+        if((!nombres.equals("") || !razon_social.equals("")) && (!num_doc.equals("")||!ruc.equals(""))&&!correo.equals("")&&!num_cuenta.equals("")){
             Persona persona=new Persona();
             PersonaDao ppd=new PersonaDaoImpl();
             
@@ -129,6 +129,11 @@
             }
         }
     }
+    
+    if(opcion.equals("Actualizar")){
+        CompraDao dao = new CompraDaoImpl();
+        Rep_compras rep_compras = new Rep_compras();
+    }
 %>
 
 <div class="container">
@@ -142,7 +147,7 @@
         <%}%>
     </div>
 </div>
-<%if(opcion.equals("Continuar")){%>
+<%if(opcion.equals("Continuar")||opcion.equals("Actualizar")){%>
 <div class="row">
     <div class="col-xs-3 col-sm-3 col-md-3"></div>
     <div class="col-xs-6 col-sm-6 col-md-6 well" id="reg2">
@@ -198,7 +203,7 @@
                     <td><label class="col-sm-12 control-label" >Numero **: </label></td>
                     <td colspan="3">
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="N° de Comprobante" name="num_comp" value="<%=num_comp%>">
+                            <input type="text" class="form-control" placeholder="N° de Comprobante" name="num_comp" value="<%=num_comp%>" required="">
                         </div>
                     </td>
                 </tr>
@@ -328,7 +333,7 @@
                     <td><label class="col-sm-12 control-label">N&deg; Doc:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Numero del documento" name="num_doc" value="">
+                            <input type="text" class="form-control" placeholder="Numero del documento" name="num_doc" value="" maxlength="8">
                         </div>
                     </td>
                 </tr>
@@ -336,7 +341,7 @@
                     <td><label class="col-sm-12 control-label">RUC:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="RUC" name="ruc" value="">
+                            <input type="text" class="form-control" placeholder="RUC" name="ruc" value="" maxlength="11">
                         </div>
                     </td>
                 </tr>
@@ -344,7 +349,7 @@
                     <td><label class="col-sm-12 control-label" >Tel&eacute;fono:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Telefono" name="telefono" value="">
+                            <input type="text" class="form-control" placeholder="Telefono" name="telefono" value="" maxlength="10">
                         </div>
                     </td>
                 </tr>
@@ -352,7 +357,7 @@
                     <td><label class="col-sm-12 control-label" >Celular:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Celular" name="celular" value="">
+                            <input type="text" class="form-control" placeholder="Celular" name="celular" value="" maxlength="9">
                         </div>
                     </td>
                 </tr>  

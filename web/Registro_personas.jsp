@@ -32,7 +32,7 @@
     String t_per=request.getParameter("t_per");t_per = t_per == null ? "" : t_per;
     
     String login=request.getParameter("login");login = login == null ? "" : login;
-    String pass=request.getParameter("pass");pass = pass == null ? "" : pass;
+    String pass=request.getParameter("password");pass = pass == null ? "" : pass;
     String id_rol=request.getParameter("id_rol");id_rol = id_rol == null ? "" : id_rol;
     
     String id_categoria=request.getParameter("id_categoria");id_categoria = id_categoria == null ? "" : id_categoria;
@@ -45,8 +45,7 @@
     String mensaje="";
     String alert="";
     if(opcion.equals("Continuar")||opcion.equals("Actualizando")){
-        if((!nombres.equals("") || !razon_social.equals("")) && !t_doc.equals("")&& (!num_doc.equals("")||!ruc.equals(""))
-                && (!telefono.equals("") || !celular.equals(""))){
+        if((!nombres.equals("") || !razon_social.equals("")) && (!num_doc.equals("")||!ruc.equals(""))){
             
             //out.println("id:"+id_persona);
             //out.println("opcion="+opcion);
@@ -120,7 +119,7 @@
     }    
     if(opcion.equals("Registrar")){
         
-        if(!num_doc.equals("")){
+        if(!num_doc.equals("")||!ruc.equals("")){
             Persona  persona = new Persona();
             PersonaDao dao= new PersonaDaoImpl();
             if(!num_doc.equals("")){
@@ -128,8 +127,8 @@
                 id_persona=persona.getId_persona();
                 
             }
-            if(!ruc.equals("")){
-                persona =dao.ObtenerPersonaDni(ruc);
+            else if(!ruc.equals("")){
+                persona =dao.ObtenerPersonaRuc(ruc);
                 id_persona=persona.getId_persona();
             
             }
@@ -224,7 +223,7 @@
             
                 <h2 align="center">Registro de personas</h2>
             <br>
-                <form action="Registro_personas.jsp" method="post"> 
+                <form action="Registro_personas.jsp" method="get"> 
                 <table class="table table-condensed">
                     <tbody>
                 <tr>
@@ -256,8 +255,8 @@
                 <tr>
                     <td><label class="col-sm-12 control-label">Tipo Doc.:</label></td>
                     <td>
-                        <select class="form-control" name="t_doc" selected="selected" <%if(t_doc.equals("")){%> selected<%}%>>> 
-                            <option>Seleciona el tipo de documento</option>
+                        <select class="form-control" name="t_doc" selected="selected">
+                            <option value="00004">Selecciona el tipo de documento</option>
                         <%
                             TipoDocumentoDao tdd = new TipoDocumentoDaoImpl();
 
@@ -274,7 +273,7 @@
                     <td><label class="col-sm-12 control-label">N&deg; Doc:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Numero del documento" name="num_doc" value="<%=num_doc%>">
+                            <input type="text" class="form-control" placeholder="Numero del documento" name="num_doc" value="<%=num_doc%>" maxlength="8">
                         </div>
                     </td>
                 </tr>
@@ -282,7 +281,7 @@
                     <td><label class="col-sm-12 control-label">RUC:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="RUC" name="ruc" value="<%=ruc%>">
+                            <input type="text" class="form-control" placeholder="RUC" name="ruc" value="<%=ruc%>" maxlength="11">
                         </div>
                     </td>
                 </tr>
@@ -290,7 +289,7 @@
                     <td><label class="col-sm-12 control-label" >Tel&eacute;fono:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Telefono" name="telefono" value="<%=telefono%>">
+                            <input type="text" class="form-control" placeholder="Telefono" name="telefono" value="<%=telefono%>" maxlength="10">
                         </div>
                     </td>
                 </tr>
@@ -298,7 +297,7 @@
                     <td><label class="col-sm-12 control-label" >Celular:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Celular" name="celular" value="<%=celular%>">
+                            <input type="text" class="form-control" placeholder="Celular" name="celular" value="<%=celular%>" maxlength="9">
                         </div>
                     </td>
                 </tr>  

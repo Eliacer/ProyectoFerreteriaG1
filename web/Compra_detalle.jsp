@@ -216,10 +216,10 @@
                     <tr>
                         <td width="4%" bgcolor="#FFEFCE"><strong>Cant</strong></td>
                         <td width="4%" bgcolor="#FFEFCE"><strong>Und</strong></td>
-                        <td width="25%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
+                        <td width="25%" bgcolor="#FFEFCE"><strong>Producto</strong></td>
                         <td width="7%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
                         <td width="7%" align="center" bgcolor="#FFEFCE"><strong>Importe</strong></td>
-                        <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
+                        <td width="13%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -296,9 +296,9 @@
                         <br>
                             <tr>
                                 <td width="3%" bgcolor="#FFEFCE"><strong>#</strong></td>
-                                <td width="30%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
-                                <td width="16%" bgcolor="#FFEFCE"><strong>Marca</strong></td>
-                                <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Stock</strong></td>
+                                <td width="25%" bgcolor="#FFEFCE"><strong>Producto</strong></td>
+                                <td width="15%" bgcolor="#FFEFCE"><strong>Marca</strong></td>
+                                <td width="8%" align="center" bgcolor="#FFEFCE"><strong>Stock</strong></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -315,7 +315,7 @@
                             <tr>     
                                 <input type="hidden" name="id_producto"  value="<%=producto.getIdProducto()%>" size="10">
                                 <td><%=count%>.-</td> 
-                                <td><a class="btn" href="Compra_detalle.jsp?id_producto=<%=producto.getIdProducto()%>&opcion=add">
+                                <td><a class="btn" href="buyproducts?id_producto=<%=producto.getIdProducto()%>&opcion=add">
                                  <%=producto.getNombre()%></a></td>
                                 <td><%=marca%></td>
                                 <td align="center"><%=producto.getStock_actual()%></td> 

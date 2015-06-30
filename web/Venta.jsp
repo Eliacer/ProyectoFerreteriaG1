@@ -46,7 +46,7 @@
     String id_categoria=request.getParameter("id_categoria");id_categoria = id_categoria == null ? "" : id_categoria;
     
     if(opcion.equals("Registrar")){
-        if((!nombres.equals("") || !razon_social.equals("")) && !t_doc.equals("")&& (!num_doc.equals("")||!ruc.equals(""))){
+        if((!nombres.equals("") || !razon_social.equals("")) && (!num_doc.equals("")||!ruc.equals("")) &&!id_categoria.equals("")){
             
             Persona persona=new Persona();
             PersonaDao ppd=new PersonaDaoImpl();
@@ -287,7 +287,7 @@
                     <td><label class="col-sm-12 control-label">N&deg; Doc:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Numero del documento" name="num_doc" value="">
+                            <input type="text" class="form-control" placeholder="Numero del documento" name="num_doc" value="" maxlength="8">
                         </div>
                     </td>
                 </tr>
@@ -295,7 +295,7 @@
                     <td><label class="col-sm-12 control-label">RUC:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="RUC" name="ruc" value="">
+                            <input type="text" class="form-control" placeholder="RUC" name="ruc" value="" maxlength="11">
                         </div>
                     </td>
                 </tr>
@@ -303,7 +303,7 @@
                     <td><label class="col-sm-12 control-label" >Tel&eacute;fono:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Telefono" name="telefono" value="">
+                            <input type="text" class="form-control" placeholder="Telefono" name="telefono" value="" maxlength="10">
                         </div>
                     </td>
                 </tr>
@@ -311,7 +311,7 @@
                     <td><label class="col-sm-12 control-label" >Celular:</label></td>
                     <td>
                         <div class="col-sm-15">
-                            <input type="text" class="form-control" placeholder="Celular" name="celular" value="">
+                            <input type="text" class="form-control" placeholder="Celular" name="celular" value="" maxlength="9">
                         </div>
                     </td>
                 </tr>  

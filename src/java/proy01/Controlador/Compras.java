@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controlador;
+package proy01.Controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import proy01.modelo.dao.UsuarioDao;
-import proy01.modelo.daoImpl.UsuarioDaoImpl;
-import proy01.modelo.entidad.Usuario;
+import proy01.modelo.dao.CompraDao;
+import proy01.modelo.daoImpl.CompraDaoImpl;
+import proy01.modelo.entidad.Compra;
 
 /**
  *
  * @author Eliacer Fernandez
  */
-public class Validar extends HttpServlet {
+public class Compras extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,41 +34,32 @@ public class Validar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String id_usuario="";
-        String usuario=request.getParameter("usuario");
-        String password=request.getParameter("password");
-        
+        String num_comp=request.getParameter("num_comp");
         
         HttpSession session1 = request.getSession();
-        String id=(String)session1.getAttribute("id_usuario");
-//        String user=(String)session1.getAttribute("usuario");
-//        String pass=(String)session1.getAttribute("password");
+        String id_compra=(String)session1.getAttribute("id_compra");
+        String id_proveedor=(String)session1.getAttribute("id_proveedor");
+        String num_comprobante=(String)session1.getAttribute("num_comprobante");
         
-        String mensaje;
-        Usuario u = new Usuario();
-        UsuarioDao dao = new UsuarioDaoImpl();
+        Compra compra = new Compra();
+        CompraDao cd = new CompraDaoImpl();
         
-        if (dao.validarusuario(usuario, password)!=null) {
+        if (!num_comp.equals("")) {
             
-            u=dao.ObtenerUsuario(usuario, password);
-//            id_usuario=u.getIdUsuario();//es prueba de que si envia...
+            compra=cd.ListarCompra(num_comp);
             
-            //enviando id en sesion...
             HttpSession session = request.getSession();
-            session.setAttribute("id_usuario", u.getIdUsuario());
-//            session.setAttribute("usuario", u.getLogin());
-//            session.setAttribute("password", u.getPassword());
+            session.setAttribute("id_compra", compra.getId_compra());
+            session.setAttribute("id_proveedor", compra.getId_proveedor());
+            session.setAttribute("num_comprobante", compra.getNumComprobante());
+            
+            //request.setAttribute("id_compra", compra.getId_compra());
+            request.getRequestDispatcher("Compra_detalle.jsp").forward(request, response);
             
             
-                //request.getRequestDispatcher("bienvenida.jsp?id_usuario="+id_usuario).forward(request, response);
-//                request.setAttribute("Usuario", dao.ObtenerUsuario(usuario, password));
-//                request.setAttribute("id_usuario", id_usuario);
-                request.getRequestDispatcher("bienvenida.jsp").forward(request, response);
         } else {
-            mensaje="Usuario o password incorrecto...";
-            request.getRequestDispatcher("Login.jsp?mensaje="+mensaje).forward(request, response);
         }
-        
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -84,7 +75,6 @@ public class Validar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
     }
 
     /**
@@ -99,7 +89,6 @@ public class Validar extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
     }
 
     /**

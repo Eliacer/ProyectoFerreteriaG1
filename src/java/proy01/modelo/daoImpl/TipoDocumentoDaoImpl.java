@@ -31,7 +31,7 @@ public class TipoDocumentoDaoImpl implements TipoDocumentoDao{
         
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select * from tipo_documento";
+        String sql = "select * from tipo_documento where estado='1'";
         List<TipoDocumento> lista = new ArrayList<TipoDocumento>();
         TipoDocumento td= null;
         try {

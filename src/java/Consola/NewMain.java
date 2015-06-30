@@ -36,9 +36,10 @@ public class NewMain {
 //        main.obtUsuario();
 //        main.obtUsuariopriv();
 //        main.actPersona();
-        main.obtPersona();
+//        main.obtPersona();
 //        main.obt_compra();
 //        main.insertCompra();
+        main.insertpers();
     }
     
     public void insertprod()
@@ -57,6 +58,26 @@ public class NewMain {
         p.setId_ubicacion("00002");
         
         if(dao.InsertProducto(p)){
+            System.out.println("Se ingreso correctamente");
+        
+        }
+        else{
+            System.out.println("no se pudo agregar");
+        }
+        
+    }
+    
+    
+    public void insertpers()
+    {
+        Persona persona = new Persona();
+        PersonaDao dao = new PersonaDaoImpl();
+        
+        persona.setRazon_social("jhjhjhjhj");
+        persona.setRuc("1020020022");
+        
+        
+        if(dao.InsertarPersona(persona)){
             System.out.println("Se ingreso correctamente");
         
         }

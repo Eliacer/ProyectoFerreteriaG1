@@ -2,11 +2,11 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
         <servlet-name>Validar</servlet-name>
-        <servlet-class>Controlador.Validar</servlet-class>
+        <servlet-class>proy01.Controlador.Validar</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CerrarSession</servlet-name>
-        <servlet-class>Controlador.CerrarSession</servlet-class>
+        <servlet-class>proy01.Controlador.CerrarSession</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Ocultar</servlet-name>
@@ -14,11 +14,11 @@
     </servlet>
     <servlet>
         <servlet-name>Venta</servlet-name>
-        <servlet-class>Controlador.Ventas</servlet-class>
+        <servlet-class>proy01.Controlador.Ventas</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Compras</servlet-name>
-        <servlet-class>Controlador.Compras</servlet-class>
+        <servlet-class>proy01.Controlador.Compras</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegCompra</servlet-name>

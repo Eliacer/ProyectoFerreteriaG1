@@ -155,7 +155,7 @@
                         <td  align="center"><%=compra.getAbrev()%><%=espacio%><%=compra.getCostoUnidad()%></td>
                         <td  align="center"><%=sol%><%=compra.getPsugerido()%></td>       
                         <td>
-                        <form action="FijarPrecios.jsp">    
+                            <form action="FijarPrecios.jsp" method="post">    
                         <div class="col-sm-7">
                             <input type="hidden" name="id_compra"  value="<%=id_compra%>" size="10">
                             <input type="hidden" name="id_producto"  value="<%=compra.getId_producto()%>" size="10">

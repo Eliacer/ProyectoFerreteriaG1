@@ -58,6 +58,9 @@
                 if(dao.DeletePersona(id_persona)){
                     mensaje="Se eliminó correctamente.";
                 }
+                else{
+                    mensaje="¡¡No se puede eliminar...Es posible que estea asignado con alguna funcion!!";
+                }
             }
         }
     %>

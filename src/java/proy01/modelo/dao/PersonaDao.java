@@ -29,6 +29,7 @@ public interface PersonaDao {
     //public List<Persona> ObtenerPersonaId (String id);
     public Persona ObtenerPersonaId (String id);
     public Persona ObtenerPersonaDni (String dni);
+    public Persona ObtenerPersonaRuc (String ruc);
     public boolean RegistrarProveedor(Proveedor proveedor);
     public boolean RegistrarUsuario(Usuario usuario);
     public boolean RegistrarCliente(Cliente cliente);
