@@ -3,17 +3,18 @@ package proy01.modelo.entidad;
 public class Venta {
 
 
-     private String id_venta;
-     private String id_usuario;
-     private String id_cliente;
-     private String id_formaPago;
-     private String id_configuracion;
-     private String numComprobante;
-     private String fechaventa;
-     private String descripcion;
-     private String idTipoCliente;
-     private String serie;
-     private String estado;
+     private String id_venta="";
+     private String id_usuario="";
+     private String id_cliente="";
+     private String id_formaPago="";
+     private String id_configuracion="";
+     private String numComprobante="";
+     private String fechaventa="";
+     private String descripcion="";
+     private String idTipoCliente="";
+     private String serie="";
+     private String estado="";
+     private double igv=0.0;
      
      private String dcto;
 
@@ -115,6 +116,16 @@ public class Venta {
     public void setDcto(String dcto) {
         this.dcto = dcto;
     }
+
+    public double getIgv() {
+        return igv;
+    }
+
+    public void setIgv(double igv) {
+        this.igv = igv;
+    }
+
+    
 
     
     

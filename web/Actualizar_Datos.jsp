@@ -2,68 +2,11 @@
 <%@page import="proy01.modelo.daoImpl.PersonaDaoImpl"%>
 <%@page import="proy01.modelo.dao.PersonaDao"%>
 <%@page import="proy01.modelo.entidad.Persona"%>
+<jsp:useBean id="mensaje" scope="request" class="java.lang.String" />
+<jsp:useBean id="alert" scope="request" class="java.lang.String" />
 <%@include file="WEB-INF/jspf/top.jspf" %>
 
-<script type="text/javascript">
-(function(document) {
-  'use strict';
-
-  var LightTableFilter = (function(Arr) {
-
-    var _input;
-
-    function _onInputEvent(e) {
-      _input = e.target;
-      var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-      Arr.forEach.call(tables, function(table) {
-        Arr.forEach.call(table.tBodies, function(tbody) {
-          Arr.forEach.call(tbody.rows, _filter);
-        });
-      });
-    }
-
-    function _filter(row) {
-      var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
-      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-    }
-
-    return {
-      init: function() {
-        var inputs = document.getElementsByClassName('light-table-filter');
-        Arr.forEach.call(inputs, function(input) {
-          input.oninput = _onInputEvent;
-        });
-      }
-    };
-  })(Array.prototype);
-
-  document.addEventListener('readystatechange', function() {
-    if (document.readyState === 'complete') {
-      LightTableFilter.init();
-    }
-  });
-
-})(document);
-</script>
-
-<div class="container">  
-    
-    <%
-        String id_persona = request.getParameter("id_persona");id_persona = id_persona == null ? "" : id_persona;
-        String opcion = request.getParameter("opcion");opcion = opcion == null ? "" : opcion;
-        String mensaje="";
-        if(opcion.equals("eliminar")){   
-            if(!id_persona.equals("")){
-                PersonaDao dao = new PersonaDaoImpl();
-                if(dao.DeletePersona(id_persona)){
-                    mensaje="Se eliminó correctamente.";
-                }
-                else{
-                    mensaje="¡¡No se puede eliminar...Es posible que estea asignado con alguna funcion!!";
-                }
-            }
-        }
-    %>
+<div class="container">    
     <h3 align="center">Reporte de personas</h3>
     <div class="row">
     <div class="col-md-1"></div>
@@ -72,7 +15,7 @@
             <%
                 if(!mensaje.equals("")){
             %>
-            <div class="alert alert-danger"><%=mensaje%></div> 
+            <div class="alert alert-<%=alert%>"><%=mensaje%></div> 
             <%}%>
         </div>
     <div class="col-md-1"></div>
@@ -114,12 +57,12 @@
                     <td  align="center"><%=telefono%></td>
                     <td><%=direccion%></td>
                     <td align="center">
-                        <a href="Registro_personas.jsp?opcion=Actualizar&id_persona=<%=persona.getId_persona()%>">
+                        <a href="controlpersona?opcion=Actualizar&id_persona=<%=persona.getId_persona()%>" title="Actualizar">
                             <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button><%=espacio%>
                         </a>
                     </td>
                     <td align="center">
-                        <a href="Actualizar_Datos.jsp?opcion=eliminar&id_persona=<%=persona.getId_persona()%>">
+                        <a href="controlpersona?opcion=Eliminar&id_persona=<%=persona.getId_persona()%>" title="Eliminar">
                             <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         </a>
                     </td>

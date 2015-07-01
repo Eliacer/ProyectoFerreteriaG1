@@ -11,15 +11,15 @@ package proy01.modelo.entidad;
  */
 public class Rep_ventas {
     
-    private String id_venta;
-    private String nombre_cliente;
-    private String nombre_forma_pago;
-    private String nombre_tipo_moneda;
-    private String nombre_comprobante;
-    private String fecha_compra;
-    private String nombre_usuario;
-    private String fecha_venta;
-    private String num_com;
+    private String id_venta="";
+    private String nombre_cliente="";
+    private String nombre_forma_pago="";
+    private String nombre_tipo_moneda="";
+    private String nombre_comprobante="";
+    private String nombre_usuario="";
+    private String fecha_venta="";
+    private String num_com="";
+    private String igv="";
 
     public Rep_ventas() {
     }
@@ -66,14 +66,6 @@ public class Rep_ventas {
         this.nombre_comprobante = nombre_comprobante;
     }
 
-    public String getFecha_compra() {
-        return fecha_compra;
-    }
-
-    public void setFecha_compra(String fecha_compra) {
-        this.fecha_compra = fecha_compra;
-    }
-
     public String getNombre_usuario() {
         return nombre_usuario;
     }
@@ -96,6 +88,14 @@ public class Rep_ventas {
 
     public void setNum_com(String num_com) {
         this.num_com = num_com;
+    }
+
+    public String getIgv() {
+        return igv;
+    }
+
+    public void setIgv(String igv) {
+        this.igv = igv;
     }
 
     

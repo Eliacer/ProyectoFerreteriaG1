@@ -24,19 +24,21 @@ public interface VentaDao {
     public ComprobanteConfig ObtenerCompConfig(String idcomprobante);
     public List<FormaPago> ListarFormapago();
     public List<TipoMoneda> ListarMoneda();
-    public CatCliente ObtenerDcto(String id_venta,String id_cliente);
+    public CatCliente ObtenerDcto(String id_venta);
     public boolean RegistrarVenta(Venta venta);
     public boolean IniciarVenta(String id_config);
     public List<Comprobante> ListarCompVenta();
     public boolean RegistrarDetVenta(DetalleVenta detalleVenta);
     public Venta ObtenerNumComp(String id_usuario,String id_cliente,String id_config);
     public Venta ObtenerVenta(String numComp, String id_configuracion);
+    public Venta ObtenerVentaid(String id_venta);
     public Venta ObtenerDatosVenta(String id_venta);
     public DetalleVenta ObtenerDetVenta(String id_venta,String id_producto);
     public List<DetalleVenta> ListarProductosVenta(String id_venta);
     public boolean Stockventa(String id_venta);
     public boolean DeleteProdVenta(String id_venta,String id_producto);
     public boolean UpdateDetVenta(DetalleVenta detalleVenta);
+    public boolean UpdateVenta(Venta venta);
     
     public List<Rep_ventas> ListarVentas(String f_in,String f_fn);
     

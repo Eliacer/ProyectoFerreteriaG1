@@ -209,7 +209,7 @@ public class ProductoDaoImpl implements ProductoDao{
         
         Statement st = null;
         ResultSet rs= null;
-        String query = "select stock_actual,nombre,nombre_marca(id_marca)as marca,precio from producto "
+        String query = "select id_producto,stock_actual,nombre,nombre_marca(id_marca)as marca,precio from producto "
                     + "where id_producto='"+id_pro+"'";
         Producto pr = null;
         
@@ -218,6 +218,7 @@ public class ProductoDaoImpl implements ProductoDao{
             rs=st.executeQuery(query);          
             while (rs.next()) {
                 pr= new Producto();
+                pr.setIdProducto(rs.getString("id_producto"));
                 pr.setNombre(rs.getString("nombre"));
                 pr.setId_marca(rs.getString("marca"));
                 pr.setPrecio(rs.getDouble("precio"));

@@ -2,18 +2,18 @@ package proy01.modelo.entidad;
 
 public class DetalleCompra {
 
-     private String id_compra;
-     private String id_producto;
-     private String producto;
-     private String id_unidad;
+     private String id_compra="";
+     private String id_producto="";
+     private String producto="";
+     private String id_unidad="";
      private Integer cantMayor;
      private Integer cantMenor;
      private Double costoMayor;
-     private Double costoUnidad;
-     private Double costototal;
-     private Double valor_moneda;
-     private double importe;
-     private String pf;
+     private Double costoUnidad=0.0;
+     private Double costototal=0.0;
+     private Double valor_moneda=0.0;
+     private Double importe=0.0;
+     private String pf="";
      
      private Double igv;
      

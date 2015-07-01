@@ -3,21 +3,15 @@
 <%@page import="proy01.modelo.daoImpl.VentaDaoImpl"%>
 <%@page import="proy01.modelo.dao.VentaDao"%>
 <%@page import="proy01.modelo.entidad.Rep_compras"%>
+<jsp:useBean id="f_in" scope="request" class="java.lang.String" />
+<jsp:useBean id="f_fn" scope="request" class="java.lang.String" />
 <%@include file="WEB-INF/jspf/top.jspf"%>
 
 <div class="container">
-    <%
-        String f_in = request.getParameter("f_in");f_in = f_in == null ? "" : f_in;
-        String f_fn = request.getParameter("f_fn");f_fn = f_fn == null ? "" : f_fn;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
-        //Date inicio = formatter.parse(f_in);
-        //Date fin = formatter.parse(f_fn);
-    %>
-    
     <div class="row">
         <div class="col-md-12">
             <h3 align="center">Ventas entre dos fechas</h3>
-            <form action="Rep_Ventas.jsp" method="post">
+            <form action="controlreportes?opcion=RventasF" method="post">
                 <table align="center">
                     <tbody>
                         <tr>                 

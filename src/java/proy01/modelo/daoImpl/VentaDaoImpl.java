@@ -161,12 +161,13 @@ public class VentaDaoImpl implements VentaDao{
                     + "id_cliente, "
                     + "id_configuracion, "
                     + "id_forma_pago, "
-                    + "id_categoria) "
+                    + "id_categoria,igv) "
                     + "values('"+venta.getId_usuario()  +"',"
                     + "'"+venta.getId_cliente()         +"',"
                     + "'"+venta.getId_configuracion()   +"',"
                     + "'"+venta.getId_formaPago()       +"',"
-                    + "'"+venta.getIdTipoCliente()      +"')";
+                    + "'"+venta.getIdTipoCliente()      +"',"
+                    + venta.getIgv()+")";
         
         try {
             st = open().createStatement();
@@ -200,12 +201,12 @@ public class VentaDaoImpl implements VentaDao{
                     + "id_producto, "
                     + "cantidad, "
                     + "precio_unitario, "
-                    + "descuento) "
+                    + "descuento,control) "
                     + "values('"+detalleVenta.getId_venta()  +"',"
                     + "'"+detalleVenta.getId_producto()      +"',"
                     + ""+detalleVenta.getCantidad()          +","
                     + ""+detalleVenta.getPreciounitario()   +","
-                    + ""+descuento+")";
+                    + ""+descuento+",'0')";
         
         try {
             st = open().createStatement();
@@ -311,14 +312,15 @@ public class VentaDaoImpl implements VentaDao{
         return venta;
     }
 
+    
+    
+            
     @Override
-    public Venta ObtenerVenta(String numComp, String config) {
+    public Venta ObtenerVentaid(String id_venta) {
         
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select id_venta,id_usuario,id_cliente,to_char(fecha_venta,'dd/mm/yy') as fv,id_configuracion, "
-                + "num_comprobante,id_forma_pago,id_categoria,estado,serieventa(id_configuracion) as serie "
-                + "from venta where num_comprobante='"+numComp+"' and id_configuracion=('"+config+"')";
+        String sql = "select * from venta where id_venta='"+id_venta+"'";
         Venta venta= null;
         
         try {
@@ -330,13 +332,42 @@ public class VentaDaoImpl implements VentaDao{
                 venta.setId_venta(rs.getString("id_venta"));
                 venta.setId_usuario(rs.getString("id_usuario"));
                 venta.setId_cliente(rs.getString("id_cliente")); 
-                venta.setFechaventa(rs.getString("fv")); 
-                venta.setId_configuracion(rs.getString("id_configuracion"));
-                venta.setNumComprobante(rs.getString("num_comprobante")); 
-                venta.setSerie(rs.getString("serie")); 
-                venta.setId_formaPago(rs.getString("id_forma_pago")); 
+                venta.setFechaventa(rs.getString("fecha_venta")); 
+                venta.setId_formaPago(rs.getString("id_forma_pago"));   
+                venta.setId_configuracion(rs.getString("id_configuracion")); 
                 venta.setIdTipoCliente(rs.getString("id_categoria")); 
-                venta.setEstado(rs.getString("estado"));         
+                venta.setIgv(rs.getDouble("igv"));
+                venta.setNumComprobante(rs.getString("num_comprobante"));
+                venta.setEstado(rs.getString("estado"));
+                         
+            }  
+            open().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+        return venta;
+    }
+    
+    @Override
+    public Venta ObtenerVenta(String numComp, String config) {
+        
+        Statement st=null;
+        ResultSet rs=null;
+        String sql = "select id_venta from venta where num_comprobante='"+numComp+"' and id_configuracion=('"+config+"')";
+        Venta venta= null;
+        
+        try {
+            st = open().createStatement();
+            rs = st.executeQuery(sql);
+            
+            while (rs.next()) {                    
+                venta = new Venta();              
+                venta.setId_venta(rs.getString("id_venta"));
+                         
             }  
             open().close();
         } catch (Exception e) {
@@ -423,8 +454,8 @@ public class VentaDaoImpl implements VentaDao{
         ResultSet rs=null;
         String sql = "select nombre_usuario(id_usuario) as us,nombre_cliente(id_cliente) as cliente, "
                    + "to_char(fecha_venta,'dd/mm/yyyy') as fv,nombre_forma_pago(id_forma_pago) as forma, "
-                   + "nombre_comp_venta(id_configuracion) as conp, "
-                   + "num_comprobante from venta where id_venta='"+id_venta+"'";
+                   + "nombre_comp_venta(id_configuracion) as conp,serieventa(id_configuracion) as serie, "
+                   + "num_comprobante,igv from venta where id_venta='"+id_venta+"'";
         Venta venta= null;
         
         try {
@@ -439,7 +470,8 @@ public class VentaDaoImpl implements VentaDao{
                 venta.setId_formaPago(rs.getString("forma"));   
                 venta.setId_configuracion(rs.getString("conp")); 
                 venta.setSerie(rs.getString("serie")); 
-                venta.setNumComprobante(rs.getString("num_comprobante"));         
+                venta.setNumComprobante(rs.getString("num_comprobante"));  
+                venta.setIgv(rs.getDouble("igv"));
             }  
             open().close();
         } catch (Exception e) {
@@ -478,12 +510,40 @@ public class VentaDaoImpl implements VentaDao{
     }
 
     @Override
+    public boolean UpdateVenta(Venta venta) {
+        
+        boolean estado = false;
+        Statement st = null;
+        String query="update venta set id_usuario='"+venta.getId_usuario()+"', "
+                    + "id_cliente='"+venta.getId_cliente()+"', "
+                    + "id_configuracion='"+venta.getId_configuracion()+"', "
+                    + "id_forma_pago='"+venta.getId_formaPago()+"', "
+                    + "id_categoria='"+venta.getIdTipoCliente()+"', "
+                    + "igv="+venta.getIgv()+" where id_venta='"+venta.getId_venta()+"'";
+        
+        try {
+            st = open().createStatement();
+            st.executeQuery(query);
+            open().commit();
+            open().close();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                estado = false;
+                open().rollback();
+                open().close();
+            } catch (Exception ex) {
+            }       
+        }
+        return estado; 
+    }
+    
+    @Override
     public boolean UpdateDetVenta(DetalleVenta dv) {
         
         double descuento=0;
-        descuento=(dv.getCantidad()*dv.getPreciounitario())*(dv.getDescuento()/100);
-        
-        
+        descuento=(dv.getCantidad()*dv.getPreciounitario())*(dv.getDescuento()/100);           
         boolean estado = false;
         Statement st = null;
         String query="update venta_detalle set cantidad="+dv.getCantidad()+", "
@@ -509,12 +569,11 @@ public class VentaDaoImpl implements VentaDao{
     }
 
     @Override
-    public CatCliente ObtenerDcto(String id_venta,String id_cliente) {
+    public CatCliente ObtenerDcto(String id_venta) {
         
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select porc_descuento(id_venta,id_cliente) as dcto from venta where id_venta='"+id_venta+"' and "
-                   + "id_cliente='"+id_cliente+"'";
+        String sql = "select porc_descuento(id_venta) as dcto from venta where id_venta='"+id_venta+"'";
         CatCliente catCliente= null;
         
         try {
@@ -556,7 +615,7 @@ public class VentaDaoImpl implements VentaDao{
             
             while (rs.next()) {                    
                 rep_ventas = new Rep_ventas();              
-                rep_ventas.setFecha_compra(rs.getString("fecha_venta"));
+                rep_ventas.setFecha_venta(rs.getString("fecha_venta"));
                 rep_ventas.setNombre_comprobante(rs.getString("comprobante"));
                 rep_ventas.setNum_com(rs.getString("num_comprobante")); 
                 rep_ventas.setNombre_usuario(rs.getString("usuario")); 

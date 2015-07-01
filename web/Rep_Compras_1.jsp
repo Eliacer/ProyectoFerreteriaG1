@@ -18,13 +18,10 @@
 <%
     String f_in = request.getParameter("f_in");f_in = f_in == null ? "" : f_in;
     String f_fn = request.getParameter("f_fn");f_fn = f_fn == null ? "" : f_fn;
-    String mensaje="";
-     
-
 %>
 
     <div class="row">
-        <h3 align="center">Reportes de Compras</h3><br>
+        <br><h3 align="center">Reportes de Compras</h3><br>
         <div class="col-md-12 well">
             <div class="tab-pane">
                 <table class="table table-hover table-striped table-bordered">
@@ -47,7 +44,7 @@
                              count++;
                         %>
           
-                        <tr>     
+                        <tr onmouseover="this.style.backgroundColor = 'pink';" onmouseout="this.style.backgroundColor = 'white';" style="background-color: white ;">     
                             <input type="hidden" name="id_compra"  value="<%=compra.getId_compra()%>" size="10">
                             <td><%=count%>.-</td> 
                             <td align="center"><%=compra.getFecha_compra()%></td>

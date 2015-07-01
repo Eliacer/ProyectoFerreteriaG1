@@ -10,151 +10,29 @@
 <%@page import="proy01.modelo.entidad.Rep_compras"%>
 <%@page import="proy01.modelo.entidad.Compra"%>
 <%@include file="WEB-INF/jspf/top.jspf" %>
-
+<jsp:useBean id="id_compra" scope="request" class="java.lang.String" />
+<jsp:useBean id="mensaje" scope="request" class="java.lang.String" />
+<jsp:useBean id="alert" scope="request" class="java.lang.String" />
+<jsp:useBean id="opcion" scope="request" class="java.lang.String" />
+<jsp:useBean id="buscar_por" scope="request" class="java.lang.String" />
+<jsp:useBean id="buscar" scope="request" class="java.lang.String" />
+<jsp:useBean id="CompraT" scope="request" class="proy01.modelo.entidad.Rep_compras" />
+<jsp:useBean id="CompraDetalle" scope="request" class="proy01.modelo.entidad.DetalleCompra" />
+<jsp:useBean id="ProductoDe" scope="request" class="proy01.modelo.entidad.Producto" />
 <div class="container">
     
     <%
     
-        HttpSession ses = request.getSession();     
-        String num_comp=(String)ses.getAttribute("num_compobante");num_comp = num_comp==null?"":num_comp;
-        String id_compra=(String)ses.getAttribute("id_compra");id_compra = id_compra==null?"":id_compra;
-        String id_cliente=(String)ses.getAttribute("id_cliente");id_cliente = id_cliente==null?"":id_cliente;   
-        String id_producto=request.getParameter("id_producto");id_producto = id_producto==null?"":id_producto;
-        String unidad=request.getParameter("unidad");unidad = unidad==null?"":unidad;
-        String cant_may=request.getParameter("cant_may");cant_may = cant_may==null?"":cant_may;
-        String cant_menor=request.getParameter("cant_menor");cant_menor = cant_menor==null?"":cant_menor;
-        String costo=request.getParameter("costo");costo = costo==null?"":costo;
-        String buscar_por = request.getParameter("buscar_por");buscar_por = buscar_por==null?"nombre": buscar_por;
-        String buscar = request.getParameter("buscar");buscar = buscar==null?"": buscar;
-        String opcion = request.getParameter("opcion");opcion = opcion == null ? "Buscar" : opcion;    
-        String nombre_proveedor="";
-        String nombre_forma_pago="";
-        String nombre_tipo_moneda="";
-        String nombre_comprobante="";
-        String fecha_compra="";
-        String nombre_usuario="";
-        String direccion_prov="";
-        String igv="";
-        String flete="";
-        String valor_moneda=request.getParameter("valor_moneda");valor_moneda = valor_moneda == null ? "" : valor_moneda;
-        String mensaje="";
-        String marca1="";
-        String nombre_prod="";
-        String alert="";
-        String simbolo="";
-        String espacio="  ";
+        if(opcion==null ||opcion.equals("")){opcion="Buscar";}
+        if(buscar_por==null ||buscar_por.equals("")){buscar_por="";}
+        if(buscar==null ||buscar.equals("")){buscar="";}
+        String espacio= "  ";
+        String marca="";
+        String cant_may=String.valueOf(CompraDetalle.getCantMayor());cant_may = cant_may.equals("null")?"":cant_may;
+        String cant_menor=String.valueOf(CompraDetalle.getCantMenor());cant_menor = cant_menor.equals("null")?"":cant_menor;
+        String costo=String.valueOf(CompraDetalle.getCostoMayor());costo = costo.equals("null")?"":costo;
         
-        if(opcion.equals("Buscar") || opcion.equals("add") || opcion.equals("Agregar") ||opcion.equals("Actualizar")
-                || opcion.equals("Actualizando") || opcion.equals("Eliminar")){
-            
-            if(!id_compra.equals("")){          
-                CompraDao dao = new CompraDaoImpl();
-                Rep_compras rep_compras = new Rep_compras();
-                
-                rep_compras = dao.ListarCompraT(id_compra);
-                nombre_proveedor=rep_compras.getNombre_proveedor();nombre_proveedor = nombre_proveedor==null?"":nombre_proveedor;
-                nombre_forma_pago=rep_compras.getNombre_forma_pago();nombre_forma_pago = nombre_forma_pago==null?"":nombre_forma_pago;
-                nombre_tipo_moneda=rep_compras.getNombre_tipo_moneda();nombre_tipo_moneda = nombre_tipo_moneda==null?"":nombre_tipo_moneda;
-                simbolo=rep_compras.getAbrev_moneda();simbolo = simbolo==null?"":simbolo;
-                nombre_comprobante=rep_compras.getNombre_comprobante();nombre_comprobante = nombre_comprobante==null?"":nombre_comprobante;
-                fecha_compra=rep_compras.getFecha_compra();fecha_compra = fecha_compra==null?"":fecha_compra;
-                nombre_usuario=rep_compras.getNombre_usuario();nombre_usuario = nombre_usuario==null?"":nombre_usuario;
-                direccion_prov=rep_compras.getDireccion_prov();direccion_prov = direccion_prov==null?"":direccion_prov;
-                igv=rep_compras.getIgv();igv = igv==null?"":igv;
-                flete=rep_compras.getFlete();flete = flete==null?"":flete;
-                valor_moneda=String.valueOf(rep_compras.getValor_moneda());valor_moneda = valor_moneda==null?"":valor_moneda;                                
-            }    
-            if(opcion.equals("add")||opcion.equals("Actualizar")){
-                if(!id_producto.equals("")){
-                    Producto producto = new Producto();
-                    ProductoDao pd=new ProductoDaoImpl();
-                    producto = pd.ObtenerDatProducto(id_producto);
-                    nombre_prod=producto.getNombre();nombre_prod = nombre_prod==null?"":nombre_prod;                
-                    marca1=producto.getId_marca();marca1 = marca1==null?"":marca1;                              
-                }    
-                if(opcion.equals("Actualizar")){
-                    DetalleCompra dc = new DetalleCompra();
-                    CompraDao cd = new CompraDaoImpl();
-                    dc=cd.ObtenerDetCompra(id_compra, id_producto);
-                    id_compra=dc.getId_compra();id_compra = id_compra==null?"":id_compra;   
-                    id_producto=dc.getId_producto();id_producto = id_producto==null?"":id_producto;
-                    unidad=dc.getId_unidad();unidad = unidad==null?"":unidad;  
-                    cant_may=String.valueOf(dc.getCantMayor());cant_may = cant_may==null?"":cant_may;  
-                    cant_menor=String.valueOf(dc.getCantMenor());cant_menor = cant_menor==null?"":cant_menor;  
-                    costo=String.valueOf(dc.getCostoMayor());costo = costo==null?"":costo; 
-                }
-            }  
-        if(opcion.equals("Agregar")){
-            if(!id_compra.equals("")&&!id_producto.equals("") && !unidad.equals("")&& !cant_may.equals("")
-                    && !cant_menor.equals("")&& !costo.equals("")){
-                DetalleCompra detalleCompra = new DetalleCompra();
-                CompraDao compraDao = new CompraDaoImpl(); 
-                detalleCompra.setId_compra(id_compra);
-                detalleCompra.setId_producto(id_producto);
-                detalleCompra.setId_unidad(unidad);
-                detalleCompra.setCantMayor(Integer.parseInt(cant_may));
-                detalleCompra.setCantMenor(Integer.parseInt(cant_menor));
-                detalleCompra.setCostoMayor(Double.parseDouble(costo));
-                if(compraDao.RegistrarDetCompra(detalleCompra)){
-                    mensaje="Se añadió el producto...";  
-                    alert="success";
-                    opcion="Buscar";
-                }
-                else{
-                    mensaje="No se pudo añaadir el producto...";
-                    alert="danger";
-                    opcion="Buscar";
-                }             
-            }
-        }  
-            if(opcion.equals("Actualizando")){
-                DetalleCompra dc = new DetalleCompra();
-                CompraDao cd = new CompraDaoImpl();
-                dc.setId_compra(id_compra);
-                dc.setId_producto(id_producto);
-                dc.setId_unidad(unidad);
-                dc.setCantMayor(Integer.parseInt(cant_may));
-                dc.setCantMenor(Integer.parseInt(cant_menor));
-                dc.setCostoMayor(Double.parseDouble(costo));
-                
-                if(cd.UpdateDeompra(dc)){
-                    mensaje="Se actualizo correctamente el producto de la compra...";
-                    alert="success";
-                    opcion="Buscar";
-                }
-                else{
-                    mensaje="No se pudo actulizar el producto de la compra...";
-                    alert="danger";
-                    opcion="Buscar";
-                }    
-            }
-            if(opcion.equals("Eliminar")){
-                CompraDao cd = new CompraDaoImpl();
-                if(cd.DeleteProdCompra(id_compra, id_producto)){
-                    mensaje="Se elimino correctamente el producto de la compra...";
-                    alert="success";
-                    opcion="Buscar";
-                }
-                else{
-                    mensaje="No se pudo eliminar el producto de la compra...";
-                    alert="danger";
-                    opcion="Buscar";
-                }  
-            }   
-        }      
-        if(opcion.equals("Finalizar")){
-            if(!id_compra.equals("")){
-                CompraDao cd = new CompraDaoImpl();
-                if(cd.StockCompra(id_compra)){
-                    mensaje="Se registró correctamente la compra...";
-                    response.sendRedirect("FijarPrecios.jsp");
-                }
-                else{
-                    alert="danger";
-                    mensaje="Ocurrió un error al registrar la compra...";
-                }
-            }
-        }
+        
     %>
   
 <br>
@@ -174,35 +52,39 @@
 <%if(!opcion.equals("Finalizar")){%>
 <div class="row">
     <div class="col-md-1"></div>
-    <div class="col-md-10"><h1 align="center"><%=nombre_proveedor%></h1></div>
+    <div class="col-md-10"><h1 align="center"><%=CompraT.getNombre_proveedor()%></h1></div>
     <div class="col-md-1"></div>
 </div>
 <div class="row"> 
     <div class="col-md-7"> 
-        <h4 allign="center"><strong>Registro de Compras</strong></h4><br>
-        <table width="480" align="left" class="table-responsive">
+        <h4 allign="center"><strong>Registro de Compras</strong></h4>
+        <a href="controlcompra?opcion=Actualizar&id_compra=<%=id_compra%>"><input type="submit" class="btn btn-primary" value="Actualizar"></a>
+        <table width="550" align="left" class="table-responsive">
             <tbody>
             <tr>
-                <td width="10"><strong>Fecha:</strong></td>
-                <td width="50"><%=fecha_compra%></td>
-                <td width="10"></td>
-                <td width="15"><strong>Moneda:</strong></td>
-                <td width="30"><%=nombre_tipo_moneda%></td>
+                <td width="15%"><strong>Fecha:</strong></td>
+                <td width="45%"><%=CompraT.getFecha_compra()%></td>
+                <td width="5%"></td>
+                <td width="15%"><strong>Moneda:</strong></td>
+                <td width="10%"><%=CompraT.getNombre_tipo_moneda()%></td>
             </tr>
             <tr>
                 <td><strong>F. Pago:</strong></td>
-                <td><%=nombre_forma_pago%></td>
+                <td><%=CompraT.getNombre_forma_pago()%></td>
                 <td></td>
-                <td><strong>IGV</strong></td>
-                <td width="10"><%=igv%></td>
+                <td><strong>IGV:</strong></td>
+                <td width=""><%=CompraT.getIgv()%></td>
             </tr>
             <tr>
                 <td><strong>Usuario:</strong></td>
-                <<td><%=nombre_usuario%></td>
+                <td><%=CompraT.getNombre_usuario()%></td>
                 <td></td>
                 <td><strong>Flete:</strong></td>
-                <td width="10"><%=flete%></td>
+                <td width=""><%=CompraT.getFlete()%></td>
             </tr>
+            <tr>
+                <td colspan="6"><br><h4 align="center">Productos de la compra</h4><br></td>
+            </tr>        
             </tbody>
         </table>   
         <br><br>
@@ -210,7 +92,7 @@
         <%if(opcion.equals("Buscar") || opcion.equals("add")|| opcion.equals("Actualizar"))  {%>     
         
         <div class="tab-pane">
-            <br><br><h4 align="center">Productos de la compra</h4>
+            
             <table class="table table-hover table-striped table-bordered">
                 <thead>
                     <tr>
@@ -234,15 +116,15 @@
                         <td align="center"><%=dc.getCantMayor()%></td>
                         <td align="center"><%=dc.getId_unidad()%></td>
                         <td><%=dc.getProducto()%></td>
-                        <td align="center"><%=simbolo%><%=espacio%><%=dc.getCostoMayor()%></td> 
-                        <td align="center"><%=simbolo%><%=espacio%><%=dc.getImporte()%></td>
+                        <td align="center"><%=CompraT.getAbrev_moneda()%><%=espacio%><%=dc.getCostoMayor()%></td> 
+                        <td align="center"><%=CompraT.getAbrev_moneda()%><%=espacio%><%=dc.getImporte()%></td>
                         <td>
-                            <a href="Compra_detalle.jsp?opcion=Actualizar&id_producto=<%=dc.getId_producto()%>" title="Actualizar">
+                            <a href="buyproducts?opcion=Actualizar&id_producto=<%=dc.getId_producto()%>&id_compra=<%=id_compra%>" title="Actualizar">
                                 <button type="button" class="btn btn-info">
                                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                                 </button>
                             </a>
-                            <a href="Compra_detalle.jsp?opcion=Eliminar&id_producto=<%=dc.getId_producto()%>" title="Eliminar">
+                            <a href="buyproducts?opcion=Eliminar&id_producto=<%=dc.getId_producto()%>&id_compra=<%=id_compra%>" title="Eliminar">
                                 <button type="button" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </button>
@@ -252,12 +134,13 @@
                     <%}%>                   
                 </tbody>
             </table>
-            <form action="Compra_detalle.jsp">
+            <form action="buyproducts" method="post">
                 <table class="table table-hover table-striped table-bordered">
                     <tbody>
                         <tr>
                             <input type="hidden" name="id_compra"  value="<%=id_compra%>" size="10">
-                            <td colspan="6" align="center"><input type="submit" name="opcion" class="btn btn-primary" value="Finalizar"></td>
+                            <input type="hidden" name="opcion"  value="Finalizar" size="10">
+                            <td colspan="6" align="center"><input type="submit" class="btn btn-primary" value="Finalizar"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -268,12 +151,12 @@
     <div class="col-md-5"> 
         <h4 allign="center"><strong>B&uacute;squeda de Productos</strong></h4><br>
         <%if(opcion.equals("Buscar")){%>
-            <form class="form-horizontal" action="Compra_detalle.jsp" method="post">  
+            <form class="form-horizontal" action="buyproducts" method="post">  
                 
                 <table>
                     <tr>
-                        <input type="hidden" name="num_comp"  value="<%=num_comp%>" size="10">
-                        <input type="hidden" name="opcion"  value="<%=opcion%>" size="10">
+                        <input type="hidden" name="opcion"  value="Buscando" size="10">
+                        <input type="hidden" name="id_compra"  value="<%=id_compra%>" size="10">
                         <td width="20%"><strong>Buscar Por:</strong></td>
                         <td width="25%"><select class="form-control" name="buscar_por">
                             <option value="nombre">Nombre</option>
@@ -308,14 +191,12 @@
                             ProductoDao pro = new ProductoDaoImpl();
                             for(Producto producto :pro.BuscarProducto(buscar_por, buscar)){
                                  count++;
-                                 String marca=producto.getId_marca();marca = marca==null?"":marca; 
-                                 nombre_prod=producto.getNombre();
-
+                                 marca=producto.getId_marca();marca = marca==null?"":marca; 
                             %>        
                             <tr>     
                                 <input type="hidden" name="id_producto"  value="<%=producto.getIdProducto()%>" size="10">
                                 <td><%=count%>.-</td> 
-                                <td><a class="btn" href="buyproducts?id_producto=<%=producto.getIdProducto()%>&opcion=add">
+                                <td><a class="btn" href="buyproducts?id_producto=<%=producto.getIdProducto()%>&opcion=add&id_compra=<%=id_compra%>">
                                  <%=producto.getNombre()%></a></td>
                                 <td><%=marca%></td>
                                 <td align="center"><%=producto.getStock_actual()%></td> 
@@ -333,30 +214,30 @@
             <%if(opcion.equals("Actualizar")){%>
             <h4 align="center">Actualizando Productos</h4><br>
             <%}%>
-            <form action="Compra_detalle.jsp" method="post"> 
+            <form action="buyproducts" method="post"> 
                 <table class="table table-bordered">
                     <tbody>   
                         <tr>
-                            <input type="hidden" name="valor_moneda"  value="<%=valor_moneda%>" size="10">
-                            <input type="hidden" name="id_producto"  value="<%=id_producto%>" size="10">
+                            <input type="hidden" name="id_producto"  value="<%=ProductoDe.getIdProducto()%>" size="10">
+                            <input type="hidden" name="id_compra"  value="<%=id_compra%>" size="10">
                             <td width="35%">Nombre:</td>
-                          <td colspan="2"><div class="col-sm-15"><input type="text" class="form-control" placeholder="Nombre" value="<%=nombre_prod%>" disabled=""></div></td>
+                          <td colspan="2"><div class="col-sm-15"><input type="text" class="form-control" placeholder="Nombre" value="<%=ProductoDe.getNombre()%>" disabled=""></div></td>
                         </tr>
-                        <%if(!marca1.equals("")){%>
+                        <%if(!marca.equals("")){%>
                         <tr>
                           <td>Marca:</td>
-                          <td colspan="2"><div class="col-sm-15"><input type="text" class="form-control" placeholder="Marca" value="<%=marca1%>" disabled=""></div></td>
+                          <td colspan="2"><div class="col-sm-15"><input type="text" class="form-control" placeholder="Marca" value="<%=ProductoDe.getId_marca()%>" disabled=""></div></td>
                         </tr>
                         <%}%>
                         <tr>
-                            <td>Und venta:</td>
-                            <td colspan="2"><select class="form-control" name="unidad" selected="selected" <%if(unidad.equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
+                            <td>Unidad compra:</td>
+                            <td colspan="2"><select class="form-control" name="unidad" selected="selected" <%if(CompraDetalle.getId_unidad().equals("")){%> selected<%}%>><option>[--Selecciona--]</option>                 
                                 <%
                                     CaracteristicasProductoDao und_med = new CaracteristicasProductoDaoImpl();
 
                                     for(Unidad u: und_med.ListarUnidad()){             
                                 %>
-                                 <option value="<%=u.getId_unidad()%>" <%if(unidad.equals(u.getId_unidad())){%> selected<%}%>> <%=u.getNombre_unidad()%></option> 
+                                 <option value="<%=u.getId_unidad()%>" <%if(CompraDetalle.getId_unidad().equals(u.getId_unidad())){%> selected<%}%>> <%=u.getNombre_unidad()%></option> 
                                  <%}%>
                                 </select>
                             </td>
@@ -371,7 +252,7 @@
                         </tr>
                         <tr>
                           <td>Costo</td>
-                          <td align="center"><%=simbolo%></td>
+                          <td align="center"><%=CompraT.getAbrev_moneda()%></td>
                           <td><div class="col-sm-15"><input type="text" class="form-control" placeholder="Costo" name="costo" value="<%=costo%>" required></div></td>
                         </tr>
                         <%if(opcion.equals("add")){%>

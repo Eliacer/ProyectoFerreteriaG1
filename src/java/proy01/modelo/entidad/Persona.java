@@ -3,25 +3,25 @@ package proy01.modelo.entidad;
 public class Persona {
 
 
-     private String id_persona;
-     private String id_tipo_doc;
-     private String nombres;
-     private String razon_social;
-     private String apellidos;
-     private String genero;
-     private String fecha_nac;
-     private String telefono;
-     private String celular;
-     private String numero_doc;
-     private String ruc;
-     private String direccion;
+     private String id_persona="";
+     private String id_tipo_doc="";
+     private String nombres="";
+     private String razon_social="";
+     private String apellidos="";
+     private String genero="";
+     private String fecha_nac="";
+     private String telefono="";
+     private String celular="";
+     private String numero_doc="";
+     private String ruc="";
+     private String direccion="";
      private String estado;
      
      //Solo para Reportes...
-     private String usuario;
-     private String correo;
-     private String num_cuenta;
-     private String rol;
+     private String usuario="";
+     private String correo="";
+     private String num_cuenta="";
+     private String rol="";
 
     public Persona() {
         

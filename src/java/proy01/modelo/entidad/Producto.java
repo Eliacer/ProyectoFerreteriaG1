@@ -3,18 +3,18 @@ package proy01.modelo.entidad;
 public class Producto {
 
 
-     private String idProducto;
+     private String idProducto="";
      private String codigo;
-     private String nombre;
-     private String IdUndMedida;
+     private String nombre="";
+     private String IdUndMedida="";
      private Double porc_ganacia;
-     private Double precio;
-     private int stock_actual;
-     private int stock_min;
-     private String fecha_reg;
-     private String id_categoria;
-     private String id_marca;
-     private String id_ubicacion;
+     private Double precio=0.0;
+     private int stock_actual=0;
+     private int stock_min=0;
+     private String fecha_reg="";
+     private String id_categoria="";
+     private String id_marca="";
+     private String id_ubicacion="";
      private String descripcion;
 
     public Producto() {

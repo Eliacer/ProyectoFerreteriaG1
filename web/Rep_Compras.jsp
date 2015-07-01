@@ -6,21 +6,16 @@
 <%@page import="proy01.modelo.daoImpl.ProductoDaoImpl"%>
 <%@page import="proy01.modelo.dao.ProductoDao"%>
 <%@page import="proy01.modelo.entidad.Producto"%>
+<jsp:useBean id="f_in" scope="request" class="java.lang.String" />
+<jsp:useBean id="f_fn" scope="request" class="java.lang.String" />
 <%@include file="WEB-INF/jspf/top.jspf"%>
 
 <div class="container">
 
-<%
-    String f_in = request.getParameter("f_in");f_in = f_in == null ? "" : f_in;
-    String f_fn = request.getParameter("f_fn");f_fn = f_fn == null ? "" : f_fn;
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
-        
-%>
-
-    <div class="row">
+<div class="row">
         <div class="col-md-12">
             <h3 align="center">Compras entre dos fechas</h3>
-            <form action="Rep_Compras.jsp" method="post">
+            <form action="controlreportes?opcion=RcomprasF" method="post">
                 <table align="center">
                     <tbody>
                         <tr>                 

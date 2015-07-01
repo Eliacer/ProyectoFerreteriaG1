@@ -3,18 +3,18 @@ package proy01.modelo.entidad;
 public class Compra {
 
 
-     private String id_compra;
-     private String id_usuario;
-     private String id_proveedor;
-     private String id_formaPago;
-     private String id_comprobante;
-     private String id_tipoMoneda;
-     private String numComprobante;
-     private String fechaCompra;
-     private String descripcion;
-     private String igv;
-     private String flete;
-     private String precio_fijado;
+     private String id_compra="";
+     private String id_usuario="";
+     private String id_proveedor="";
+     private String id_formaPago="";
+     private String id_comprobante="";
+     private String id_tipoMoneda="";
+     private String numComprobante="";
+     private String fechaCompra="";
+     private String descripcion="";
+     private String igv="";
+     private String flete="";
+     private String precio_fijado="";
 
     public Compra() {
     }

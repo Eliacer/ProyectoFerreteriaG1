@@ -15,8 +15,8 @@
     <header>   
         <%
          HttpSession session1 = request.getSession();
-         String id=(String)session1.getAttribute("id_usuario");
-         if(id==null){
+         String id_usuario=(String)session1.getAttribute("id_usuario");
+         if(id_usuario==null){
              response.sendRedirect("Login.jsp");     
          }
         %>
@@ -25,7 +25,7 @@
                 <div class="row">          
                     <div class=" col-xs-12 col-sm-3 col-md-3">
                         <div class="logo">
-                            <a href="bienvenida.jsp"><img src="recursos/img/arca.png" class="img-responsive" alt="Imagen responsive"></a>                
+                            <a href="controlreportes?opcion=Welcome"><img src="recursos/img/arca.png" class="img-responsive" alt="Imagen responsive"></a>                
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">
@@ -56,7 +56,7 @@
                         </div>
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
-                                <li><a href="bienvenida.jsp">
+                                <li><a href="controlreportes?opcion=Welcome">
                                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Inicio
                                     </a>
                                 </li>
@@ -66,24 +66,24 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li class="divider"></li>
                                         <li class="dropdown-header">Registro</li>
-                                        <li><a href="Registro_personas.jsp">Registro de personas</a></li>
-                                        <li><a href="Registro_productos.jsp">Registro de productos</a></li>
+                                        <li><a href="controlpersona?opcion=Iniciar">Registro de personas</a></li>
+                                        <li><a href="controlproducto?opcion=Iniciar">Registro de productos</a></li>
                                         <li><a href="Caract_Producto.jsp">A&ntilde;adir Categor&iacute;as,Marcas,Ubicaci&oacute;n</a></li>
                                         <li><a href="FijarPrecios.jsp">Fijar Precios Compras</a></li>
-                                        <li><a href="FijarMoneda.jsp">Fijar valor moneda</a></li>
+                                        <li><a href="FijarMoneda.jsp">Fijar Valor Moneda</a></li>
                                         <li class="divider"></li>
                                         <li class="dropdown-header">Reportes</li>
-                                        <li><a href="Rep_Productos.jsp">Inventario</a></li>
+                                        <li><a href="controlreportes?opcion=Inventario">Inventario</a></li>
                                         <li><a href="Rep_Personas.jsp">Reportes de Personas</a></li>   
-                                        <li><a href="Rep_Compras.jsp">Reportes de Compras</a></li> 
-                                        <li><a href="Rep_Ventas.jsp">Reportes de ventas</a></li>
-                                        <li><a href="Rep_Decisivos.jsp">Reportes Importantes</a></li>
+                                        <li><a href="controlreportes?opcion=Rcompras">Reportes de Compras</a></li> 
+                                        <li><a href="controlreportes?opcion=Rventas">Reportes de Ventas</a></li>
+                                        <li><a href="controlreportes?opcion=RImportantes">Reportes Importantes</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Gestión compras <span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="Compra.jsp">Registro de compras a proveedores</a></li>   
+                                        <li><a href="controlcompra?opcion=Iniciar">Registro de compras a proveedores</a></li>   
                                     </ul>
                                     
                                 </li>
@@ -91,15 +91,15 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Gesti&oacute;n ventas<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="Venta.jsp">Registrar ventas a clientes</a></li>         
+                                        <li><a href="controlventa?opcion=Iniciar">Registrar ventas a clientes</a></li>         
                                     </ul>
                                 </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>Configurac&oacute;n<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="ModificacionProducto.jsp">Atualizar productos</a></li>
-                                        <li><a href="Actualizar_Datos.jsp">Atualizar datos personales</a></li>
+                                        <li><a href="controlproducto?opcion=Act">Actualizar productos</a></li>
+                                        <li><a href="controlpersona?opcion=Act">Actualizar datos personales</a></li>
                                     </ul>
                                 </li>   
                                 <li>

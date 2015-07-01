@@ -9,11 +9,11 @@ package proy01.modelo.entidad;
 public class Usuario  implements java.io.Serializable {
 
 
-     private String idUsuario;
-     private String login;
-     private String password;
-     private String idRol;
-     private String estado;
+     private String idUsuario="";
+     private String login="";
+     private String password="";
+     private String idRol="";
+     private String estado="";
 
     public Usuario() {
     }

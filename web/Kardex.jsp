@@ -13,8 +13,7 @@
         <title>Kardex</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
-  <body>
-      
+  <body>     
       <%
           String id_producto=request.getParameter("id_producto");id_producto = id_producto==null?"":id_producto;
       %>
@@ -30,9 +29,9 @@
                         <tr>
                             <td width="9%" bgcolor="#FFEFCE"><strong>Fecha</strong></td>
                             <td width="6%" align="center" bgcolor="#FFEFCE"><strong>Mov.</strong></td>
-                            <td width="18%" align="center" bgcolor="#FFEFCE"><strong>Producto</strong></td>
+                            <td width="18%" bgcolor="#FFEFCE"><strong>Producto</strong></td>
                             <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Cant</strong></td>
-                            <td width="9%" bgcolor="#FFEFCE"><strong>Comp.</strong></td>
+                            <td width="9%" bgcolor="#FFEFCE"><strong>Comprob.</strong></td>
                             <td width="9%" bgcolor="#FFEFCE"><strong>N&deg; Comp.</strong></td>
                             <td width="20%" bgcolor="#FFEFCE"><strong>Proveedor o Cliente </strong></td>
                         </tr>
@@ -42,11 +41,9 @@
                         int count=0;
                         FijarPreciosCompraDao dao= new FijarPreciosCompraDaoImpl() ;
                         for(KardexProducto producto:dao.Kardexproducto(id_producto)){
-                             count++;
-                            
-                        %>
-          
-                        <tr>     
+                             count++;                           
+                        %>         
+                        <tr onmouseover="this.style.backgroundColor = '#ECE0F8';" onmouseout="this.style.backgroundColor = 'white';" style="background-color: white ;">     
                             <td><%=producto.getFecha()%></td>
                             <td align="center"><%=producto.getMovimiento()%></td>
                             <td><%=producto.getProducto()%></td>

@@ -218,8 +218,7 @@ public class PersonaDaoImpl implements PersonaDao{
         String sql = "select pr.id_proveedor as id,p.razon_social||' ( '||p.ruc||' )' as nombre "
                     + "from persona p, proveedor pr "
                     + "where p.id_persona=pr.id_proveedor and "
-                    + "upper(p.razon_social) like upper('%"+proveedor+"%') and "
-                    + "rownum <=3 order by nombre asc";
+                    + "upper(p.razon_social) like upper('%"+proveedor+"%') order by nombre asc";
         List<Persona> lista = new ArrayList<Persona>();
         Persona persona = null;
         try {

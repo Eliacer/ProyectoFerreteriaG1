@@ -16,31 +16,13 @@
 <div class="container">
 
 <%
-    //String buscar_por = request.getParameter("buscar_por");buscar_por = buscar_por==null?"nombre": buscar_por;
-    //String buscar = request.getParameter("buscar");buscar = buscar==null?"": buscar;
-    String opcion = request.getParameter("opcion");opcion = opcion == null ? "" : opcion;
-    String id_producto = request.getParameter("id_producto");id_producto = id_producto == null ? "" : id_producto;
     String f_in = request.getParameter("f_in");f_in = f_in == null ? "" : f_in;
     String f_fn = request.getParameter("f_fn");f_fn = f_fn == null ? "" : f_fn;
-    String mensaje="";
-     
 
 %>
 <br>
-<div class="row">
-    <div class="col-md-1"></div>
-        <div class="col-md-10" id="aler">
-            <br>
-            <%
-                if(!mensaje.equals("")){
-            %>
-            <div class="alert alert-danger"><%=mensaje%></div> 
-            <%}%>
-        </div>
-    <div class="col-md-1"></div>
-</div>
     <div class="row">
-        <h3 align="center">Reportes de Ventas</h3><br>
+        <br><h3 align="center">Reportes de Ventas</h3><br>
         <div class="col-md-12 well">
             <div class="tab-pane">
                 <table class="table table-hover table-striped table-bordered">
@@ -63,9 +45,9 @@
                              count++;
                         %>
           
-                        <tr>     
+                        <tr onmouseover="this.style.backgroundColor = 'pink';" onmouseout="this.style.backgroundColor = 'white';" style="background-color: white ;">     
                             <td><%=count%>.-</td> 
-                            <td align="center"><%=venta.getFecha_compra()%></td>
+                            <td align="center"><%=venta.getFecha_venta()%></td>
                             <td><%=venta.getNombre_usuario()%></td>
                             <td><%=venta.getNombre_cliente()%></td>
                             <td align="center"><%=venta.getNombre_comprobante()%></td>

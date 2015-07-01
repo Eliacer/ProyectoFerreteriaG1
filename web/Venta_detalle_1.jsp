@@ -13,169 +13,30 @@
 <%@page import="proy01.modelo.entidad.Rep_compras"%>
 <%@page import="proy01.modelo.entidad.Compra"%>
 <%@include file="WEB-INF/jspf/top.jspf" %>
-
-<style>
-    #letra{
-        font-size: 10px;
-    }
-    
-</style>
+<jsp:useBean id="id_venta" scope="request" class="java.lang.String" />
+<jsp:useBean id="mensaje" scope="request" class="java.lang.String" />
+<jsp:useBean id="alert" scope="request" class="java.lang.String" />
+<jsp:useBean id="opcion" scope="request" class="java.lang.String" />
+<jsp:useBean id="buscar_por" scope="request" class="java.lang.String" />
+<jsp:useBean id="buscar" scope="request" class="java.lang.String" />
+<jsp:useBean id="VentaT" scope="request" class="proy01.modelo.entidad.Venta" />
+<jsp:useBean id="VentaDetalle" scope="request" class="proy01.modelo.entidad.DetalleVenta" />
+<jsp:useBean id="ProductoDe" scope="request" class="proy01.modelo.entidad.Producto" />
 
 <div class="container">
     
     <%
-    
-        HttpSession se = request.getSession();
-        String id_venta=(String)se.getAttribute("id_venta");id_venta = id_venta==null?"":id_venta;
-        String id_cliente=(String)se.getAttribute("id_cliente");id_cliente = id_cliente==null?"":id_cliente;
-        String num_comp=(String)se.getAttribute("num_comp");num_comp = num_comp==null?"":num_comp;
-        String serie=(String)se.getAttribute("serie");serie = serie==null?"":serie;
-        String fecha_venta=(String)se.getAttribute("fecha_venta");fecha_venta = fecha_venta==null?"":fecha_venta;
-               
-        String id_producto=request.getParameter("id_producto");id_producto = id_producto==null?"":id_producto;
-        String cant=request.getParameter("cant");cant = cant==null?"":cant;
-        String precio=request.getParameter("precio");precio = precio==null?"":precio;
-        String buscar_por = request.getParameter("buscar_por");buscar_por = buscar_por==null?"nombre": buscar_por;
-        String buscar = request.getParameter("buscar");buscar = buscar==null?"": buscar;
-        String opcion = request.getParameter("opcion");opcion = opcion == null ? "Buscar" : opcion;
-        
-        String nombre_forma_pago="";
-        String nombre_comprobante="";
-        String nombre_usuario="";
-        String nombre_cliente="";
-        double descuento=0;
-        String igv="";
-        String mensaje="";
-        String nombre_prod="";
-        String marca1="";
-        int stock;
-        String alert="";
-        
-        if(opcion.equals("Buscar") || opcion.equals("add") || opcion.equals("Agregar") ||opcion.equals("Actualizar")
-                || opcion.equals("Actualizando") || opcion.equals("Eliminar")){
-            
-            VentaDao dao = new VentaDaoImpl();
-            Venta repventa = new Venta();
-               
-            if(id_venta!=null){
-                repventa =dao.ObtenerDatosVenta(id_venta);
-                
-                nombre_cliente=repventa.getId_cliente();nombre_cliente = nombre_cliente==null?"":nombre_cliente;
-                nombre_forma_pago=repventa.getId_formaPago();nombre_forma_pago = nombre_forma_pago==null?"":nombre_forma_pago;
-                nombre_comprobante=repventa.getId_configuracion();nombre_comprobante = nombre_comprobante==null?"":nombre_comprobante;
-                nombre_usuario=repventa.getId_usuario();nombre_usuario = nombre_usuario==null?"":nombre_usuario;  
-            }    
-            if(opcion.equals("add")||opcion.equals("Actualizar")){
-                if(!id_producto.equals("")){
-
-                    Producto producto = new Producto();
-                    ProductoDao pd=new ProductoDaoImpl();
-                    producto = pd.ObtenerDatProducto(id_producto);
-
-                    nombre_prod=producto.getNombre();nombre_prod = nombre_prod==null?"":nombre_prod;                
-                    marca1=producto.getId_marca();marca1 = marca1==null?"":marca1;
-                    precio=String.valueOf(producto.getPrecio());
-                    
-                }    
-                if(opcion.equals("Actualizar")){
-
-                    DetalleVenta dv = new DetalleVenta();
-                    VentaDao cd = new VentaDaoImpl();
-                    dv=cd.ObtenerDetVenta(id_venta, id_producto);
-                    id_producto=dv.getId_producto();id_producto = id_producto==null?"":id_producto;
-                    precio=String.valueOf(dv.getPreciounitario());precio = precio==null?"":precio; 
-                    cant=String.valueOf(dv.getCantidad());cant = cant==null?"":cant;  
-                }
-            }  
-            if(opcion.equals("Agregar")){
-                if(!id_venta.equals("")&&!id_producto.equals("")&& !cant.equals("")&& !precio.equals("")){
-
-                    DetalleVenta dventa = new DetalleVenta();
-                    CatCliente cc = new CatCliente();
-                    VentaDao ventaDao = new VentaDaoImpl();
-                    Producto producto = new Producto();
-                    ProductoDao pd=new ProductoDaoImpl();
-                    producto = pd.ObtenerDatProducto(id_producto);
-                    
-                    cc=ventaDao.ObtenerDcto(id_venta, id_cliente);//obteniendo descuento...
-                    descuento=cc.getDescuento();//dcto en porc
-                    stock=producto.getStock_actual();//obtenemos el stock
-                    dventa.setId_venta(id_venta);//seteando los datos
-                    dventa.setId_producto(id_producto);
-                    dventa.setCantidad(Integer.parseInt(cant));
-                    dventa.setPreciounitario(Double.parseDouble(precio));
-                    dventa.setDescuento(descuento);
-                    
-                    if(stock>=Double.parseDouble(cant)){
-                        if(ventaDao.RegistrarDetVenta(dventa)){
-                            mensaje="Se añadió el producto...";
-                            alert="success";
-                            opcion="Buscar";
-                        }
-                        else{
-                            mensaje="¡¡No se pudo añadir el producto...Es posible que este producto estea en la lista!!";
-                            alert="danger";
-                            opcion="Buscar";
-                        } 
-                    }
-                    else{
-                            mensaje="¡¡No se pudo agregar segun lo solicitado...Solo hay: "+stock+" en stock!!";
-                            alert="danger";
-                            opcion="Buscar";
-                        } 
-                }
-            }
-            if(opcion.equals("Actualizando")){
-                DetalleVenta dv = new DetalleVenta();
-                VentaDao act = new VentaDaoImpl();
-                CatCliente cc = new CatCliente();
-                
-                cc=act.ObtenerDcto(id_venta, id_cliente);//obteniendo descuento...
-                descuento=cc.getDescuento();//dcto en porc
-                
-                dv.setId_venta(id_venta);
-                dv.setId_producto(id_producto);
-                dv.setCantidad(Integer.parseInt(cant));
-                dv.setPreciounitario(Double.parseDouble(precio));
-                dv.setDescuento(descuento);
-                if(act.UpdateDetVenta(dv)){
-                    mensaje="Se actualizo correctamente el producto comprado...";
-                    alert="success";
-                    opcion="Buscar";
-                }
-                else{
-                    mensaje="Ocurrio un error al actualizar el producto comprado...";
-                    alert="danger";
-                    opcion="Buscar";
-                }
-            }
-            if(opcion.equals("Eliminar")){
-                VentaDao del = new VentaDaoImpl();
-                if(del.DeleteProdVenta(id_venta, id_producto)){
-                    mensaje="Se elimino correctamente el producto comprado...";
-                    alert="success";
-                    opcion="Buscar";
-                }
-                else{
-                    mensaje="Ocurrio un error al eliminar el producto comprado...";
-                    alert="danger";
-                    opcion="Buscar";
-                }
-            }   
-        }
-        if(opcion.equals("Finalizar")){
-            if(!id_venta.equals("")){
-                VentaDao cd = new VentaDaoImpl();
-                if(cd.Stockventa(id_venta)){
-                    alert="success";
-                    mensaje="Se registró correctamente la venta...";
-                }
-                else{
-                    alert="danger";
-                    mensaje="Ocurrió un error al registrar la venta...";
-                }
-            }
-        }
+        if(opcion==null ||opcion.equals("")){opcion="Buscar";}
+        if(buscar_por==null ||buscar_por.equals("")){buscar_por="";}
+        if(buscar==null ||buscar.equals("")){buscar="";}
+        String espacio= "  ";
+        String marca="";
+        String cant=String.valueOf(VentaDetalle.getCantidad());cant = cant.equals("0")?"":cant;
+        String precio=String.valueOf(VentaDetalle.getPreciounitario());precio = precio.equals("0.0")?"":precio;
+        double dcto=0.0;
+        double subtotal=0.0;
+        double total=0.0;
+        double igv=0.0;
     %>
   
 <div class="row">
@@ -201,34 +62,32 @@
 </div>
 <div class="row">
     <div class="col-md-7">
-        <h4 allign="center"><strong>Registro de Ventas</strong></h4><br>
-        <table width="480" align="left" class="table-responsive">  
+        <h4 allign="center"><strong>Registro de Ventas</strong></h4>
+        <a href="controlventa?opcion=Actualizar&id_venta=<%=id_venta%>"><input type="submit" class="btn btn-primary" value="Actualizar"></a>
+        <table width="600" align="left" class="table-responsive">  
             <tbody>
             <tr>
-                <td width="10"><strong>Fecha:</strong></td>
-                <td width="60"><%=fecha_venta%></td>
-                <td width="30"></td>
-                <td width="15"><strong>IGV:</strong></td>
-                <td width="60"><%=igv%></td>
+                <td width="15%"><strong>Fecha:</strong></td>
+                <td width="37%"><%=VentaT.getFechaventa()%></td>
+                <td width="15%"><strong>IGV:</strong></td>
+                <td width="20%"><%=VentaT.getIgv()%></td>
             </tr>
             <tr>
                 <td><strong>Usuario:</strong></td>
-                <td><%=nombre_usuario%></td>
-                <td></td>
-                <td><strong>N&deg;. Comprob:</strong></td>
-                <td width="10"><%=serie%>-<%=num_comp%></td>
+                <td><%=VentaT.getId_usuario()%></td>
+                <td><strong>N&deg;. Comp.:</strong></td>
+                <td><%=VentaT.getSerie()%>-<%=VentaT.getNumComprobante()%></td>
             </tr>
             <tr>
                 <td><strong>Cliente:</strong></td>
-                <<td><%=nombre_cliente%></td>
-                <td></td>
+                <td><%=VentaT.getId_cliente()%></td>
                 <td><strong>F. Pago:</strong></td>
-                <td width="10"><%=nombre_forma_pago%></td>
+                <td><%=VentaT.getId_formaPago()%></td>
             </tr>
             <br>
             <tr>
-                <td colspan="5">
-                    <h4 align="center">Productos de la venta</h4>
+                <td colspan="4">
+                    <br><h4 align="center">Productos de la venta</h4><br>
                 </td>
             </tr>
             </tbody>
@@ -247,11 +106,14 @@
                 </thead>
                 <tbody>
                     <%
-                    String espacio="  ";
                     int count=0;
                     VentaDao dao = new VentaDaoImpl();
                     for(DetalleVenta dv : dao.ListarProductosVenta(id_venta)){
                          count++;
+                         dcto=dcto+dv.getDescuento();
+                         subtotal=subtotal+dv.getCantidad()*dv.getPreciounitario();
+                         total=subtotal-dcto;
+                         
                     %>
                     <tr> 
                         <td align="center"><%=dv.getCantidad()%></td>
@@ -259,27 +121,49 @@
                         <td align="center"><%=dv.getPreciounitario()%></td> 
                         <td align="center"><%=dv.getSubtotal()%></td>
                         <td>
-                            <a href="Venta_detalle_1.jsp?opcion=Actualizar&id_producto=<%=dv.getId_producto()%>&id_venta=<%=id_venta%>" title="Actualizar">
+                            <a href="sellcustomers?opcion=Actualizar&id_producto=<%=dv.getId_producto()%>&id_venta=<%=id_venta%>" title="Actualizar">
                                 <button type="button" class="btn btn-info">
                                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                                 </button>
                             </a>
-                            <a href="Venta_detalle_1.jsp?opcion=Eliminar&id_producto=<%=dv.getId_producto()%>&id_venta=<%=id_venta%>" title="Eliminar">
+                            <a href="sellcustomers?opcion=Eliminar&id_producto=<%=dv.getId_producto()%>&id_venta=<%=id_venta%>" title="Eliminar">
                                 <button type="button" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </button>
                             </a>
                         </td>
                     </tr>
-                    <%}%>                   
+                    <%}%>
+                    
                 </tbody>
             </table>
-            <form action="Venta_detalle_1.jsp">
-                <table class="table table-hover table-striped table-bordered">
+            <form class="form-horizontal" action="sellcustomers" method="post">
+                <table width="85%">
                     <tbody>
                         <tr>
+                            <td colspan="4" width="70%"></td>
+                            <td width="23%">Subtotal:</td>
+                            <td width="12%" align="right"><input type="text" name="id_venta"  value="<%=subtotal%>" size="10" disabled=""></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>IGV: </td>
+                            <td align="right"><input type="text" name="id_venta"  value="<%=igv%>" size="10" disabled=""></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>Descuento: </td>
+                            <td align="right"><input type="text" name="id_venta"  value="<%=dcto%>" size="10" disabled=""></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>Total: </td>
+                            <td align="right"><input type="text" name="id_venta"  value="<%=total%>" size="10" disabled=""></td>
+                        </tr>
+                        <tr>
                             <input type="hidden" name="id_venta"  value="<%=id_venta%>" size="10">
-                            <td colspan="6" align="center"><input type="submit" name="opcion" class="btn btn-primary" value="Finalizar"></td>
+                            <input type="hidden" name="opcion"  value="Finalizar" size="10">
+                            <td colspan="6" align="center"><input type="submit" class="btn btn-primary" value="Finalizar"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -290,11 +174,11 @@
     <div class="col-md-5">
         <h4 allign="center"><strong>Buscar Productos</strong></h4><br>
         <%if(opcion.equals("Buscar")){%>
-        <form class="form-horizontal" action="Venta_detalle_1.jsp" method="post"> 
+        <form class="form-horizontal" action="sellcustomers" method="post"> 
             
             <table>
                 <tr>
-                    <input type="hidden" name="opcion"  value="<%=opcion%>" size="10">  
+                    <input type="hidden" name="opcion"  value="Buscando" size="10">  
                     <input type="hidden" name="id_venta"  value="<%=id_venta%>" size="10">  
                     <td width="20%"><strong>Buscar Por:</strong></td>
                     <td width="25%"><select class="form-control" name="buscar_por">
@@ -311,7 +195,6 @@
                     </td>        
                 </tr>
             </table>
-            <div class="form-group">
         </form>       
         <div class="tab-pane">
             <table class="table table-hover table-striped table-bordered">
@@ -327,16 +210,15 @@
                 <tbody id="letr">
                 
                     <%
-                    String espacio="  ";
                     int count=0;
                     ProductoDao pro = new ProductoDaoImpl();
                     for(Producto producto :pro.BuscarProducto(buscar_por, buscar)){
                          count++;
-                         nombre_prod=producto.getNombre();
+                         marca=producto.getId_marca();marca = marca==null?"":marca;
                     %>        
                     <tr>     
                         <td><%=count%>.-</td> 
-                        <td><a class="btn" href="Venta_detalle_1.jsp?id_producto=<%=producto.getIdProducto()%>&opcion=add"><%=producto.getNombre()%></a></td>
+                        <td><a class="btn" href="sellcustomers?id_producto=<%=producto.getIdProducto()%>&opcion=add&id_venta=<%=id_venta%>"><%=producto.getNombre()%></a></td>
                         <td align="center"><%=producto.getPrecio()%></td>
                         <td align="center"><%=producto.getStock_actual()%></td> 
                     </tr>
@@ -354,19 +236,19 @@
         <%if(opcion.equals("Actualizar")){%>
         <h4 align="center">Actualizando Productos</h4><br>
         <%}%>
-        <form action="Venta_detalle_1.jsp" method="get"> 
+        <form action="sellcustomers" method="post"> 
             <table class="table table-bordered">
                 <tbody>   
                     <tr>
-                        <input type="hidden" name="id_producto"  value="<%=id_producto%>" size="10">
+                        <input type="hidden" name="id_producto"  value="<%=ProductoDe.getIdProducto()%>" size="10">
                         <input type="hidden" name="id_venta"  value="<%=id_venta%>" size="10">
                         <td>Nombre:</td>
-                        <td><div class="col-sm-15"><input type="text" class="form-control" placeholder="Nombre" value="<%=nombre_prod%>" disabled=""></div></td>
+                        <td><div class="col-sm-15"><input type="text" class="form-control" placeholder="Nombre" value="<%=ProductoDe.getNombre()%>" disabled=""></div></td>
                     </tr>
-                    <%if(!marca1.equals("")){%>
+                    <%if(!marca.equals("")){%>
                     <tr>
                         <td>Marca:</td>
-                        <td><div class="col-sm-15"><input type="text" class="form-control" placeholder="Marca" value="<%=marca1%>" disabled=""></div></td>
+                        <td><div class="col-sm-15"><input type="text" class="form-control" placeholder="Marca" value="<%=ProductoDe.getId_marca()%>" disabled=""></div></td>
                     </tr>
                     <%}%>
                     <tr>
@@ -375,7 +257,7 @@
                     </tr>
                     <tr>
                         <td>Costo:</td>
-                        <td><div class="col-sm-15"><input type="text" class="form-control" placeholder="Precio Unitario" name="precio" value="<%=precio%>" required></div></td>
+                        <td><div class="col-sm-15"><input type="text" class="form-control" placeholder="Precio Unitario" name="precio" value="<%=ProductoDe.getPrecio()%>" required></div></td>
                     </tr>
                     <%if(opcion.equals("add")){%>
                     <tr>

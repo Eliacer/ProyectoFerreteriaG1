@@ -3,10 +3,10 @@ package proy01.modelo.entidad;
 public class Proveedor{
 
 
-     private String id_proveedor;
-     private String num_cuenta;
-     private String correo_electronico;
-     private String estado;     
+     private String id_proveedor="";
+     private String num_cuenta="";
+     private String correo_electronico="";
+     private String estado="";     
 
     public Proveedor() {
         

@@ -42,7 +42,7 @@
                             
                         %>
           
-                        <tr>     
+                        <tr onmouseover="this.style.backgroundColor = '#A9F5F2';" onmouseout="this.style.backgroundColor = 'white';" style="background-color: white ;">     
                             <td><%=count%>.-</td> 
                             <td><a class="btn" href="Kardex.jsp?id_producto=<%=producto.getId_producto()%>"><%=producto.getProducto()%></a></td>
                             <td align="center"><%=producto.getStock_actual()%></td>

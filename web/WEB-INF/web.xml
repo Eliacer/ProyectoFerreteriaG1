@@ -13,16 +13,40 @@
         <servlet-class>Controlador.Ocultar</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Venta</servlet-name>
-        <servlet-class>proy01.Controlador.Ventas</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Compras</servlet-name>
         <servlet-class>proy01.Controlador.Compras</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegCompra</servlet-name>
         <servlet-class>Controlador.RegCompra</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MenuPrincipal</servlet-name>
+        <servlet-class>proy01.Controlador.MenuPrincipal</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControlPersona</servlet-name>
+        <servlet-class>proy01.Controlador.ControlPersona</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControlCompra</servlet-name>
+        <servlet-class>proy01.Controlador.ControlCompra</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControlVenta</servlet-name>
+        <servlet-class>proy01.Controlador.ControlVenta</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControlReportes</servlet-name>
+        <servlet-class>proy01.Controlador.ControlReportes</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Ventas</servlet-name>
+        <servlet-class>proy01.Controlador.Ventas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControlProducto</servlet-name>
+        <servlet-class>proy01.Controlador.ControlProducto</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Validar</servlet-name>
@@ -37,16 +61,40 @@
         <url-pattern>/ocultar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Venta</servlet-name>
-        <url-pattern>/sellcustomer</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Compras</servlet-name>
         <url-pattern>/buyproducts</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegCompra</servlet-name>
         <url-pattern>/registerbuy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MenuPrincipal</servlet-name>
+        <url-pattern>/menu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlPersona</servlet-name>
+        <url-pattern>/controlpersona</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlCompra</servlet-name>
+        <url-pattern>/controlcompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlVenta</servlet-name>
+        <url-pattern>/controlventa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlReportes</servlet-name>
+        <url-pattern>/controlreportes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Ventas</servlet-name>
+        <url-pattern>/sellcustomers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlProducto</servlet-name>
+        <url-pattern>/controlproducto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

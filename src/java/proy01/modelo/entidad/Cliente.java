@@ -3,9 +3,9 @@ package proy01.modelo.entidad;
 public class Cliente  implements java.io.Serializable {
 
 
-     private String idCliente;
-     private String idTipoCliente;
-     private String estado;
+     private String idCliente="";
+     private String idTipoCliente="";
+     private String estado="";
 
     public Cliente() {
     }

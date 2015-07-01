@@ -9,10 +9,13 @@ import proy01.modelo.dao.CompraDao;
 import proy01.modelo.dao.PersonaDao;
 import proy01.modelo.dao.ProductoDao;
 import proy01.modelo.dao.UsuarioDao;
+import proy01.modelo.dao.VentaDao;
 import proy01.modelo.daoImpl.CompraDaoImpl;
 import proy01.modelo.daoImpl.PersonaDaoImpl;
 import proy01.modelo.daoImpl.ProductoDaoImpl;
 import proy01.modelo.daoImpl.UsuarioDaoImpl;
+import proy01.modelo.daoImpl.VentaDaoImpl;
+import proy01.modelo.entidad.CatCliente;
 import proy01.modelo.entidad.Compra;
 import proy01.modelo.entidad.DetalleCompra;
 import proy01.modelo.entidad.Persona;
@@ -39,7 +42,8 @@ public class NewMain {
 //        main.obtPersona();
 //        main.obt_compra();
 //        main.insertCompra();
-        main.insertpers();
+//        main.insertpers();
+        main.ontenerdcto();
     }
     
     public void insertprod()
@@ -173,5 +177,25 @@ public class NewMain {
                    
                 }
     
+                
+    }
+    
+    public void ontenerdcto(){
+        
+//        VENTA-2906201507130836
+//                
+//                P-BL2406201512204179
+//                        
+        
+        double descuento;
+        CatCliente cc = new CatCliente();
+        VentaDao dao =new VentaDaoImpl();
+        
+        cc=dao.ObtenerDcto("VENTA-2906201507130836");//obteniendo descuento...
+        descuento=cc.getDescuento();
+        
+        System.out.println("Descuento: "+descuento);
+        
+        
     }
 }

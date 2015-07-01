@@ -42,16 +42,18 @@
                                   String nombre=persona.getNombres();nombre = nombre == null ? "" : nombre;
                                   String num_doc=persona.getNumero_doc();num_doc = num_doc == null ? "" : num_doc;
                                   String telefono=persona.getTelefono();telefono = telefono == null ? "" : telefono; 
-                                  String monto=persona.getEstado();monto = monto == null ? "" : monto;                                     
+                                  String monto=persona.getEstado();monto = monto == null ? "" : monto;  
+                                  
+                                  if(!monto.equals("")){
                           %>
-                        <tr>
+                        <tr onmouseover="this.style.backgroundColor = 'pink';" onmouseout="this.style.backgroundColor = 'white';" style="background-color: white ;">
                             <td><%=count%>.-</td>
                             <td><%=nombre%></td>
                             <td  align="center"><%=num_doc%></td>
                             <td  align="center"><%=telefono%></td>
                             <td align="right"><%=monto%></td>
                         </tr>
-                        <%}%>
+                        <%}}%>
                       </tbody>
                     </table>
                     </div>
@@ -79,15 +81,17 @@
                                   c++;
                                   String product=producto.getNombre();product = product == null ? "" : product;
                                   String marca=producto.getId_marca();marca = marca == null ? "" : marca;
-                                  double monto=producto.getPrecio();monto = monto == 0 ? 0 : monto;
+                                  String monto=String.valueOf(producto.getPrecio());monto = monto == "0.0" ? "" : monto;
+                                  
+                                  if(!monto.equals("")){
                           %>
-                        <tr>
+                        <tr onmouseover="this.style.backgroundColor = 'pink';" onmouseout="this.style.backgroundColor = 'white';" style="background-color: white ;">
                             <td><%=c%>.-</td>
                             <td><%=product%></td>
                             <td><%=marca%></td>
                             <td  align="right"><%=monto%></td>
                         </tr>
-                        <%}%>
+                        <%}}%>
                       </tbody>
                     </table>
                     </div> 
@@ -116,7 +120,9 @@
                                       String rz=proveedor.getId_proveedor();rz = rz == null ? "" : rz;
                                       String ruc=proveedor.getNum_cuenta();ruc = ruc == null ? "" : ruc;
                                       String correo=proveedor.getCorreo_electronico();correo = correo == null ? "" : correo; 
-                                      String monto=proveedor.getEstado();monto = monto == null ? "" : monto;        
+                                      String monto=proveedor.getEstado();monto = monto == null ? "" : monto;  
+                                      if(!monto.equals("")){
+                                      
                               %>
                             <tr onmouseover="this.style.backgroundColor = 'pink';" onmouseout="this.style.backgroundColor = 'white';" style="background-color: white ;"> 
                                 <td><%=co%>.-</td>
@@ -125,7 +131,7 @@
                                 <td><%=correo%></td>
                                 <td align="right"><%=monto%></td>
                             </tr>
-                            <%}%>
+                            <%}}%>
                           </tbody>
                         </table>
                     </div>

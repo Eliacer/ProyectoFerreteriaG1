@@ -2,12 +2,12 @@ package proy01.modelo.entidad;
 
 public class DetalleVenta {
 
-     private String id_venta;
-     private String id_producto;
-     private String producto;
-     private Integer cantidad;
-     private Double preciounitario;
-     private Double descuento;
+     private String id_venta="";
+     private String id_producto="";
+     private String producto="";
+     private Integer cantidad=0;
+     private Double preciounitario=0.0;
+     private Double descuento=0.0;
      
      private Double subtotal;
      

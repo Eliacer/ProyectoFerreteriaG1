@@ -191,7 +191,7 @@ public class FijarPreciosCompraDaoImpl implements FijarPreciosCompraDao{
         KardexProducto kardexProducto = null;
         String query = "select * from ( "
                 + "select p.id_producto as id_producto,c.id_compra as id_movimiento,to_char(c.fecha_compra,'dd-mm-yyyy') as fecha, c.fecha_compra as fech, "
-                + "decode(c.e_s,'E','Compra','Venta') as movimiento,p.nombre as producto,cd.cant_total as cantidad, "
+                + "decode(c.e_s,'E','Compra','Venta') as movimiento,p.nombre as producto,cd.cant_mayor as cantidad, "
                 + "und_producto(cd.id_compra,cd.id_producto) as und,nombre_comp(c.id_comprobante) as comprobante, "
                 + "c.num_comprobante,nombre_proveedor(c.id_proveedor) as proveedor_cliente from compra_detalle cd "
                 + "inner join producto p on p.id_producto=cd.id_producto and p.id_producto='"+id_producto+"' "
