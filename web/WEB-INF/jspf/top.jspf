@@ -69,8 +69,8 @@
                                         <li><a href="controlpersona?opcion=Iniciar">Registro de personas</a></li>
                                         <li><a href="controlproducto?opcion=Iniciar">Registro de productos</a></li>
                                         <li><a href="Caract_Producto.jsp">A&ntilde;adir Categor&iacute;as,Marcas,Ubicaci&oacute;n</a></li>
-                                        <li><a href="FijarPrecios.jsp">Fijar Precios Compras</a></li>
-                                        <li><a href="FijarMoneda.jsp">Fijar Valor Moneda</a></li>
+                                        <li><a href="controlprecios?opcion=Iniciar">Fijar Precios Compras</a></li>
+                                        <li><a href="controlmoneda?opcion=Iniciar">Fijar Valor Moneda</a></li>
                                         <li class="divider"></li>
                                         <li class="dropdown-header">Reportes</li>
                                         <li><a href="controlreportes?opcion=Inventario">Inventario</a></li>

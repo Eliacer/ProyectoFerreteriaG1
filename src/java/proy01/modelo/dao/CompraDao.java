@@ -24,6 +24,10 @@ public interface CompraDao {
     public List<Comprobante> ListarComprobante();
     public List<FormaPago> ListarFormapago();
     public List<TipoMoneda> ListarMoneda();
+    public boolean AgregarMoneda(TipoMoneda moneda);
+    public boolean ActualizarMoneda(TipoMoneda moneda);
+    public boolean EliminarMoneda(String id_moenda);
+    public TipoMoneda BuscarMonedaid(String id_moenda);
     public Compra ListarCompra(String num_comp);
     public Compra ListarCompraid(String id_compra);
     public Rep_compras ListarCompraT(String num_comp);

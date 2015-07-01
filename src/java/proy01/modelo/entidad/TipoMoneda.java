@@ -5,6 +5,7 @@ public class TipoMoneda {
 
      private String idMoneda;
      private String nombre;
+     private String abrev;
      private Double valorActual;
 
     public TipoMoneda() {
@@ -33,6 +34,16 @@ public class TipoMoneda {
     public void setValorActual(Double valorActual) {
         this.valorActual = valorActual;
     }
+
+    public String getAbrev() {
+        return abrev;
+    }
+
+    public void setAbrev(String abrev) {
+        this.abrev = abrev;
+    }
+    
+    
     
 }
 

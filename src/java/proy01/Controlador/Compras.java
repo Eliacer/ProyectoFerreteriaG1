@@ -188,7 +188,7 @@ public class Compras extends HttpServlet {
             
             if(dao.StockCompra(id_compra)){
                 alert="success";
-                mensaje="Se registró correctamente la compra...<a href='FijarPrecios.jsp'>[Fijar precio a los productos] </a>";
+                mensaje="Se registró correctamente la compra...<a href='controlprecios?opcion=Iniciar'>[Fijar precio a los productos] </a>";
                 request.setAttribute("opcion", "Finalizar");
                 request.setAttribute("mensaje", mensaje);
                 request.setAttribute("alert", alert);

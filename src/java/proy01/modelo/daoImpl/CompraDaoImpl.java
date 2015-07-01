@@ -92,11 +92,124 @@ public class CompraDaoImpl implements CompraDao{
     }
 
     @Override
+    public boolean AgregarMoneda(TipoMoneda moneda) {
+        
+        boolean estado = false;
+        Statement st = null;
+        String query="insert into tipo_moneda "
+                    + "(nombre, "
+                    + "valor_actual, "
+                    + "abrev) "
+                    + "values('"+moneda.getNombre()+"',"
+                    + moneda.getValorActual()+","
+                    + "'"+moneda.getAbrev()+"')";
+        
+        try {
+            st = open().createStatement();
+            st.executeUpdate(query);
+            open().commit();
+            open().close();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                estado = false;
+                open().rollback();
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+        return estado;
+    }
+    
+    @Override
+    public boolean ActualizarMoneda(TipoMoneda moneda) {
+        
+        boolean estado = false;
+        Statement st = null;
+        String query="update tipo_moneda "
+                    + " set nombre='"+moneda.getNombre()+"',"
+                    + " valor_actual="+moneda.getValorActual()+","
+                    + " abrev='"+moneda.getAbrev()+"' where id_moneda='"+moneda.getIdMoneda()+"'";
+        
+        try {
+            st = open().createStatement();
+            st.executeUpdate(query);
+            open().commit();
+            open().close();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                estado = false;
+                open().rollback();
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+        return estado;
+    }
+    
+     public TipoMoneda BuscarMonedaid(String id_moneda) {
+        
+        TipoMoneda moneda = new TipoMoneda();
+        Statement st = null;
+        ResultSet rs = null;
+        String query="select * from tipo_moneda where id_moneda='"+id_moneda+"'";
+               
+            try {
+            st = open().createStatement();
+            rs = st.executeQuery(query);
+            
+            while (rs.next()) {                    
+                moneda = new TipoMoneda();              
+                moneda.setIdMoneda(rs.getString("id_moneda"));
+                moneda.setNombre(rs.getString("nombre")); 
+                moneda.setValorActual(rs.getDouble("valor_actual"));   
+                moneda.setAbrev(rs.getString("abrev"));                
+            }  
+            open().close();
+            } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+        return moneda;
+    }
+    
+    @Override
+    public boolean EliminarMoneda(String id_moneda) {
+        
+        boolean estado = false;
+        Statement st = null;
+        String query="delete from tipo_moneda where id_moneda='"+id_moneda+"'";
+        
+        try {
+            st = open().createStatement();
+            st.executeUpdate(query);
+            open().commit();
+            open().close();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                estado = false;
+                open().rollback();
+                open().close();
+            } catch (Exception ex) {
+            }
+        }
+        return estado;
+    }
+    
+    @Override
     public List<TipoMoneda> ListarMoneda() {
         
         Statement st=null;
         ResultSet rs=null;
-        String sql = "select id_moneda,initcap(nombre) as nombre, valor_actual from tipo_moneda where estado='1'";
+        String sql = "select id_moneda,initcap(nombre) as nombre,abrev,valor_actual from tipo_moneda where estado='1'";
         List<TipoMoneda> lista = new ArrayList<TipoMoneda>();
         TipoMoneda tm= null;
         try {
@@ -107,6 +220,7 @@ public class CompraDaoImpl implements CompraDao{
                 tm = new TipoMoneda();              
                 tm.setIdMoneda(rs.getString("id_moneda"));
                 tm.setNombre(rs.getString("nombre")); 
+                tm.setAbrev(rs.getString("abrev"));
                 tm.setValorActual(rs.getDouble("valor_actual"));
                 lista.add(tm);   
             }  

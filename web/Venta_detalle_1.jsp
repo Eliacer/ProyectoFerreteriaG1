@@ -61,14 +61,14 @@
     <div class="col-md-1"></div>
 </div>
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-sm-8 col-md-7">
         <h4 allign="center"><strong>Registro de Ventas</strong></h4>
         <a href="controlventa?opcion=Actualizar&id_venta=<%=id_venta%>"><input type="submit" class="btn btn-primary" value="Actualizar"></a>
-        <table width="600" align="left" class="table-responsive">  
+        <table width="550" align="left" class="table-responsive">  
             <tbody>
             <tr>
-                <td width="15%"><strong>Fecha:</strong></td>
-                <td width="37%"><%=VentaT.getFechaventa()%></td>
+                <td width="13%"><strong>Fecha:</strong></td>
+                <td width="33%"><%=VentaT.getFechaventa()%></td>
                 <td width="15%"><strong>IGV:</strong></td>
                 <td width="20%"><%=VentaT.getIgv()%></td>
             </tr>
@@ -98,9 +98,9 @@
                 <thead>
                     <tr>
                         <td width="5%" bgcolor="#FFEFCE"><strong>Cant</strong></td>
-                        <td width="23%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
-                        <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
-                        <td width="9%" align="center" bgcolor="#FFEFCE"><strong>Importe</strong></td>
+                        <td width="20%" bgcolor="#FFEFCE"><strong>Nombre del Producto</strong></td>
+                        <td width="8%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
+                        <td width="8%" align="center" bgcolor="#FFEFCE"><strong>Importe</strong></td>
                         <td width="8%" align="center" bgcolor="#FFEFCE"><strong>Opciones</strong></td>
                     </tr>
                 </thead>
@@ -171,7 +171,7 @@
         </div>
         <%}%>
     </div>
-    <div class="col-md-5">
+    <div class="col-sm-4 col-md-5">
         <h4 allign="center"><strong>Buscar Productos</strong></h4><br>
         <%if(opcion.equals("Buscar")){%>
         <form class="form-horizontal" action="sellcustomers" method="post"> 
@@ -202,9 +202,9 @@
                 <br>
                     <tr>
                         <td width="3%" bgcolor="#FFEFCE"><strong>#</strong></td>
-                        <td width="15%" bgcolor="#FFEFCE"><strong>Producto</strong></td>
-                        <td width="7%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
-                        <td width="7%" align="center" bgcolor="#FFEFCE"><strong>Stock</strong></td>
+                        <td width="13%" bgcolor="#FFEFCE"><strong>Producto</strong></td>
+                        <td width="5%" align="center" bgcolor="#FFEFCE"><strong>Costo</strong></td>
+                        <td width="5%" align="center" bgcolor="#FFEFCE"><strong>Stock</strong></td>
                     </tr>
                 </thead>
                 <tbody id="letr">

@@ -48,6 +48,14 @@
         <servlet-name>ControlProducto</servlet-name>
         <servlet-class>proy01.Controlador.ControlProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControlPrecios</servlet-name>
+        <servlet-class>proy01.Controlador.ControlPrecios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControlMoneda</servlet-name>
+        <servlet-class>proy01.Controlador.ControlMoneda</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Validar</servlet-name>
         <url-pattern>/control</url-pattern>
@@ -95,6 +103,14 @@
     <servlet-mapping>
         <servlet-name>ControlProducto</servlet-name>
         <url-pattern>/controlproducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlPrecios</servlet-name>
+        <url-pattern>/controlprecios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlMoneda</servlet-name>
+        <url-pattern>/controlmoneda</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
