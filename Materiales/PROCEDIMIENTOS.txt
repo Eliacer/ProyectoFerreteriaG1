@@ -1,0 +1,84 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      ACTUALIZAR CONTADOR MAXIMO DEL COMPROBANTE
+
+CREATE OR REPLACE PROCEDURE actualizar_contmax (id_config in varchar2)
+
+IS
+
+num_in NUMBER;
+num NUMBER;
+
+BEGIN
+   
+   select max(num_comprobante) into num from venta where id_configuracion=id_config;
+   
+   update comprobante_config set cont_maximo=num where id_configuracion=id_config;
+   
+END actualizar_contmax;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             STOCK COMPRA
+
+CREATE OR REPLACE PROCEDURE STOCK_COMPRA (id_comp in varchar2) 
+
+IS
+id_compr varchar2(35);
+id_prod varchar2(35);
+cantidad NUMBER;
+ 
+		 CURSOR stock 
+		 IS SELECT id_compra,id_producto,cant_total
+		 FROM compra_detalle
+		 WHERE control='0' and id_compra=id_comp;
+		
+BEGIN
+ 	  OPEN stock;
+	  FETCH stock INTO id_compr,id_prod,cantidad;
+	 
+	 WHILE stock%FOUND LOOP
+	 	  
+		    update producto set stock_actual=stock_actual+cantidad 
+				   where id_producto=id_prod;	
+		    update compra_detalle set control='1' 
+				   where id_compra=id_compr and id_producto=id_prod;
+			
+		 FETCH stock INTO id_compr,id_prod,cantidad;
+	  END LOOP;  
+	  CLOSE stock; 
+END STOCK_COMPRA;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            STOCK VENTA
+
+CREATE OR REPLACE PROCEDURE STOCK_VENTA (id_ven in varchar2) 
+
+IS
+id_vent varchar2(35);
+id_prod varchar2(35);
+cant NUMBER;
+ 
+		 CURSOR stock 
+		 IS SELECT id_venta,id_producto,cantidad
+		 FROM venta_detalle
+		 WHERE control='0' and id_venta=id_ven;
+		
+BEGIN
+ 	  OPEN stock;
+	  FETCH stock INTO id_vent,id_prod,cant;
+	 
+	 WHILE stock%FOUND LOOP
+	 	    
+			update producto set stock_actual=stock_actual-cant 
+				   where id_producto=id_prod;	
+			update venta_detalle set control='1' 
+				   where id_venta=id_vent and id_producto=id_prod;
+			
+		 FETCH stock INTO id_vent,id_prod,cant;
+	  END LOOP;  
+	  CLOSE stock; 
+END STOCK_VENTA;
+/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

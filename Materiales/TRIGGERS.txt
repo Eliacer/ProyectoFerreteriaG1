@@ -1,0 +1,243 @@
+          CATEGORÍA
+
+ CREATE OR REPLACE TRIGGER DANIEL.CATEGORIA
+BEFORE INSERT
+ON DANIEL.CATEGORIA
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+select lpad( to_number ( coalesce(max(id_categoria),'0' ),'99999' )+1,5,'0') into
+:new.id_categoria from categoria;
+:new.nombre_categoria := upper(:NEW.nombre_categoria);
+:new.estado:='1';
+END  categoria;
+/
+
+.......................................................................................................................................................................
+          TIPO MONEDA
+
+ CREATE OR REPLACE TRIGGER DANIEL.TIPO_MONEDA
+BEFORE INSERT
+ON DANIEL.TIPO_MONEDA
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+select lpad( to_number ( coalesce(max(id_moneda),'0' ),'99999' )+1,5,'0') into
+:new.id_moneda from tipo_moneda;
+:new.nombre := initcap(:NEW.nombre);
+END  tipo_moneda;
+/
+.......................................................................................................................................................................
+          CATEGORIA CLIENTE
+
+CREATE OR REPLACE TRIGGER DANIEL.CAT_CLIENTE
+BEFORE INSERT
+ON DANIEL.CAT_CLIENTE
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+select lpad( to_number ( coalesce(max(id_categoria),'0' ),'99999' )+1,5,'0') into
+:new.id_categoria from cat_cliente;
+:new.nombre := initcap(:NEW.nombre);
+END  cat_cliente;
+
+
+
+
+.......................................................................................................................................................................
+
+        CLIENTE
+
+ CREATE OR REPLACE TRIGGER DANIEL.CLIENTE
+BEFORE INSERT
+ON DANIEL.CLIENTE
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+:new.estado :='1';
+END  CLIENTE;
+/
+.......................................................................................................................................................................
+
+        COMPRA
+
+CREATE OR REPLACE TRIGGER DANIEL.COMPRA
+BEFORE INSERT
+ON DANIEL.COMPRA
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+select 'COMPRA-'||to_char(systimestamp,'ddmmyyyyhh24missFF2') into
+:new.id_compra from dual;
+:new.descripcion := upper(:NEW.descripcion);
+:new.precio_fijado:='0';
+:new.valor_moneda:=valor_mon(:NEW.id_moneda);
+:new.e_s:='E';
+
+END  COMPRA;
+/
+
+.......................................................................................................................................................................
+
+         COMPRA_DETALLE
+
+ CREATE OR REPLACE TRIGGER DANIEL.COMPRA_DETALLE
+BEFORE INSERT OR UPDATE
+ON DANIEL.COMPRA_DETALLE
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+:new.cant_total :=(:NEW.cant_mayor)*(:NEW.cant_menor);
+:new.costo_und :=(:NEW.costo_mayor)/(:NEW.cant_menor);
+
+
+END  COMPRA_DETALLE;
+/
+
+.......................................................................................................................................................................
+
+           COMPROBANTE_CONFIG
+
+ CREATE OR REPLACE TRIGGER DANIEL.COMPROBANTE_CONFIG
+BEFORE INSERT
+ON DANIEL.COMPROBANTE_CONFIG
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+
+select lpad( to_number ( coalesce(max(id_configuracion),'0' ),'99999' )+1,5,'0') into
+:new.id_configuracion from comprobante_config;
+:new.fecha_reg := to_date(sysdate,'dd/mm/yyyy');
+:new.cont_maximo:=:new.num_inicio;
+:new.estado:='1';
+
+END  COMPROBANTE_CONFIG;
+/
+
+........................................................................................................................................................................
+
+             MARCA
+  
+ CREATE OR REPLACE TRIGGER DANIEL.MARCA
+BEFORE INSERT
+ON DANIEL.MARCA
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+select lpad( to_number ( coalesce(max(id_marca),'0' ),'99999' )+1,5,'0') into
+:new.id_marca from marca;
+:new.nombre_marca := upper(:NEW.nombre_marca);
+:new.estado:='1';
+END  marca;
+/
+
+.......................................................................................................................................................................
+
+           PERSONA
+
+CREATE OR REPLACE TRIGGER DANIEL.PERSONA
+BEFORE INSERT
+ON DANIEL.PERSONA
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+select 'P-'||UPPER(substr(:new.nombres,0,2))||to_char(systimestamp,'ddmmyyyyhh24missFF2') into
+:new.id_persona from dual;
+:new.nombres := initcap(:NEW.nombres);
+:new.razon_social := upper(:NEW.razon_social);
+:new.apellidos := initcap(:NEW.apellidos);
+:new.direccion := initcap(:NEW.direccion);
+:new.estado :='1';
+:new.genero := UPPER(:NEW.genero);
+:new.fecha_reg := to_date(sysdate,'dd/mm/yy');
+END  persona;
+/
+
+
+......................................................................................................................................................................
+
+           PRODUCTO
+
+ CREATE OR REPLACE TRIGGER DANIEL.PRODUCTO
+BEFORE INSERT
+ON DANIEL.PRODUCTO
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+select 'P-'||to_char(systimestamp,'ddmmyyyyhh24missFF2') into
+:new.id_producto from dual;
+:new.nombre := UPPER(:NEW.nombre);
+:new.stock_actual := 0;
+:new.descripcion := UPPER(:NEW.descripcion);
+:new.fecha_reg := to_date(sysdate,'dd/mm/yy');
+END  PRODUCTO;
+/
+
+........................................................................................................................................................................
+
+         PROVEEDOR
+
+CREATE OR REPLACE TRIGGER DANIEL.PROVEEDOR
+BEFORE INSERT
+ON DANIEL.PROVEEDOR
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+:new.estado :='1';
+END  proveedor;
+/
+
+........................................................................................................................................................................
+
+       UBICACIÓN
+
+ CREATE OR REPLACE TRIGGER DANIEL.UBICACION
+BEFORE INSERT
+ON DANIEL.UBICACION
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+select lpad( to_number ( coalesce(max(id_ubicacion),'0' ),'99999' )+1,5,'0') into
+:new.id_ubicacion from ubicacion;
+:new.nombre_ubicacion := upper(:NEW.nombre_ubicacion);
+:new.estado:='1';
+END  ubicacion;
+/
+......................................................................................................................................................................
+
+       USUARIO
+
+CREATE OR REPLACE TRIGGER DANIEL.USUARIO
+BEFORE INSERT
+ON DANIEL.USUARIO
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+:new.estado :='1';
+END  usuario;
+/
+........................................................................................................................................................................
+
+       VENTA
+
+CREATE OR REPLACE TRIGGER DANIEL.VENTA
+BEFORE INSERT
+ON DANIEL.VENTA
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+
+select 'VENTA-'||to_char(systimestamp,'ddmmyyyyhh24missFF2') into
+:new.id_venta from dual;
+select lpad( to_number ( coalesce(max(numcompmaximo(:new.id_configuracion)),'0' ),'999999' )+1,6,'0') into
+:new.num_comprobante from venta where id_configuracion=:new.id_configuracion;
+:new.fecha_venta := to_date(sysdate,'dd/mm/yy');
+:new.estado:='1';
+:new.e_s:='S';
+
+END  VENTA;
+/
+.....................................................................................................................................................................
+
+
+

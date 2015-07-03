@@ -1,0 +1,605 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      ABREVIATURA_MONEDA
+
+CREATE OR REPLACE FUNCTION abrev_moneda (id_money in varchar2)
+RETURN varchar2 
+IS
+abrev_money varchar2(10);
+
+BEGIN
+   select abrev into abrev_money
+   from tipo_moneda where id_moneda=id_money;
+   return (abrev_money);
+END abrev_moneda;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+IGV VENTA
+
+CREATE OR REPLACE FUNCTION igvventa (id_venta in varchar2)
+RETURN varchar2 
+IS
+igv_venta varchar2(50);
+
+BEGIN
+
+   select igv into igv_venta from venta where id_venta=id_venta;
+   
+   return (igv_venta);
+END igvventa;
+/
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+       COSTO_PRODUCTO
+
+CREATE OR REPLACE FUNCTION COSTO_PRODUCTO (id_prod in varchar2,id_com in varchar2)  
+RETURN float 
+IS
+costo_prod float(126);
+
+BEGIN
+
+   select valor_mon_compra(id_compra)*costo_und+((valor_igv_compra(id_compra)/100)*(costo_und*valor_mon_compra(id_compra)))+
+   ((valor_flete_compra(id_compra)/100)*(costo_und*valor_mon_compra(id_compra))) into costo_prod
+   from compra_detalle where id_producto=id_prod and id_compra=id_com;
+   
+   return(costo_prod);
+   
+END COSTO_PRODUCTO;
+/
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+         COSTO_PROMEDIO
+
+CREATE OR REPLACE FUNCTION COSTO_PROMEDIO (id_prod in varchar2)  
+RETURN float 
+IS
+costo_prom float(126);
+
+BEGIN
+
+   select sum(cant_total*costo_producto(id_producto,id_compra))/sum(cant_total) into costo_prom
+   from compra_detalle where id_producto=id_prod group by id_producto;
+   
+   return(costo_prom);
+   
+END COSTO_PROMEDIO;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+         DIRECCION_PROVEEDOR
+
+CREATE OR REPLACE FUNCTION direccion_proveedor (id_prov in varchar2)  
+RETURN varchar2 
+IS
+direcc varchar2(100);
+
+BEGIN
+   select direccion into direcc
+   from persona where id_persona=id_prov;  
+   return (direcc); 
+END direccion_proveedor;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        MONTO_CLIENTE
+
+CREATE OR REPLACE FUNCTION monto_cliente (id_cli in varchar2)  
+RETURN float
+IS
+monto float(126);
+
+BEGIN
+	select sum((vd.cantidad*vd.precio_unitario)-vd.descuento) as m into monto
+	from venta_detalle vd,cliente c,venta v
+	where c.id_cliente=v.id_cliente and v.id_venta=vd.id_venta and c.id_cliente=id_cli;
+	
+	return(monto);
+	
+END monto_cliente;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+         MONTO_PRODUCTO
+
+CREATE OR REPLACE FUNCTION monto_producto (id_prod in varchar2)  
+RETURN float
+IS
+monto float(126);
+
+BEGIN
+	select sum((cantidad*precio_unitario)-descuento) as monto into monto
+	from venta_detalle where id_producto=id_prod
+	group by id_producto;
+	return(monto);
+	
+END monto_producto;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             MONTO_PROVEEDOR
+
+CREATE OR REPLACE FUNCTION monto_proveedor (id_prov in varchar2)  
+RETURN float
+IS
+monto float(126);
+
+BEGIN
+	select sum((cd.cant_mayor*cd.costo_mayor)) into monto
+	from compra_detalle cd,compra c  
+	where c.id_compra=cd.id_compra and c.id_proveedor=id_prov
+	group by c.id_proveedor;
+	
+	return(monto);
+	
+END monto_proveedor;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+              NOMBRE CLIENTE
+
+CREATE OR REPLACE FUNCTION nombre_cliente (id_cli in varchar2)  
+RETURN varchar2 
+IS
+name_cliente varchar2(100);
+
+BEGIN
+   select upper(nombres)||' '||upper(apellidos) into name_cliente
+   from persona where id_persona=id_cli;  
+   return (name_cliente); 
+END nombre_cliente;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             NOMBRE COMPROBANTE
+
+CREATE OR REPLACE FUNCTION nombre_comp (id_comp in varchar2)
+RETURN varchar2 
+IS
+nom_comp varchar2(50);
+
+BEGIN
+   select nombre into nom_comp
+   from comprobante where id_comprobante=id_comp;
+   return (nom_comp);
+END nombre_comp;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            NOMBRE COMPROBANTE DE VENTA
+
+CREATE OR REPLACE FUNCTION nombre_comp_venta (id_comf in varchar2)
+RETURN varchar2 
+IS
+nom_comp varchar2(50);
+
+BEGIN
+   select nombre_comp(id_comprobante) into nom_comp
+   from comprobante_config where id_configuracion=id_comf;
+   return (nom_comp);
+END nombre_comp_venta;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+              NOMBRE DE LA FORMA DE PAGO
+
+CREATE OR REPLACE FUNCTION nombre_forma_pago (id_fp in varchar2)  
+RETURN varchar2 
+IS
+name_fp varchar2(100);
+
+BEGIN
+   
+   select nombre into name_fp
+   from forma_pago
+   where id_forma_pago=id_fp;
+   
+   return (name_fp);
+   
+END nombre_forma_pago;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            NOMBRE DE LA MARCA
+
+CREATE OR REPLACE FUNCTION nombre_marca (id_m in varchar2)  
+RETURN varchar2 
+IS
+name_marca varchar2(100);
+
+BEGIN
+   select nombre_marca into name_marca
+   from marca
+   where id_marca=id_m;
+   return (name_marca); 
+END nombre_marca;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+           NOMBRE PERSONA
+
+CREATE OR REPLACE FUNCTION nombre_persona (id_per in varchar2)  
+RETURN varchar2 
+IS
+name_per varchar2(100);
+
+BEGIN
+   select nombres||' '||apellidos into name_per
+   from persona where id_persona=id_per;  
+   return (name_per); 
+END nombre_persona;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+          NOMBRE PRODUCTO
+
+CREATE OR REPLACE FUNCTION nombre_producto (id_prod in varchar2)  
+RETURN varchar2 
+IS
+name_prod varchar2(100);
+
+BEGIN
+   select nombre into name_prod
+   from producto where id_producto=id_prod;
+   return (name_prod); 
+END nombre_producto;
+/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+           NOMBRE PROVEEDOR
+
+CREATE OR REPLACE FUNCTION nombre_proveedor (id_prov in varchar2)  
+RETURN varchar2 
+IS
+name_prov varchar2(100);
+
+BEGIN
+   select razon_social into name_prov
+   from persona where id_persona=id_prov;  
+   return (name_prov); 
+END nombre_proveedor;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            NOMBRE ROL
+
+CREATE OR REPLACE FUNCTION nombre_rol (id_r in varchar2)  
+RETURN varchar2 
+IS
+name_r varchar2(100);
+
+BEGIN
+   select initcap(nombre) into name_r
+   from rol where id_rol=id_r;  
+   return (name_r); 
+END nombre_rol;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            NOMBRE TIPO DE DOCUMENTO
+
+CREATE OR REPLACE FUNCTION nombre_tip_doc (id_tdoc in varchar2)
+RETURN varchar2 
+IS
+nom_tdoc varchar2(50);
+
+BEGIN
+   select nombre into nom_tdoc
+   from tipo_documento where id_tipo_doc=id_tdoc;
+   return (nom_tdoc);
+END nombre_tip_doc;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+         NOMBRE TIPO DE MONEDA
+
+CREATE OR REPLACE FUNCTION nombre_tipo_moneda (id_money in varchar2)
+RETURN varchar2 
+IS
+nom_money varchar2(50);
+
+BEGIN
+   select nombre into nom_money
+   from tipo_moneda where id_moneda=id_money;
+   return (nom_money);
+END nombre_tipo_moneda;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+       NOMBRE UBICACION DEL PRODUCTO
+
+CREATE OR REPLACE FUNCTION nombre_ubicacion (id_prod in varchar2)  
+RETURN varchar2 
+IS
+name_ub varchar2(100);
+
+BEGIN
+   select u.nombre_ubicacion into name_ub
+   from ubicacion u, producto p 
+   where u.id_ubicacion=p.id_ubicacion and p.id_producto=id_prod;
+   return (name_ub); 
+END nombre_ubicacion;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             NOMBRE USUARIO
+
+CREATE OR REPLACE FUNCTION nombre_usuario (id_user in varchar2)  
+RETURN varchar2 
+IS
+name_user varchar2(100);
+
+BEGIN
+   select nombres ||' '|| apellidos into name_user
+   from persona where id_persona=id_user;  
+   return (name_user); 
+END nombre_usuario;
+/   
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+          NUMERO DEL COMPROBANTE MÁXIMO
+
+CREATE OR REPLACE FUNCTION numcompmaximo (id_config in varchar2)  
+RETURN varchar2 
+IS
+cont varchar2(20);
+
+BEGIN
+
+   select cont_maximo into cont
+   from comprobante_config where id_configuracion=id_config;
+   return (cont); 
+   
+   
+END numcompmaximo;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+           NUMERO DEL COMPROBANTE MÁXIMO DE LA VENTA
+
+CREATE OR REPLACE FUNCTION numcompmaximoventa 
+RETURN number 
+IS
+num number;
+
+BEGIN
+   select max(num_comprobante) into num
+   from venta;
+   return (num); 
+END numcompmaximoventa;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+          PORCENTAJE DE DESCUENTO
+
+CREATE OR REPLACE FUNCTION PORC_DESCUENTO (id_vent in varchar2)  
+RETURN float 
+IS
+descuento float(126);
+
+BEGIN
+
+   select distinct c.dcto into descuento
+   from venta v, cat_cliente c
+   where c.id_categoria=v.id_categoria and v.id_venta=id_vent;
+
+   return(descuento);
+   
+END PORC_DESCUENTO;
+/
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             PORCENTAJE UTILIDAD
+
+CREATE OR REPLACE FUNCTION PORCENTAJE_UTILIDAD (id_prod in varchar2)  
+RETURN float 
+IS
+
+costo_prom float(126);
+precio_prom float(126);
+cant number;
+porcentaje float(126);
+totalcompra float(126);
+totalventa float(126);
+utilidad float(126);
+
+BEGIN
+
+   select distinct precio_promedio(id_producto) into precio_prom from venta_detalle where id_producto=id_prod;
+
+   select distinct costo_promedio(id_producto) into costo_prom from compra_detalle where id_producto=id_prod;
+   
+   select sum(cantidad) into cant
+   from venta_detalle where id_producto=id_prod group by id_producto;
+   
+   totalventa:=cant*precio_prom;
+   totalcompra:=cant*costo_prom;
+   
+   utilidad:=totalventa-totalcompra;
+   
+   
+   porcentaje:=(utilidad*100)/totalcompra;
+   
+   return(porcentaje);
+   
+END PORCENTAJE_UTILIDAD;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+     PORCENTAJE DE GANANCIA
+
+CREATE OR REPLACE FUNCTION porc_gan (id_prod in varchar2)  
+RETURN float 
+IS
+porc float;
+
+BEGIN
+   select porc_ganancia into porc
+   from producto where id_producto=id_prod;
+   return (porc); 
+END porc_gan;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+     PRECIO DEL PRODUCTO
+
+CREATE OR REPLACE FUNCTION precio_producto (id_prod in varchar2)  
+RETURN float 
+IS
+prec float;
+
+BEGIN
+   select precio into prec
+   from producto where id_producto=id_prod;
+   return (prec); 
+END precio_producto;
+/
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+     PRECIO PROMEDIO
+
+CREATE OR REPLACE FUNCTION PRECIO_PROMEDIO (id_prod in varchar2)  
+RETURN float 
+IS
+precio_prom float(126);
+
+BEGIN
+
+   select sum((cantidad*precio_unitario)-descuento)/sum(cantidad) into precio_prom
+   from venta_detalle where id_producto=id_prod group by id_producto;
+   return(precio_prom);   
+   
+END PRECIO_PROMEDIO;
+/
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+         PRIVILEGIOS USUARIO
+
+CREATE OR REPLACE FUNCTION privilegios_usuario (id_usuario in varchar2)
+RETURN varchar2 
+IS
+privilegios varchar2(80);
+
+BEGIN
+
+select priv.nombre into privilegios from usuario u, rol r, privilegio priv, rol_privilegio rpr
+where u.id_rol=r.id_rol and r.id_rol=rpr.id_rol and priv.id_privilegio=rpr.id_privilegio 
+and rpr.estado='1' and u.id_usuario=id_usuario;
+
+
+return (privilegios);
+END privilegios_usuario;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+           SERIE DE LA VENTA
+
+CREATE OR REPLACE FUNCTION serieventa (id_config in varchar2)
+RETURN varchar2 
+IS
+ser varchar2(50);
+
+BEGIN
+
+   select serie into ser from comprobante_config where id_configuracion=id_config;
+   
+   return (ser);
+END serieventa;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+           
+           UNIDAD DEL PRODUCTO
+
+CREATE OR REPLACE FUNCTION und_producto (id_comp in varchar2,id_prod in varchar2)  
+RETURN varchar2 
+IS
+unidad_abrev varchar2(100);
+
+BEGIN
+   
+   select u.abreviatura into unidad_abrev
+   from unidad u,compra_detalle cd where u.id_unidad=cd.id_unidad and cd.id_compra=id_comp and cd.id_producto=id_prod; 
+   return (unidad_abrev); 
+   
+END und_producto;
+/
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             UNIDAD DE VENTA DEL PRODUCTO 
+
+CREATE OR REPLACE FUNCTION und_producto_venta (id_und in varchar2)  
+RETURN varchar2 
+IS
+unidad_abrev varchar2(100);
+
+BEGIN
+   
+   select abreviatura into unidad_abrev
+   from unidad_medida where id_unidad_medida=id_und; 
+   return (unidad_abrev); 
+   
+END und_producto_venta;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+              VALOR DEL FLETE DE COMPRA
+
+CREATE OR REPLACE FUNCTION valor_flete_compra (id_compr in varchar2)  
+RETURN float 
+IS
+valor float;
+
+BEGIN
+   select flete into valor
+   from compra where id_compra=id_compr;
+   return (valor); 
+END valor_flete_compra;
+/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            VALOR IGV DE COMPRA
+
+CREATE OR REPLACE FUNCTION valor_igv_compra (id_compr in varchar2)  
+RETURN float 
+IS
+valor float;
+
+BEGIN
+   select igv into valor
+   from compra where id_compra=id_compr;
+   return (valor); 
+END valor_igv_compra;
+/
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             VALOR DE LA MONEDA
+
+CREATE OR REPLACE FUNCTION valor_mon (id_mon in varchar2)  
+RETURN float 
+IS
+valor float;
+
+BEGIN
+   select valor_actual into valor
+   from tipo_moneda where id_moneda=id_mon;
+   return (valor); 
+END valor_mon;
+/
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             VALOR DE  MONEDA EN LA COMPRA
+
+CREATE OR REPLACE FUNCTION valor_mon_compra (id_compr in varchar2)  
+RETURN float 
+IS
+valor float;
+
+BEGIN
+   select valor_moneda into valor
+   from compra where id_compra=id_compr;
+   return (valor); 
+END valor_mon_compra;
+/
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------

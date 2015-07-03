@@ -1,0 +1,18 @@
+
+----Se crea el usuario desde el system o sys de Oracle
+create user daniel identified by eliacer;
+grant connect, resource to daniel;
+grant create table to daniel;
+grant dba to daniel;
+disconn
+conn daniel/eliacer
+
+
+----Codigo de importacion
+host imp daniel/eliacer file=d:/daniel.dmp fromuser=daniel touser=daniel;
+
+la importacion lo puede hacer conectado al usuario daniel o incluso desde cualquier usuario que este conectado 
+en el oracle...
+
+Recomendacion: Segun la experiencia que se pudo recopilar, usar el mismo nombre del usuario, para de esa manera
+poder importarse correctamente el backap con todos sus procedimientos, funciones y triggers...
